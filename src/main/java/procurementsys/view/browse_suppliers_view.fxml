@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="345.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="procurementsys.BrowseSuppliersController">
+  <children>
+    <SplitPane dividerPositions="0.47285714285714286" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+         <items>
+            <VBox prefHeight="200.0" prefWidth="405.0">
+               <children>
+                  <MenuBar>
+                     <menus>
+                        <Menu mnemonicParsing="false">
+                           <graphic>
+                              <TextField prefHeight="26.0" prefWidth="510.0" />
+                           </graphic>
+                        </Menu>
+                     </menus>
+                  </MenuBar>
+                  <ListView fx:id="supplierList" prefHeight="540.0" prefWidth="327.0" />
+               </children>
+            </VBox>
+            <AnchorPane prefHeight="578.0" prefWidth="219.0">
+               <children>
+                  <ScrollPane layoutX="4.0" layoutY="35.0" prefHeight="19.0" prefWidth="198.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="35.0">
+                     <content>
+                        <Text fx:id="nameText" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;name&gt;" />
+                     </content>
+                  </ScrollPane>
+                  <ScrollPane layoutX="5.0" layoutY="100.0" prefHeight="36.0" prefWidth="198.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="3.0">
+                     <content>
+                        <Text fx:id="contactNumberText" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;contact number&gt;" />
+                     </content>
+                  </ScrollPane>
+                  <Label layoutX="2.0" layoutY="17.0" text="Name:">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="2.0" layoutY="80.0" text="Contact #:">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="28.0" layoutY="225.0" mnemonicParsing="false" onAction="#handleAssignProductBtnPress" prefHeight="26.0" prefWidth="149.0" text="Asssign Product" />
+                  <Button layoutX="28.0" layoutY="285.0" mnemonicParsing="false" onAction="#handleToggleActivityStatusBtnPress" prefHeight="26.0" prefWidth="149.0" text="Toggle Activity Status" />
+                  <Button layoutX="28.0" layoutY="255.0" mnemonicParsing="false" onAction="#handleViewProductsSoldBtnPress" prefHeight="26.0" prefWidth="149.0" text="View Products Sold" />
+                  <ScrollPane layoutX="5.0" layoutY="163.0" prefHeight="36.0" prefWidth="198.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="3.0">
+                     <content>
+                        <Text fx:id="activityText" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;activity status&gt;" />
+                     </content>
+                  </ScrollPane>
+                  <Label layoutX="2.0" layoutY="145.0" text="Activity Status:">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </items>
+    </SplitPane>
+  </children>
+</VBox>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="210.0" prefWidth="235.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="procurementsys.CheckDeliveryDetailsController">
+   <children>
+      <ListView fx:id="productsDeliveredListView" layoutX="17.0" layoutY="74.0" prefHeight="122.0" prefWidth="200.0" />
+      <Label layoutX="17.0" layoutY="58.0" text="Products Delivered:">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Label>
+      <Label layoutX="17.0" layoutY="14.0" text="Delivery DateTime:">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Label>
+      <Text fx:id="deliveredDateTimeText" layoutX="21.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+   </children>
+</AnchorPane>

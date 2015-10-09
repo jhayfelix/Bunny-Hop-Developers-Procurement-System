@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="255.0" prefWidth="216.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="procurementsys.AddNewPaymentController">
+   <children>
+      <ButtonBar layoutX="14.0" layoutY="196.0" prefHeight="40.0" prefWidth="184.0">
+        <buttons>
+          <Button mnemonicParsing="false" onAction="#handleConfirmPaymentBtn" text="Confirm" />
+            <Button mnemonicParsing="false" onAction="#handleCancelBtnPress" text="Cancel" />
+        </buttons>
+      </ButtonBar>
+      <DatePicker fx:id="paymentDatePicker" layoutX="21.0" layoutY="43.0" prefHeight="26.0" prefWidth="176.0" promptText="Click calendar icon" AnchorPane.leftAnchor="21.0" />
+      <Label layoutX="21.0" layoutY="20.0" text="Date Ordered:" AnchorPane.leftAnchor="20.0">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="hourChoiceBox" layoutX="44.0" layoutY="102.0" prefHeight="26.0" prefWidth="49.0" AnchorPane.leftAnchor="21.0" />
+      <Label layoutX="20.0" layoutY="79.0" text="Time Ordered:" AnchorPane.leftAnchor="20.0">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="minuteChoiceBox" layoutX="78.0" layoutY="102.0" prefHeight="26.0" prefWidth="49.0" AnchorPane.leftAnchor="78.0" />
+      <ChoiceBox fx:id="amPmChoiceBox" layoutX="139.0" layoutY="102.0" prefHeight="26.0" prefWidth="56.0" />
+      <TextField fx:id="paidAmountTextField" layoutX="30.0" layoutY="158.0" prefHeight="26.0" prefWidth="176.0" AnchorPane.leftAnchor="21.0" />
+      <Label layoutX="14.0" layoutY="142.0" prefWidth="89.0" text="Amount Paid:" AnchorPane.leftAnchor="20.0">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

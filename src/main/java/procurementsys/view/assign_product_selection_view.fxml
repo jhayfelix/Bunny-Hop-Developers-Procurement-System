@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="275.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="procurementsys.AssignProductSelectionController">
+  <children>
+    <MenuBar VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false">
+               <graphic>
+                  <TextField prefHeight="26.0" prefWidth="260.0" />
+               </graphic>
+        </Menu>
+      </menus>
+    </MenuBar>
+      <ListView fx:id="productListView" prefHeight="200.0" prefWidth="200.0" />
+      <ButtonBar prefHeight="40.0" prefWidth="200.0">
+        <buttons>
+          <Button mnemonicParsing="false" onAction="#handleConfirmProductsBtnPress" text="Confirm" />
+            <Button mnemonicParsing="false" onAction="#handleCancelBtnPress" text="Cancel" />
+        </buttons>
+      </ButtonBar>
+  </children>
+</VBox>
