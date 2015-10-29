@@ -18,11 +18,13 @@ public class MySQLSupplierDAO implements SupplierDAO {
 	public List<Supplier> getAll() {
 		// TODO - DEVS implement this
 		List<Supplier> ret = new ArrayList<>();
+		
 		ret.add(new Supplier("National Bookstore", "8452005"));
 		ret.add(new Supplier("SM Supermarket", "4202045"));
 		ret.add(new Supplier("Robinsons Supermarket", "8506453"));
 		ret.add(new Supplier("Milan Industries", "7004533"));
 		ret.add(new Supplier("La Senza", "2347777"));
+		
 		return ret;
 	}
 
@@ -30,6 +32,11 @@ public class MySQLSupplierDAO implements SupplierDAO {
 	public List<Supplier> getAll(List<Tag> tags) {
 		// TODO - DEVS implement this
 		return null;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return getAll().size() == 0;
 	}
 
 }

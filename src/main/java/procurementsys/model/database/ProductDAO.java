@@ -9,4 +9,5 @@ public interface ProductDAO {
 	void add(Product product);
 	List<Product> getAll();
 	List<Product> getAll(List<Tag> tags, String filterStr);
+	boolean isEmpty();
 }

@@ -9,4 +9,5 @@ public interface SupplierDAO {
 	void add(Supplier supplier);
 	List<Supplier> getAll();
 	List<Supplier> getAll(List<Tag> tags);
+	boolean isEmpty();
 }

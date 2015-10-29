@@ -18,6 +18,8 @@ public class MySQLProductDAO implements ProductDAO {
 	public List<Product> getAll() {
 		// TODO - DEVS implement this
 		List<Product> ret = new ArrayList<>();
+		return ret;
+		/*
 		ret.add(new Product("Red Ballpen"));
 		ret.add(new Product("Blue Ballpen"));
 		ret.add(new Product("Green Ballpen"));
@@ -32,7 +34,7 @@ public class MySQLProductDAO implements ProductDAO {
 		ret.add(new Product("Minute Maid Pulpy Orange"));
 		ret.add(new Product("Zesto Orange Juice Drink"));
 		
-		return ret;
+		return ret;*/
 	}
 
 	@Override
@@ -62,6 +64,11 @@ public class MySQLProductDAO implements ProductDAO {
 			}
 		}
 		return filteredRet;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return getAll().size() == 0;
 	}
 
 

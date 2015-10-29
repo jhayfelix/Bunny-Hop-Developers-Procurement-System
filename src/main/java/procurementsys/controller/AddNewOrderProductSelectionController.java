@@ -13,6 +13,8 @@ import javafx.scene.control.SelectionMode;
 import javafx.stage.Stage;
 import procurementsys.model.Product;
 import procurementsys.model.Supplier;
+import procurementsys.model.database.MySQLProductDAO;
+import procurementsys.model.database.ProductDAO;
 
 /**
  * @author Jan Tristan Milan
@@ -23,7 +25,8 @@ public class AddNewOrderProductSelectionController extends Controller {
 	private Supplier selectedSupplier;
 	
 	@FXML private void initialize() {
-		productListView.getItems().addAll(parseProductList());
+		ProductDAO productDAO = new MySQLProductDAO();
+		productListView.getItems().addAll(productDAO.getAll());
 		productListView.getSelectionModel().select(0);
 		productListView.getSelectionModel()
 		.setSelectionMode(SelectionMode.MULTIPLE);
