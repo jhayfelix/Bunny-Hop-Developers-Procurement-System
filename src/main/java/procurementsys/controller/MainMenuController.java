@@ -40,6 +40,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -67,6 +68,8 @@ public class MainMenuController extends Controller {
 	@FXML private TableColumn<ProductOffer, Number> upcomingCostCol;
 	@FXML private TableColumn<ProductOffer, String> upcomingCostChangeDateCol;
 	
+	private Tooltip toolTip;
+	
 	public MainMenuController() {
 		
 	}
@@ -89,6 +92,8 @@ public class MainMenuController extends Controller {
 		titleLabel.setFont(new Font(20));
 		selectedTagsListView.setPlaceholder(titleLabel);
 		
+		toolTip = new Tooltip("Double click tag to remove from current search");
+		
 		// Remove selected tag when double clicked
 		selectedTagsListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
@@ -98,6 +103,11 @@ public class MainMenuController extends Controller {
 							.getSelectedIndex();
 					selectedTagsListView.getItems().remove(index);
 					showTaggedProducts(selectedTagsListView.getItems());
+					
+					selectedTagsListView.setTooltip(
+							(selectedTagsListView.getItems().size() == 0) 
+							? null 
+							: toolTip);
 				}
 			}
 		});
@@ -209,9 +219,18 @@ public class MainMenuController extends Controller {
 	
 	@FXML protected void handleSearchTag(ActionEvent event) throws IOException {
 		Tag selectedTag = tagSearchComboBox.getSelectionModel().getSelectedItem();
-		if (selectedTag != null) {
+		
+		if (selectedTag != null && !selectedTagsListView.getItems().contains(selectedTag)) {
+			
 			selectedTagsListView.getItems().add(selectedTag);
 			showTaggedProducts(selectedTagsListView.getItems());
+			tagSearchComboBox.getSelectionModel().clearSelection();
+			selectedTagsListView.setTooltip(toolTip);
+			
+		} else if (selectedTag != null && selectedTagsListView.getItems().contains(selectedTag)) {
+			String errorMsg = "The tag \'" + selectedTag + "\' is already included in the current search.";
+			Notifications.create().title("Error").text(errorMsg)
+			.position(Pos.TOP_RIGHT).showError();
 			tagSearchComboBox.getSelectionModel().clearSelection();
 		}
 	}

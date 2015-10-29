@@ -56,7 +56,6 @@
          <children>
             <ComboBox fx:id="tagSearchComboBox" layoutX="410.0" layoutY="101.0" prefHeight="27.0" prefWidth="420.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="410.0" AnchorPane.rightAnchor="420.0" AnchorPane.topAnchor="101.0" />
             <Button layoutX="839.0" layoutY="101.0" mnemonicParsing="false" onAction="#handleSearchTag" text="Search" AnchorPane.leftAnchor="839.0" AnchorPane.topAnchor="101.0" />
-            <BreadCrumbBar fx:id="selectedTagsBar" layoutX="389.0" layoutY="134.0" prefHeight="31.0" prefWidth="444.0" AnchorPane.leftAnchor="410.0" AnchorPane.rightAnchor="420.0" />
             <ListView fx:id="selectedTagsListView" layoutX="410.0" layoutY="44.0" orientation="HORIZONTAL" prefHeight="50.0" prefWidth="422.0" style="-fx-background-color: royalblue; -fx-control-inner-background: royalblue;" AnchorPane.bottomAnchor="94.0" AnchorPane.leftAnchor="410.0" AnchorPane.rightAnchor="420.0" AnchorPane.topAnchor="44.0" />
          </children>
       </AnchorPane>
