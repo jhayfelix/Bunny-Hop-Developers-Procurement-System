@@ -262,7 +262,7 @@ public class AddNewOrderController {
 			} else if (!qtyField.getText().matches("[0-9]+")) {
 				String errorMsg = "The quantity for the product '" 
 						+ product.getName() + "\' can only be composed of digits."
-						+ " Please enter a number positive integer instead.";
+						+ " Please enter a positive integer instead.";
 				SoftwareNotification.notifyError(errorMsg);
 				return false;
 			}
