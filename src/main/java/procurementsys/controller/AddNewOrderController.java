@@ -14,13 +14,18 @@ import procurementsys.model.Supplier;
 import procurementsys.model.database.MySQLOrderDAO;
 import procurementsys.model.database.MySQLProductDAO;
 import procurementsys.model.database.MySQLProductOfferDAO;
+import procurementsys.model.database.MySQLSupplierDAO;
 import procurementsys.model.database.OrderDAO;
 import procurementsys.model.database.ProductDAO;
 import procurementsys.model.database.ProductOfferDAO;
+import procurementsys.model.database.SupplierDAO;
 import procurementsys.view.SoftwareNotification;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventTarget;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
@@ -38,7 +43,9 @@ import jfxtras.scene.control.LocalDateTimeTextField;
 
 public class AddNewOrderController {
 	private static LocalDateTimeTextField dateTimeField;
+	private static TextField supplierFilterTextField;
 	private static ListView<Supplier> supplierListView;
+	private static TextField productFilter;
 	private static ListView<Product> productListView;
 	private static ListView<HBox> qtyTextFields;
 	
@@ -56,9 +63,29 @@ public class AddNewOrderController {
 			grid.setVgap(10);
 			grid.setPadding(new Insets(20, 20, 10, 10));
 			
+			// Hack method - supplierListView and supplierFilter need to be initialized
+			//				 right away
+			FXMLLoader supplierLoader = new FXMLLoader(AddNewOrderController
+					.class.getResource("/procurementsys/view/supplier_list.fxml"));
+			Parent supplierParent = supplierLoader.load();
+			SupplierListController supplierController =
+					supplierLoader.getController();
+			supplierListView = supplierController.getListView();
+			supplierFilterTextField = supplierController.getFilterTextField();
+			
+			// Hack method - productListView and productFilter need to be initialized
+			//				 right away
+			FXMLLoader productLoader = new FXMLLoader(AddNewOrderController
+					.class.getResource("/procurementsys/view/product_list.fxml"));
+			Parent productParent = productLoader.load();
+			ProductListController productController =
+					productLoader.getController();
+			productListView = productController.getListView();
+			productFilter = productController.getFilterTextField();
+			
 			initializeDateTimeSelection(grid);
-			initalizeSupplierSelection(grid);
-			initializeProductSelection(grid);
+			initalizeSupplierSelection(grid, supplierParent, supplierController);
+			initializeProductSelection(grid, productParent, productController);
 			initializeQtyTextFields(grid);
 			
 			dialog.getDialogPane().setContent(grid);
@@ -115,41 +142,81 @@ public class AddNewOrderController {
 		grid.add(dateTimeField, 0, 1);
 	}
 	
-	private static void initalizeSupplierSelection(GridPane grid) 
-			throws IOException {
+	private static void initalizeSupplierSelection(GridPane grid, Parent supplierRoot,
+			SupplierListController supplierController) throws IOException {
 		
 		Label supplierLbl = new Label("Supplier:");
 		supplierLbl.setStyle("-fx-font-weight: bold");
 		grid.add(supplierLbl, 0, 2);
 		
-		FXMLLoader supplierLoader = new FXMLLoader(AddNewOrderController
-				.class.getResource("/procurementsys/view/supplier_list.fxml"));
-		Parent supplierRoot = supplierLoader.load();
-		SupplierListController supplierController =
-				supplierLoader.getController();
 		supplierController.resize(supplierController.getWidth(), 300);
 		grid.add(supplierRoot, 0, 3);
 		
-		supplierListView = supplierController.getListView();
-	
+		// Get initial set of suppliers
+		showSuppliers();
+		showProducts(); // Products wont show since, listener has not yet been assigned
+		supplierListView.getSelectionModel().selectedItemProperty()
+			.addListener(new ChangeListener<Supplier>() {
+			@Override
+			public void changed(ObservableValue<? extends Supplier> observable,
+					Supplier oldValue, Supplier newValue) {
+				showProducts();
+			}
+		});
+
+		supplierFilterTextField.textProperty().addListener(new ChangeListener<String>(){
+			@Override
+			public void changed(ObservableValue<? extends String> observable,
+					String oldValue, String newValue) {
+				showSuppliers();	
+			}	
+		});
 	}
 	
-	private static void initializeProductSelection(GridPane grid)
-			throws IOException {
+	
+	private static void showSuppliers() {
+		SupplierDAO supplierDAO = new MySQLSupplierDAO();
+		List<Supplier> suppliers = supplierDAO
+				.getAll(supplierFilterTextField.getText());
+		supplierListView.getItems().clear();
+		supplierListView.getItems().addAll(suppliers);
+		if (supplierListView.getItems().size() > 0) {
+			supplierListView.getSelectionModel().select(0);
+		}
+		fireMouseClickEvent(productListView);
+	}
+	
+	private static void initializeProductSelection(GridPane grid, Parent productRoot, 
+			ProductListController productController ) throws IOException {
 		
 		Label productLbl = new Label("Product:");
 		productLbl.setStyle("-fx-font-weight: bold");
 		grid.add(productLbl, 1, 2);
 		
-		FXMLLoader productLoader = new FXMLLoader(AddNewOrderController
-				.class.getResource("/procurementsys/view/product_list.fxml"));
-		Parent productRoot = productLoader.load();
-		ProductListController productController =
-				productLoader.getController();
 		productController.resize(productController.getWidth(), 300);
 		grid.add(productRoot, 1, 3);
 		
-		productListView = productController.getListView();
+		
+		productFilter.textProperty().addListener(new ChangeListener<String>(){
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable,
+					String oldValue, String newValue) {
+				showProducts();	
+			}
+			
+		});
+	}
+	
+	private static void showProducts() {
+		ProductDAO productDAO = new MySQLProductDAO();
+		List<Product> products = productDAO.getAll(getSelectedSupplier(), productFilter.getText());
+		productListView.getItems().clear();
+		productListView.getItems().addAll(products);
+		if (productListView.getItems().size() > 0) {
+			productListView.getSelectionModel().select(0);
+		}
+		fireMouseClickEvent(productListView);
 	}
 	
 	private static void initializeQtyTextFields(GridPane grid) {
@@ -186,11 +253,15 @@ public class AddNewOrderController {
 			
 		});
 
-		Event.fireEvent(productListView, new MouseEvent(MouseEvent.MOUSE_CLICKED,
+		fireMouseClickEvent(productListView);	
+		grid.add(qtyTextFields, 2, 3);
+		
+	}
+
+	private static void fireMouseClickEvent(EventTarget eventTarget) {
+		Event.fireEvent(eventTarget, new MouseEvent(MouseEvent.MOUSE_CLICKED,
 				0, 0, 0, 0, MouseButton.PRIMARY, 1, true, true, true, true, true,
 				true, true, true, true, true, null));
-		
-		grid.add(qtyTextFields, 2, 3);
 		
 	}
 
@@ -249,6 +320,12 @@ public class AddNewOrderController {
 	}
 	
 	private static boolean isValidProductQtyMap() {
+		if (qtyTextFields.getItems().size() == 0) {
+			String errorMsg = "Product ordered cannot be empty. Please select a product.";
+			SoftwareNotification.notifyError(errorMsg);
+			return false;
+		}
+		
 		for (HBox hBox : qtyTextFields.getItems()) {
 			Label lbl = (Label) hBox.getChildren().get(0);
 			Product product = parseProduct(lbl.getText() + "");

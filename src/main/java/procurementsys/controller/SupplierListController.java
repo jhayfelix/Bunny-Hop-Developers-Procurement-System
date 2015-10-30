@@ -3,21 +3,15 @@ package procurementsys.controller;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import procurementsys.model.Supplier;
-import procurementsys.model.database.MySQLSupplierDAO;
-import procurementsys.model.database.SupplierDAO;
 
 public class SupplierListController {
-	public final static String LISTVIEW_ID = "supplierListView";
-	
+	@FXML private TextField filterTextField;
 	@FXML private ListView<Supplier> supplierListView;
 
-	@FXML private void initialize() {
-		SupplierDAO supplierDAO = new MySQLSupplierDAO();
-		supplierListView.getItems().addAll(supplierDAO.getAll());
-		if (supplierListView.getItems().size() > 0) {
-			supplierListView.getSelectionModel().select(0);
-		}
+	@FXML private void initialize() {		
+		
 	}
 	
 	public void resize(double width, double height) {
@@ -37,7 +31,12 @@ public class SupplierListController {
 		return  supplierListView.getHeight();
 	}
 	
+	public TextField getFilterTextField() {
+		return filterTextField;
+	}
+	
 	public ListView<Supplier> getListView() {
 		return supplierListView;
 	}
+	
 }

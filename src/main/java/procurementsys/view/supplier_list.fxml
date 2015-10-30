@@ -13,7 +13,7 @@
       <menus>
         <Menu mnemonicParsing="false">
                <graphic>
-                  <TextField />
+                  <TextField fx:id="filterTextField" />
                </graphic>
         </Menu>
       </menus>

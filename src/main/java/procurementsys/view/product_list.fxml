@@ -13,7 +13,7 @@
       <menus>
         <Menu mnemonicParsing="false">
                <graphic>
-                  <TextField prefHeight="26.0" prefWidth="260.0" />
+                  <TextField fx:id="filterTextField" prefHeight="26.0" prefWidth="260.0" />
                </graphic>
         </Menu>
       </menus>

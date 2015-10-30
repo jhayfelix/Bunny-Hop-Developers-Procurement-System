@@ -1,22 +1,21 @@
 package procurementsys.controller;
 
+import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TextField;
 import procurementsys.model.Product;
-import procurementsys.model.database.MySQLProductDAO;
-import procurementsys.model.database.ProductDAO;
 
 public class ProductListController {
+	@FXML private TextField filterTextField;
 	@FXML private ListView<Product> productListView;
 	
+	
 	@FXML private void initialize() {
-		ProductDAO productDAO = new MySQLProductDAO();
-		productListView.getItems().addAll(productDAO.getAll());
-		productListView.getSelectionModel().select(0);
 		productListView.getSelectionModel()
-		.setSelectionMode(SelectionMode.MULTIPLE);
+			.setSelectionMode(SelectionMode.MULTIPLE);
 	}
 	
 	public void resize(double width, double height) {
@@ -24,10 +23,10 @@ public class ProductListController {
 		parent.prefWidth(width);
 		parent.prefHeight(height);
 		
-		
 		productListView.setPrefWidth(width);
 		productListView.setPrefHeight(height);
 	}
+	
 	
 	public double getWidth() {
 		return productListView.getWidth();
@@ -37,8 +36,16 @@ public class ProductListController {
 		return  productListView.getHeight();
 	}
 	
+	public TextField getFilterTextField() {
+		return filterTextField;
+	}
+	
 	public ListView<Product> getListView() {
 		return productListView;
+	}
+	
+	public void showAll(List<Product> products) {
+		productListView.getItems().addAll(products);
 	}
 	
 }
