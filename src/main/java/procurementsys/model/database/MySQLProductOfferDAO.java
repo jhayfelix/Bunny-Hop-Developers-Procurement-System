@@ -18,6 +18,12 @@ public class MySQLProductOfferDAO implements ProductOfferDAO {
 	}
 	
 	@Override
+	public ProductOffer get(Supplier supplier, Product product) {
+		// TODO - DEVS implement this
+		return getAll(product,"").get(0);
+	}
+	
+	@Override
 	public List<ProductOffer> getAll(Product product, String filterStr) {
 		// TODO - DEVS implement this
 		List<ProductOffer> ret = new ArrayList<>();
@@ -38,5 +44,6 @@ public class MySQLProductOfferDAO implements ProductOfferDAO {
 		}
 		return ret;
 	}
+	
 
 }

@@ -14,5 +14,11 @@
 	    <artifactId>jide-oss</artifactId>
 	    <version>3.6.11</version>
 	</dependency>
+	
+	<dependency>
+		<groupId>org.jfxtras</groupId>
+		<artifactId>jfxtras-all</artifactId>
+		<version>8.0-r4</version>
+	</dependency>
   </dependencies>
 </project>

@@ -2,14 +2,12 @@ package procurementsys.controller;
 
 import java.util.Optional;
 
-import org.controlsfx.control.Notifications;
-
 import procurementsys.model.Supplier;
 import procurementsys.model.database.MySQLSupplierDAO;
 import procurementsys.model.database.SupplierDAO;
+import procurementsys.view.SoftwareNotification;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
@@ -40,7 +38,7 @@ public class AddNewSupplierController extends Controller {
 	
 		grid.add(new Label("Name:"), 0, 0);
 		grid.add(nameTextField, 1, 0);
-		grid.add(new Label("Password:"), 0, 1);
+		grid.add(new Label("Contact Number:"), 0, 1);
 		grid.add(contactNumberTextField, 1, 1);
 		
 		dialog.getDialogPane().setContent(grid);
@@ -58,18 +56,14 @@ public class AddNewSupplierController extends Controller {
             if (!isValidName(name)) {
     			String errorMsg = "Supplier name cannot be empty."
     					+ " Please enter a supplier name.";
-    			
-    			Notifications.create().title("Error").text(errorMsg)
-    				.position(Pos.TOP_RIGHT).showError();
+    			SoftwareNotification.notifyError(errorMsg);
                 event.consume();
             } else if (!isValidContactNum(contactNumber)) {
     			String errorMsg = (contactNumber == null || contactNumber.length() == 0)
     					? "Contact number cannot be empty. Please enter a contact number."
     					: "Contact number can only be composed of digits."
     							+ " Please enter another contact number.";
-    			
-    			Notifications.create().title("Error").text(errorMsg)
-    				.position(Pos.TOP_RIGHT).showError();
+    			SoftwareNotification.notifyError(errorMsg);
                 event.consume();
             }
         });
@@ -83,10 +77,10 @@ public class AddNewSupplierController extends Controller {
 			SupplierDAO supplierDAO = new MySQLSupplierDAO();
 			supplierDAO.add(new Supplier(name, contactNumber));
 			
-			Notifications.create().title("Success")
-				.text("The supplier \'" + name 
-					  + "\' has been successfully added to the system.")
-				.position(Pos.TOP_RIGHT).showInformation();
+			String successMsg = "The supplier \'" + name 
+					  + "\' has been successfully added to the system.";
+			SoftwareNotification.notifySuccess(successMsg);
+
 		}
 	}
 

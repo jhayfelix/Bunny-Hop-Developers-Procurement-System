@@ -21,6 +21,7 @@ import procurementsys.model.database.ProductOfferDAO;
 import procurementsys.model.database.SupplierDAO;
 import procurementsys.model.database.TagDAO;
 import procurementsys.view.AutoCompleteComboBoxListener;
+import procurementsys.view.SoftwareNotification;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
@@ -263,7 +264,7 @@ public class MainMenuController extends Controller {
     }
     
     @FXML protected void handleAddNewTag(ActionEvent event) throws IOException {
-    	// TODO - implement this
+    	AddNewTagController.run();
     }
     
     @FXML protected void handleTagProductOffer(ActionEvent event) throws IOException {
@@ -279,15 +280,14 @@ public class MainMenuController extends Controller {
     	ProductDAO productDAO = new MySQLProductDAO();
     	if (supplierDAO.isEmpty()) {
 			String errorMsg = "There are no suppliers in the system. Please add a supplier first.";
-			Notifications.create().title("Error").text(errorMsg)
-			.position(Pos.TOP_RIGHT).showError();
+			SoftwareNotification.notifyError(errorMsg);
     	} else if(productDAO.isEmpty()) {
 			String errorMsg = "There are no products in the system. Please add a product first.";
-			Notifications.create().title("Error").text(errorMsg)
-			.position(Pos.TOP_RIGHT).showError();
+			SoftwareNotification.notifyError(errorMsg);
     	} else {
-    		loadNewStage("Select Supplier",
-        			"/procurementsys/view/add_new_order_supplier_selection_view.fxml", false);
+    		AddNewOrderController.run();
+    		//loadNewStage("Select Supplier",
+        	//		"/procurementsys/view/add_new_order_supplier_selection_view.fxml", false);
     	}
     	
     }

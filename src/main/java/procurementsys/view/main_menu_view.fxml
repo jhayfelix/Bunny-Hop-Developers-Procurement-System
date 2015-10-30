@@ -32,7 +32,7 @@
         </Menu>
             <Menu mnemonicParsing="false" text="Tags">
               <items>
-                <MenuItem mnemonicParsing="false" text="Add New" />
+                <MenuItem mnemonicParsing="false" onAction="#handleAddNewTag" text="Add New" />
                   <MenuItem mnemonicParsing="false" text="Edit Existing" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Tag Product Offer" />
