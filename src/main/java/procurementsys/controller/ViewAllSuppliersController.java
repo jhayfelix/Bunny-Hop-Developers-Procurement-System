@@ -3,7 +3,6 @@ package procurementsys.controller;
 import java.io.IOException;
 import java.util.List;
 
-import org.controlsfx.control.MasterDetailPane;
 import org.controlsfx.control.PopOver;
 
 import procurementsys.model.Supplier;
@@ -11,9 +10,7 @@ import procurementsys.model.database.MySQLSupplierDAO;
 import procurementsys.model.database.SupplierDAO;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Side;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
