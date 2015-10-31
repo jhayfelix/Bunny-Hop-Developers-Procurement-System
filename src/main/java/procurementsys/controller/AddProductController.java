@@ -16,7 +16,7 @@ import javafx.scene.control.TextInputDialog;
  * @author Jan Tristan Milan
  */
 
-public class AddNewProductController extends Controller {
+public class AddProductController extends Controller {
 	
 	public static void run() {
 		TextInputDialog dialog = new TextInputDialog();
@@ -31,6 +31,7 @@ public class AddNewProductController extends Controller {
     			String errorMsg = "Product name cannot be empty."
     					+ " Please enter a product name.";
     			SoftwareNotification.notifyError(errorMsg);
+    			event.consume();
             }
         });
          

@@ -237,9 +237,7 @@ public class MainMenuController extends Controller {
 	}
 	
     @FXML protected void handleAddNewSupplier(ActionEvent event) throws IOException {
-    	/*loadNewStage("Enter supplier details",
-    			"/procurementsys/view/add_new_supplier_details_dialog.fxml", false);*/
-    	AddNewSupplierController.run();
+    	AddSupplierController.run();
     }
 	
     @FXML protected void handleViewSuppliers(ActionEvent event)
@@ -250,11 +248,21 @@ public class MainMenuController extends Controller {
     
     
     @FXML protected void handleAddNewProduct(ActionEvent event) throws IOException {
-    	AddNewProductController.run();
+    	AddProductController.run();
     }
     
     @FXML protected void handleAssignProduct(ActionEvent event) throws IOException {
-    	// TODO - implement this
+    	SupplierDAO supplierDAO = new MySQLSupplierDAO();
+    	ProductDAO productDAO = new MySQLProductDAO();
+    	if (supplierDAO.isEmpty()) {
+			String errorMsg = "There are no suppliers in the system. Please add a supplier first.";
+			SoftwareNotification.notifyError(errorMsg);
+    	} else if(productDAO.isEmpty()) {
+			String errorMsg = "There are no products in the system. Please add a product first.";
+			SoftwareNotification.notifyError(errorMsg);
+    	} else {
+    		AssignProductController.run();
+    	}
     }
     
     @FXML protected void handleViewProducts(ActionEvent event) 
@@ -264,7 +272,7 @@ public class MainMenuController extends Controller {
     }
     
     @FXML protected void handleAddNewTag(ActionEvent event) throws IOException {
-    	AddNewTagController.run();
+    	AddTagController.run();
     }
     
     @FXML protected void handleTagProductOffer(ActionEvent event) throws IOException {
@@ -285,11 +293,8 @@ public class MainMenuController extends Controller {
 			String errorMsg = "There are no products in the system. Please add a product first.";
 			SoftwareNotification.notifyError(errorMsg);
     	} else {
-    		AddNewOrderController.run();
-    		//loadNewStage("Select Supplier",
-        	//		"/procurementsys/view/add_new_order_supplier_selection_view.fxml", false);
+    		AddOrderController.run();
     	}
-    	
     }
     
     @FXML protected void handleViewOrders(ActionEvent event) throws IOException {

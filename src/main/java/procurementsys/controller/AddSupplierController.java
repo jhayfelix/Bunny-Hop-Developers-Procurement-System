@@ -20,7 +20,7 @@ import javafx.util.Pair;
  * @author Jan Tristan Milan
  */
 
-public class AddNewSupplierController extends Controller {
+public class AddSupplierController extends Controller {
 	
 	public static void run() {
 		Dialog<Pair<String, String>> dialog = new Dialog<>();

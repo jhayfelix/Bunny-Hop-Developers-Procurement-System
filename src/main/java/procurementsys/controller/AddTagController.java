@@ -13,7 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 
-public class AddNewTagController {
+public class AddTagController {
 	public static void run() {
 		TextInputDialog dialog = new TextInputDialog();
 		dialog.setTitle("Add Tag");
