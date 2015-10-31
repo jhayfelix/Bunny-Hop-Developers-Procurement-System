@@ -43,6 +43,7 @@ public class ViewAllSuppliersController {
 			initializePopOver();
 			initializeSupplierList();
 			
+			stage.setTitle("Suppliers");
 			stage.show();
 			showSuppliers();
 			
@@ -76,6 +77,7 @@ public class ViewAllSuppliersController {
 		activeBox.getChildren().addAll(activeLbl, activeInfo);
 		
 		VBox vBox = new VBox();
+		vBox.setStyle("-fx-background-color: palegoldenrod");
 		vBox.getChildren().addAll(nameHBox, contactNumHBox, activeBox);
 		
 		popOver.setContentNode(vBox);

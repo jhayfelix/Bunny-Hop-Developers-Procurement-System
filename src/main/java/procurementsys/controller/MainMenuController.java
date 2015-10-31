@@ -281,7 +281,8 @@ public class MainMenuController extends Controller {
     	ProductDAO productDAO = new MySQLProductDAO();
     	
     	if(productDAO.isEmpty()) {
-			String errorMsg = "There are no products in the system. Please add a product first.";
+			String errorMsg = "There are no products in the system."
+					+ " Please add a product first.";
 			SoftwareNotification.notifyError(errorMsg);
     	} else {
         	AddTagController.run();
@@ -293,7 +294,15 @@ public class MainMenuController extends Controller {
     }
     
     @FXML protected void handleViewTags(ActionEvent event) throws IOException {
-    	// TODO - implement this
+    	TagDAO tagDAO = new MySQLTagDAO();
+    	
+    	if (tagDAO.isEmpty()) {
+    		String errorMsg = "There are no tags in the system."
+    				+ " Please add a tag first.";
+    		SoftwareNotification.notifyError(errorMsg);
+    	} else {
+    		ViewAllTagsController.run();
+    	}
     }
     
     @FXML protected void handleAddNewOrder(ActionEvent event) throws IOException {

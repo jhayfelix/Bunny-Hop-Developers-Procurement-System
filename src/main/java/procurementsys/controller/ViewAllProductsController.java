@@ -29,6 +29,7 @@ public class ViewAllProductsController {
 			initializeSupplierList();
 			
 			stage.setScene(new Scene(root));
+			stage.setTitle("Products");
 			stage.show();
 			
 			showProducts();	
