@@ -30,6 +30,7 @@ public class ViewAllSuppliersController {
 	
 	public static void run() {
 		try {
+			
 			Stage stage = new Stage();
 			
 			FXMLLoader supplierListLoader =
@@ -45,9 +46,7 @@ public class ViewAllSuppliersController {
 			stage.show();
 			showSuppliers();
 			
-			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -93,7 +92,6 @@ public class ViewAllSuppliersController {
 			}
 			
 		});
-		
 		
 		ListView<Supplier> supplierListView = supplierListController.getListView();
 		supplierListView.getSelectionModel().selectedItemProperty()

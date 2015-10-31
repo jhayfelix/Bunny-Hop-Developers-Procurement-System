@@ -274,12 +274,18 @@ public class MainMenuController extends Controller {
     
     @FXML protected void handleViewProducts(ActionEvent event) 
     		throws IOException {
-    	loadNewStage("Kimson Trading - Products",
-    			"/procurementsys/view/browse_products_view.fxml", false);
+    	ViewAllProductsController.run();
     }
     
     @FXML protected void handleAddNewTag(ActionEvent event) throws IOException {
-    	AddTagController.run();
+    	ProductDAO productDAO = new MySQLProductDAO();
+    	
+    	if(productDAO.isEmpty()) {
+			String errorMsg = "There are no products in the system. Please add a product first.";
+			SoftwareNotification.notifyError(errorMsg);
+    	} else {
+        	AddTagController.run();
+    	}
     }
     
     @FXML protected void handleTagProductOffer(ActionEvent event) throws IOException {

@@ -1,11 +1,15 @@
 package procurementsys.controller;
 
 import java.util.List;
+
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import procurementsys.model.Product;
 
 public class ProductListController {
@@ -46,6 +50,12 @@ public class ProductListController {
 	
 	public void showAll(List<Product> products) {
 		productListView.getItems().addAll(products);
+	}
+	
+	public void fireMouseClickEvent() {
+		Event.fireEvent(productListView, new MouseEvent(MouseEvent.MOUSE_CLICKED,
+				0, 0, 0, 0, MouseButton.PRIMARY, 1, true, true, true, true, true,
+				true, true, true, true, true, null));
 	}
 	
 }
