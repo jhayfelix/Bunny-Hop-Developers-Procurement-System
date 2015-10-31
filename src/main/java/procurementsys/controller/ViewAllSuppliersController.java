@@ -104,7 +104,7 @@ public class ViewAllSuppliersController {
 					} else {
 						nameInfo.setText(newValue.getName());
 						contactNumInfo.setText(newValue.getContactNumber());
-						activeInfo.setText(newValue.isActive() + "");
+						activeInfo.setText((newValue.isActive()) ? "ACTIVE" : "INACTIVE");
 						popOver.show(supplierListView);
 					}
 				}
