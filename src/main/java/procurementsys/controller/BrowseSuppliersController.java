@@ -62,9 +62,9 @@ public class BrowseSuppliersController extends Controller {
     	Stage stage = new Stage();
     	stage.setScene(new Scene(root));
     	stage.setTitle("Select Products");
-    	AssignProductSelectionController controller = 
-    			loader.<AssignProductSelectionController>getController();
-    	controller.initialize(supplierList.getSelectionModel().getSelectedItem());
+    	//AssignProductSelectionController controller = 
+    	//		loader.<AssignProductSelectionController>getController();
+    	//controller.initialize(supplierList.getSelectionModel().getSelectedItem());
     	stage.show();
 	}
 	
