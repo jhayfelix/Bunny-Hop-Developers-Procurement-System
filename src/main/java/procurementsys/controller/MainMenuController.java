@@ -242,8 +242,14 @@ public class MainMenuController extends Controller {
 	
     @FXML protected void handleViewSuppliers(ActionEvent event)
     		throws IOException {
-    	loadNewStage("Kimson Trading - Suppliers",
-    			"/procurementsys/view/browse_suppliers_view.fxml", false);
+    	SupplierDAO supplierDAO = new MySQLSupplierDAO();
+    	
+    	if (supplierDAO.isEmpty()) {
+			String errorMsg = "There are no suppliers in the system. Please add a supplier first.";
+			SoftwareNotification.notifyError(errorMsg);
+    	} else {
+    		ViewAllSuppliersController.run();
+    	}
     }
     
     
@@ -254,6 +260,7 @@ public class MainMenuController extends Controller {
     @FXML protected void handleAssignProduct(ActionEvent event) throws IOException {
     	SupplierDAO supplierDAO = new MySQLSupplierDAO();
     	ProductDAO productDAO = new MySQLProductDAO();
+    	
     	if (supplierDAO.isEmpty()) {
 			String errorMsg = "There are no suppliers in the system. Please add a supplier first.";
 			SoftwareNotification.notifyError(errorMsg);
