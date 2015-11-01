@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.controlsfx.control.BreadCrumbBar;
 import org.controlsfx.control.Notifications;
+import org.controlsfx.control.SegmentedButton;
 
 import procurementsys.model.CostChange;
 import procurementsys.model.Product;
@@ -43,6 +44,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -59,6 +61,7 @@ import javafx.util.Callback;
 public class MainMenuController extends Controller {
 	@FXML private ComboBox<Tag> tagSearchComboBox;
 	@FXML private ListView<Tag> selectedTagsListView;
+	@FXML private SegmentedButton segmentedButton;
 	
 	@FXML private ListView<Product> taggedProductsListView;
 	@FXML private TextField productFilterTextField;
@@ -114,6 +117,15 @@ public class MainMenuController extends Controller {
 				}
 			}
 		});
+		
+		// Initialize segemented button
+		ToggleButton compareSuppliersToggle = new ToggleButton("Suppliers");
+		ToggleButton productTagsToggle  = new ToggleButton("Products");
+		productTagsToggle.setSelected(true);
+		segmentedButton.getButtons().addAll(productTagsToggle, compareSuppliersToggle);
+		segmentedButton.setPrefSize(300, 100);
+		segmentedButton.getStyleClass().add(SegmentedButton.STYLE_CLASS_DARK);
+		//segmentedButton.getToggleGroup().selectToggle(productTagsToggle);
 		
 		// Filter the products shown in the list whenever the filter changes
 		productFilterTextField.textProperty().addListener(new ChangeListener<String>(){
