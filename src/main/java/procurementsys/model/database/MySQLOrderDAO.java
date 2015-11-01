@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import procurementsys.model.CostChange;
+import procurementsys.model.Delivery;
 import procurementsys.model.Order;
 import procurementsys.model.Product;
 import procurementsys.model.ProductOffer;
@@ -61,6 +62,12 @@ public class MySQLOrderDAO implements OrderDAO {
 	public boolean isEmpty() {
 		// TODO - DEVS implement this
 		return false;
+	}
+
+	@Override
+	public void addDelivery(Order order, Delivery delivery) {
+		// TODO - DEVS implement this
+		
 	}
 
 

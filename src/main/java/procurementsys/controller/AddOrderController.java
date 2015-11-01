@@ -330,7 +330,7 @@ public class AddOrderController {
 			Label lbl = (Label) hBox.getChildren().get(0);
 			Product product = parseProduct(lbl.getText() + "");
 			TextField qtyField = (TextField) hBox.getChildren().get(1);
-			if (qtyField.getText() == null || qtyField.getText() == "") {
+			if (qtyField.getText() == null || qtyField.getText().equals("")) {
 				String errorMsg = "The quantity for the product '" 
 						+ product.getName() + "\' cannot be empty."
 						+ " Please enter a quantity.";

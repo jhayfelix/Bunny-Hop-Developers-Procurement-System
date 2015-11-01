@@ -43,7 +43,7 @@
                 <MenuItem mnemonicParsing="false" onAction="#handleAddNewOrder" text="Add New Order" />
                   <MenuItem mnemonicParsing="false" onAction="#handleViewOrders" text="View All Orders" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Add New Delivery to Order" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleAddDelivery" text="Add New Delivery to Order" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Help">
