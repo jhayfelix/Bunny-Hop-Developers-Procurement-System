@@ -21,7 +21,7 @@
             <MenuItem mnemonicParsing="false" onAction="#handleViewSuppliers" text="View All Suppliers" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#handleAssignProduct" text="Add Product Offer to Supplier" />
-                  <MenuItem mnemonicParsing="false" text="View Product Offers of Supplier" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleViewProductOffers" text="View Product Offers of Supplier" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Products">
@@ -58,6 +58,7 @@
             <ComboBox fx:id="tagSearchComboBox" layoutX="410.0" layoutY="101.0" prefHeight="27.0" prefWidth="420.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="410.0" AnchorPane.rightAnchor="420.0" AnchorPane.topAnchor="101.0" />
             <Button layoutX="839.0" layoutY="101.0" mnemonicParsing="false" onAction="#handleSearchTag" text="Search" AnchorPane.leftAnchor="839.0" AnchorPane.topAnchor="101.0" />
             <ListView fx:id="selectedTagsListView" layoutX="410.0" layoutY="44.0" orientation="HORIZONTAL" prefHeight="50.0" prefWidth="422.0" style="-fx-background-color: royalblue; -fx-control-inner-background: royalblue;" AnchorPane.bottomAnchor="94.0" AnchorPane.leftAnchor="410.0" AnchorPane.rightAnchor="420.0" AnchorPane.topAnchor="44.0" />
+            <SegmentedButton fx:id="segmentedButton" layoutX="530.0" layoutY="136.0" prefHeight="38.0" prefWidth="285.0" />
          </children>
       </AnchorPane>
       <SplitPane dividerPositions="0.1712" prefHeight="523.0" prefWidth="1252.0">

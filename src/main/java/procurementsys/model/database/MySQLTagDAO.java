@@ -1,7 +1,5 @@
 package procurementsys.model.database;
 
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,23 +9,8 @@ public class MySQLTagDAO implements TagDAO {
 
 	@Override
 	public void add(Tag tag) {
-		String tags;
-		 try{
-				java.sql.Connection conn = DBConnection.getConnection();
-				Statement statement = conn.createStatement();
-				tags=tag.getName();
-				//suppContact=supplier.getContactNumber();
-				String query = String.format("INSERT INTO procurementdb.tags(tag_name)   VALUES (\"%s\"	)",tags);
-				
-				
-				statement.executeUpdate(query);
-
-				conn.close();}
-		       catch(SQLException sqlException){
-		           sqlException.printStackTrace();
-		       }
-		       System.out.println("successful pare 2.");
-
+		// TODO - DEVS implement this
+		
 	}
 	
 	@Override
@@ -50,7 +33,7 @@ public class MySQLTagDAO implements TagDAO {
 
 	@Override
 	public List<Tag> getAll(String tagNameFilter) {
-
+		// TODO - DEVS implement this
 		List<Tag> ret = new ArrayList<>();
 		
 		for (Tag x : getAll()) {

@@ -13,7 +13,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 
 /**
- * @author Jan Tristan Milan	
+ * @author Jan Tristan Milan
  */
 
 public class AddProductController extends Controller {

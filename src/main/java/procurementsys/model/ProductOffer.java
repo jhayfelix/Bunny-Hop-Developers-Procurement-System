@@ -1,6 +1,8 @@
 package procurementsys.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import javafx.beans.property.ObjectProperty;
@@ -99,12 +101,43 @@ public class ProductOffer {
 		}
 	}
 	
+	
 	public void setPromo(Promo promo) {
 		this.promo = promo;
 	}
 	
 	public String getContactNumber() {
 		return supplier.get().getContactNumber();
+	}
+	
+	public void addTag(Tag tag) {
+		tags.add(tag);
+	}
+	
+	public void addAllTags(Collection<Tag> tags) {
+		this.tags.addAll(tags);
+	}
+	
+	public void removeTag(Tag tag) {
+		tags.remove(tag);
+	}
+	
+	public String getTagsString() {
+		StringBuilder sb = new StringBuilder();
+		Iterator<Tag> iter = tags.iterator();
+		
+		while(iter.hasNext()) {
+			Tag t = iter.next();
+			sb.append(t 
+					+ ((iter.hasNext()) ? ", " : ""));
+		}
+		
+		/*
+		for (Tag t : tags) {
+			sb.append(t + ", ");
+		}*/
+		
+		return sb.toString();
 	}
 	
 	@Override

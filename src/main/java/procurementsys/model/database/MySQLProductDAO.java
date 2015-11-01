@@ -1,14 +1,7 @@
 package procurementsys.model.database;
 
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
 
 import procurementsys.model.Product;
 import procurementsys.model.Supplier;
@@ -18,32 +11,9 @@ public class MySQLProductDAO implements ProductDAO {
 
 	@Override
 	public void add(Product product) {
-		String test;
 		// TODO - DEVS implement this
-		  try {
-			  
-			  System.out.println("product: "+ product.getName());
-			 // test=String.format("INSERT INTO products(product_name) VALUES (\"%s\")",product.getName());
-			  //String test = String.format("test goes here %s more text", "Testing");
-			  //test=product.getName();
-			 // INSERT INTO procurementdb.products (product_name) VALUES ('d');
-	            String query = String.format("INSERT INTO procurementdb.products(product_name) VALUES (\"%s\")",product.getName());
-	            java.sql.PreparedStatement preparedStatement = DBConnection.getConnection().prepareStatement(query);
-	            java.sql.Connection conn = DBConnection.getConnection();
-				java.sql.Statement statement = conn.createStatement();
-				
-				statement.executeUpdate(query);
-				conn.close();
-	           // ResultSet resultSet = preparedStatement.executeQuery();
-	          //  return resultSet;
-	        } catch (SQLException sqlException) {
-	            sqlException.printStackTrace();
-	        }
-	        System.out.println("it happened");
-	      //  return null;
-	    }
 		
-	
+	}
 
 	@Override
 	public Product get(String productNameFilter) {
