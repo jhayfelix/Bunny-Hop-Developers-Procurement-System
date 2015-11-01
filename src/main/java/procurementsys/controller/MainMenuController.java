@@ -276,10 +276,6 @@ public class MainMenuController extends Controller {
     
     @FXML protected void handleViewProducts(ActionEvent event) 
     		throws IOException {
-    	ViewAllProductsController.run();
-    }
-    
-    @FXML protected void handleAddNewTag(ActionEvent event) throws IOException {
     	ProductDAO productDAO = new MySQLProductDAO();
     	
     	if(productDAO.isEmpty()) {
@@ -287,8 +283,28 @@ public class MainMenuController extends Controller {
 					+ " Please add a product first.";
 			SoftwareNotification.notifyError(errorMsg);
     	} else {
-        	AddTagController.run();
+    		ViewAllProductsController.run();
     	}
+    }
+    
+    @FXML protected void handleAddNewTag(ActionEvent event) throws IOException {
+    	AddTagController.run();
+    }
+    
+    @FXML protected void handleViewProductOffers(ActionEvent event) throws IOException {
+    	SupplierDAO supplierDAO = new MySQLSupplierDAO();
+    	ProductOfferDAO productOfferDAO = new MySQLProductOfferDAO();
+    	
+    	if (supplierDAO.isEmpty()) {
+			String errorMsg = "There are no suppliers in the system. Please add a supplier first.";
+			SoftwareNotification.notifyError(errorMsg);
+    	} else if (productOfferDAO.isEmpty()) {
+			String errorMsg = "There are no product offers in the system. Please add a product offer first.";
+			SoftwareNotification.notifyError(errorMsg);
+    	} else {
+    		ViewProductOffersController.run();
+    	}
+    	
     }
     
     @FXML protected void handleTagProductOffer(ActionEvent event) throws IOException {

@@ -18,4 +18,13 @@ public class Tag {
 	public String toString() {
 		return name;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o == null)
+			return false;
+		
+		Tag t = (Tag) o;
+		return name.equals(t.getName());
+	}
 }

@@ -21,7 +21,7 @@
             <MenuItem mnemonicParsing="false" onAction="#handleViewSuppliers" text="View All Suppliers" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#handleAssignProduct" text="Add Product Offer to Supplier" />
-                  <MenuItem mnemonicParsing="false" text="View Product Offers of Supplier" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleViewProductOffers" text="View Product Offers of Supplier" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Products">
