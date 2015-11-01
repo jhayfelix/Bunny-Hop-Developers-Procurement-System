@@ -41,7 +41,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import jfxtras.scene.control.LocalDateTimeTextField;
 
-public class AddNewOrderController {
+public class AddOrderController {
 	private static LocalDateTimeTextField dateTimeField;
 	private static TextField supplierFilterTextField;
 	private static ListView<Supplier> supplierListView;
@@ -65,7 +65,7 @@ public class AddNewOrderController {
 			
 			// Hack method - supplierListView and supplierFilter need to be initialized
 			//				 right away
-			FXMLLoader supplierLoader = new FXMLLoader(AddNewOrderController
+			FXMLLoader supplierLoader = new FXMLLoader(AddOrderController
 					.class.getResource("/procurementsys/view/supplier_list.fxml"));
 			Parent supplierParent = supplierLoader.load();
 			SupplierListController supplierController =
@@ -75,7 +75,7 @@ public class AddNewOrderController {
 			
 			// Hack method - productListView and productFilter need to be initialized
 			//				 right away
-			FXMLLoader productLoader = new FXMLLoader(AddNewOrderController
+			FXMLLoader productLoader = new FXMLLoader(AddOrderController
 					.class.getResource("/procurementsys/view/product_list.fxml"));
 			Parent productParent = productLoader.load();
 			ProductListController productController =
@@ -330,7 +330,7 @@ public class AddNewOrderController {
 			Label lbl = (Label) hBox.getChildren().get(0);
 			Product product = parseProduct(lbl.getText() + "");
 			TextField qtyField = (TextField) hBox.getChildren().get(1);
-			if (qtyField.getText() == null || qtyField.getText() == "") {
+			if (qtyField.getText() == null || qtyField.getText().equals("")) {
 				String errorMsg = "The quantity for the product '" 
 						+ product.getName() + "\' cannot be empty."
 						+ " Please enter a quantity.";

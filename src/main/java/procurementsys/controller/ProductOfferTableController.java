@@ -7,24 +7,30 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import procurementsys.model.Product;
 import procurementsys.model.ProductOffer;
 import procurementsys.model.Supplier;
+import procurementsys.model.database.MySQLProductOfferDAO;
+import procurementsys.model.database.ProductOfferDAO;
 
 /**
  * @author Jan Tristan Milan
  */
 
-public class BrowseProductsOfferedController extends Controller {
+public class ProductOfferTableController extends Controller {
 	@FXML private TableView<ProductOffer> productOfferTable;
 	@FXML private TableColumn<ProductOffer, Product> productColumn;
 	@FXML private TableColumn<ProductOffer, Double> costColumn;
+	@FXML private TableColumn<ProductOffer, String> tagsColumn;
 	
 	@FXML private void initialize() {
 		productColumn.setCellValueFactory(
 				new PropertyValueFactory<ProductOffer, Product>("product"));
 		costColumn.setCellValueFactory(
-				new PropertyValueFactory<ProductOffer, Double>("cost"));
+				new PropertyValueFactory<ProductOffer, Double>("currentCost"));
+		tagsColumn.setCellValueFactory(
+				new PropertyValueFactory<ProductOffer, String>("tagsString"));
 	}
 	
-	public void initialize(Supplier supplier) {		
-		productOfferTable.getItems().addAll(parseProductOfferList(supplier));
+	public void setSupplier(Supplier supplier) {		
+		ProductOfferDAO productOfferDAO = new MySQLProductOfferDAO();
+		productOfferTable.getItems().addAll(productOfferDAO.getAll(supplier));
 	}
 }

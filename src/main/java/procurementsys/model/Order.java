@@ -66,4 +66,13 @@ public class Order {
 	public List<Delivery> getDeliveries() {
 		return new ArrayList<>(deliveries);
 	}
+
+	public ProductOffer getProductOffer(Product product) {
+		for (ProductOffer po : productOffersOrdered.keySet()) {
+			if (po.getProduct().equals(product)) {
+				return po;
+			}
+		}
+		return null;
+	}
 }

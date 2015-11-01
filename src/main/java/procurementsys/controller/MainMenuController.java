@@ -6,16 +6,19 @@ import java.util.List;
 
 import org.controlsfx.control.BreadCrumbBar;
 import org.controlsfx.control.Notifications;
+import org.controlsfx.control.SegmentedButton;
 
 import procurementsys.model.CostChange;
 import procurementsys.model.Product;
 import procurementsys.model.ProductOffer;
 import procurementsys.model.Supplier;
 import procurementsys.model.Tag;
+import procurementsys.model.database.MySQLOrderDAO;
 import procurementsys.model.database.MySQLProductDAO;
 import procurementsys.model.database.MySQLProductOfferDAO;
 import procurementsys.model.database.MySQLSupplierDAO;
 import procurementsys.model.database.MySQLTagDAO;
+import procurementsys.model.database.OrderDAO;
 import procurementsys.model.database.ProductDAO;
 import procurementsys.model.database.ProductOfferDAO;
 import procurementsys.model.database.SupplierDAO;
@@ -41,6 +44,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -57,6 +61,7 @@ import javafx.util.Callback;
 public class MainMenuController extends Controller {
 	@FXML private ComboBox<Tag> tagSearchComboBox;
 	@FXML private ListView<Tag> selectedTagsListView;
+	@FXML private SegmentedButton segmentedButton;
 	
 	@FXML private ListView<Product> taggedProductsListView;
 	@FXML private TextField productFilterTextField;
@@ -112,6 +117,15 @@ public class MainMenuController extends Controller {
 				}
 			}
 		});
+		
+		// Initialize segemented button
+		ToggleButton compareSuppliersToggle = new ToggleButton("Suppliers");
+		ToggleButton productTagsToggle  = new ToggleButton("Products");
+		productTagsToggle.setSelected(true);
+		segmentedButton.getButtons().addAll(productTagsToggle, compareSuppliersToggle);
+		segmentedButton.setPrefSize(300, 100);
+		segmentedButton.getStyleClass().add(SegmentedButton.STYLE_CLASS_DARK);
+		//segmentedButton.getToggleGroup().selectToggle(productTagsToggle);
 		
 		// Filter the products shown in the list whenever the filter changes
 		productFilterTextField.textProperty().addListener(new ChangeListener<String>(){
@@ -237,34 +251,72 @@ public class MainMenuController extends Controller {
 	}
 	
     @FXML protected void handleAddNewSupplier(ActionEvent event) throws IOException {
-    	/*loadNewStage("Enter supplier details",
-    			"/procurementsys/view/add_new_supplier_details_dialog.fxml", false);*/
-    	AddNewSupplierController.run();
+    	AddSupplierController.run();
     }
 	
     @FXML protected void handleViewSuppliers(ActionEvent event)
     		throws IOException {
-    	loadNewStage("Kimson Trading - Suppliers",
-    			"/procurementsys/view/browse_suppliers_view.fxml", false);
+    	SupplierDAO supplierDAO = new MySQLSupplierDAO();
+    	
+    	if (supplierDAO.isEmpty()) {
+			String errorMsg = "There are no suppliers in the system. Please add a supplier first.";
+			SoftwareNotification.notifyError(errorMsg);
+    	} else {
+    		ViewAllSuppliersController.run();
+    	}
     }
     
     
     @FXML protected void handleAddNewProduct(ActionEvent event) throws IOException {
-    	AddNewProductController.run();
+    	AddProductController.run();
     }
     
     @FXML protected void handleAssignProduct(ActionEvent event) throws IOException {
-    	// TODO - implement this
+    	SupplierDAO supplierDAO = new MySQLSupplierDAO();
+    	ProductDAO productDAO = new MySQLProductDAO();
+    	
+    	if (supplierDAO.isEmpty()) {
+			String errorMsg = "There are no suppliers in the system. Please add a supplier first.";
+			SoftwareNotification.notifyError(errorMsg);
+    	} else if(productDAO.isEmpty()) {
+			String errorMsg = "There are no products in the system. Please add a product first.";
+			SoftwareNotification.notifyError(errorMsg);
+    	} else {
+    		AssignProductController.run();
+    	}
     }
     
     @FXML protected void handleViewProducts(ActionEvent event) 
     		throws IOException {
-    	loadNewStage("Kimson Trading - Products",
-    			"/procurementsys/view/browse_products_view.fxml", false);
+    	ProductDAO productDAO = new MySQLProductDAO();
+    	
+    	if(productDAO.isEmpty()) {
+			String errorMsg = "There are no products in the system."
+					+ " Please add a product first.";
+			SoftwareNotification.notifyError(errorMsg);
+    	} else {
+    		ViewAllProductsController.run();
+    	}
     }
     
     @FXML protected void handleAddNewTag(ActionEvent event) throws IOException {
-    	AddNewTagController.run();
+    	AddTagController.run();
+    }
+    
+    @FXML protected void handleViewProductOffers(ActionEvent event) throws IOException {
+    	SupplierDAO supplierDAO = new MySQLSupplierDAO();
+    	ProductOfferDAO productOfferDAO = new MySQLProductOfferDAO();
+    	
+    	if (supplierDAO.isEmpty()) {
+			String errorMsg = "There are no suppliers in the system. Please add a supplier first.";
+			SoftwareNotification.notifyError(errorMsg);
+    	} else if (productOfferDAO.isEmpty()) {
+			String errorMsg = "There are no product offers in the system. Please add a product offer first.";
+			SoftwareNotification.notifyError(errorMsg);
+    	} else {
+    		ViewProductOffersController.run();
+    	}
+    	
     }
     
     @FXML protected void handleTagProductOffer(ActionEvent event) throws IOException {
@@ -272,7 +324,15 @@ public class MainMenuController extends Controller {
     }
     
     @FXML protected void handleViewTags(ActionEvent event) throws IOException {
-    	// TODO - implement this
+    	TagDAO tagDAO = new MySQLTagDAO();
+    	
+    	if (tagDAO.isEmpty()) {
+    		String errorMsg = "There are no tags in the system."
+    				+ " Please add a tag first.";
+    		SoftwareNotification.notifyError(errorMsg);
+    	} else {
+    		ViewAllTagsController.run();
+    	}
     }
     
     @FXML protected void handleAddNewOrder(ActionEvent event) throws IOException {
@@ -285,15 +345,33 @@ public class MainMenuController extends Controller {
 			String errorMsg = "There are no products in the system. Please add a product first.";
 			SoftwareNotification.notifyError(errorMsg);
     	} else {
-    		AddNewOrderController.run();
-    		//loadNewStage("Select Supplier",
-        	//		"/procurementsys/view/add_new_order_supplier_selection_view.fxml", false);
+    		AddOrderController.run();
     	}
-    	
     }
     
     @FXML protected void handleViewOrders(ActionEvent event) throws IOException {
-    	// TODO - implement this
+    	OrderDAO orderDAO = new MySQLOrderDAO();
+    	
+    	if (orderDAO.isEmpty()) {
+    		String errorMsg = "There are no orders in the system."
+    				+ " Please add an order first.";
+    		SoftwareNotification.notifyError(errorMsg);
+    	} else {
+    		ViewAllOrdersController.run();
+    	}
+    }
+    
+    @FXML protected void handleAddDelivery(ActionEvent event) throws IOException {
+    	OrderDAO orderDAO = new MySQLOrderDAO();
+    	
+    	if (orderDAO.isEmpty()) {
+    		String errorMsg = "There are no orders in the system."
+    				+ " Please add an order first.";
+    		SoftwareNotification.notifyError(errorMsg);
+    	} else {
+    		AddDeliveryController.run();
+    	}
+    	
     }
     
 }

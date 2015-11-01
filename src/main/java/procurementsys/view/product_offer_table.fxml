@@ -7,9 +7,10 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<TableView fx:id="productOfferTable" prefHeight="212.0" prefWidth="293.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="procurementsys.controller.BrowseProductsOfferedController">
+<TableView fx:id="productOfferTable" prefHeight="212.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="procurementsys.controller.ProductOfferTableController">
   <columns>
     <TableColumn fx:id="productColumn" prefWidth="171.0" text="Product" />
     <TableColumn fx:id="costColumn" prefWidth="119.0" text="Cost" />
+      <TableColumn fx:id="tagsColumn" prefWidth="227.0" text="Tags" />
   </columns>
 </TableView>

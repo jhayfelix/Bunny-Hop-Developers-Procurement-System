@@ -9,7 +9,7 @@ public class MySQLTagDAO implements TagDAO {
 
 	@Override
 	public void add(Tag tag) {
-		// TODO Auto-generated method stub
+		// TODO - DEVS implement this
 		
 	}
 	
@@ -23,6 +23,26 @@ public class MySQLTagDAO implements TagDAO {
 		ret.add(new Tag("SUPPLIES"));
 		ret.add(new Tag("PRODUCT"));
 		ret.add(new Tag("GEL"));
+		return ret;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return getAll().size() == 0;
+	}
+
+	@Override
+	public List<Tag> getAll(String tagNameFilter) {
+		// TODO - DEVS implement this
+		List<Tag> ret = new ArrayList<>();
+		
+		for (Tag x : getAll()) {
+			String tagName = x.getName().toLowerCase();
+			if (tagName.contains(tagNameFilter.toLowerCase())) {
+				ret.add(x);
+			}
+		}
+		
 		return ret;
 	}
 

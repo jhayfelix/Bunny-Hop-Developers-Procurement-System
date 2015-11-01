@@ -24,6 +24,32 @@ public class MySQLProductOfferDAO implements ProductOfferDAO {
 	}
 	
 	@Override
+	public List<ProductOffer> getAll(Supplier supplier) {
+		// TODO - DEVS implement this
+		List<ProductOffer> ret = new ArrayList<>();
+		
+		MySQLProductDAO productDAO = new MySQLProductDAO();
+		List<Product> products = productDAO.getAll();
+		
+		for (Product x : products) {
+				List<CostChange> costChanges = new ArrayList<>();
+				costChanges.add(new CostChange(LocalDateTime.of(2013, Month.JULY, 2, 0, 0),20.0));
+				costChanges.add(new CostChange(LocalDateTime.of(2014, Month.MARCH, 3, 0, 0),22.50));
+				costChanges.add(new CostChange(LocalDateTime.of(2015, Month.JANUARY, 4, 0, 0),21.0));
+				costChanges.add(new CostChange(LocalDateTime.of(2015, Month.OCTOBER, 5, 0, 0),27.0));
+				costChanges.add(new CostChange(LocalDateTime.of(2016, Month.OCTOBER, 1, 0, 0),25.0));
+				ret.add(new ProductOffer(x, supplier, costChanges));
+		}
+		
+		TagDAO tagDAO = new MySQLTagDAO();
+		for (ProductOffer po : ret) {
+			po.addAllTags(tagDAO.getAll());
+		}
+		return ret;
+	}
+	
+	
+	@Override
 	public List<ProductOffer> getAll(Product product, String filterStr) {
 		// TODO - DEVS implement this
 		List<ProductOffer> ret = new ArrayList<>();
@@ -44,6 +70,13 @@ public class MySQLProductOfferDAO implements ProductOfferDAO {
 		}
 		return ret;
 	}
-	
+
+	@Override
+	public boolean isEmpty() {
+		// TODO - DEVS implement this
+		return false;
+	}
+
+
 
 }
