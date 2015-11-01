@@ -12,10 +12,12 @@ import procurementsys.model.Product;
 import procurementsys.model.ProductOffer;
 import procurementsys.model.Supplier;
 import procurementsys.model.Tag;
+import procurementsys.model.database.MySQLOrderDAO;
 import procurementsys.model.database.MySQLProductDAO;
 import procurementsys.model.database.MySQLProductOfferDAO;
 import procurementsys.model.database.MySQLSupplierDAO;
 import procurementsys.model.database.MySQLTagDAO;
+import procurementsys.model.database.OrderDAO;
 import procurementsys.model.database.ProductDAO;
 import procurementsys.model.database.ProductOfferDAO;
 import procurementsys.model.database.SupplierDAO;
@@ -320,7 +322,15 @@ public class MainMenuController extends Controller {
     }
     
     @FXML protected void handleViewOrders(ActionEvent event) throws IOException {
-    	// TODO - implement this
+    	OrderDAO orderDAO = new MySQLOrderDAO();
+    	
+    	if (orderDAO.isEmpty()) {
+    		String errorMsg = "There are no orders in the system."
+    				+ " Please add an order first.";
+    		SoftwareNotification.notifyError(errorMsg);
+    	} else {
+    		ViewAllOrdersController.run();
+    	}
     }
     
 }

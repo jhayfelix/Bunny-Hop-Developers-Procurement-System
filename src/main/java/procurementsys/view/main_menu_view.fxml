@@ -40,8 +40,10 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Orders">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#handleAddNewOrder" text="Add New" />
-                  <MenuItem mnemonicParsing="false" text="View All" />
+                <MenuItem mnemonicParsing="false" onAction="#handleAddNewOrder" text="Add New Order" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleViewOrders" text="View All Orders" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Add New Delivery to Order" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Help">
