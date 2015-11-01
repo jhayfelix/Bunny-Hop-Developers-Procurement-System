@@ -3,10 +3,9 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.lang.Object;
 import org.controlsfx.control.BreadCrumbBar;
 import org.controlsfx.control.Notifications;
-import org.controlsfx.control.SegmentedButton;
 
 import procurementsys.model.CostChange;
 import procurementsys.model.Product;
@@ -44,7 +43,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -61,7 +59,6 @@ import javafx.util.Callback;
 public class MainMenuController extends Controller {
 	@FXML private ComboBox<Tag> tagSearchComboBox;
 	@FXML private ListView<Tag> selectedTagsListView;
-	@FXML private SegmentedButton segmentedButton;
 	
 	@FXML private ListView<Product> taggedProductsListView;
 	@FXML private TextField productFilterTextField;
@@ -77,7 +74,7 @@ public class MainMenuController extends Controller {
 	private Tooltip toolTip;
 	
 	public MainMenuController() {
-		
+		System.out.println("test");
 	}
 	
 	@FXML private void initialize() {
@@ -117,15 +114,6 @@ public class MainMenuController extends Controller {
 				}
 			}
 		});
-		
-		// Initialize segemented button
-		ToggleButton compareSuppliersToggle = new ToggleButton("Suppliers");
-		ToggleButton productTagsToggle  = new ToggleButton("Products");
-		productTagsToggle.setSelected(true);
-		segmentedButton.getButtons().addAll(productTagsToggle, compareSuppliersToggle);
-		segmentedButton.setPrefSize(300, 100);
-		segmentedButton.getStyleClass().add(SegmentedButton.STYLE_CLASS_DARK);
-		//segmentedButton.getToggleGroup().selectToggle(productTagsToggle);
 		
 		// Filter the products shown in the list whenever the filter changes
 		productFilterTextField.textProperty().addListener(new ChangeListener<String>(){
@@ -288,6 +276,10 @@ public class MainMenuController extends Controller {
     
     @FXML protected void handleViewProducts(ActionEvent event) 
     		throws IOException {
+    	ViewAllProductsController.run();
+    }
+    
+    @FXML protected void handleAddNewTag(ActionEvent event) throws IOException {
     	ProductDAO productDAO = new MySQLProductDAO();
     	
     	if(productDAO.isEmpty()) {
@@ -295,28 +287,8 @@ public class MainMenuController extends Controller {
 					+ " Please add a product first.";
 			SoftwareNotification.notifyError(errorMsg);
     	} else {
-    		ViewAllProductsController.run();
+        	AddTagController.run();
     	}
-    }
-    
-    @FXML protected void handleAddNewTag(ActionEvent event) throws IOException {
-    	AddTagController.run();
-    }
-    
-    @FXML protected void handleViewProductOffers(ActionEvent event) throws IOException {
-    	SupplierDAO supplierDAO = new MySQLSupplierDAO();
-    	ProductOfferDAO productOfferDAO = new MySQLProductOfferDAO();
-    	
-    	if (supplierDAO.isEmpty()) {
-			String errorMsg = "There are no suppliers in the system. Please add a supplier first.";
-			SoftwareNotification.notifyError(errorMsg);
-    	} else if (productOfferDAO.isEmpty()) {
-			String errorMsg = "There are no product offers in the system. Please add a product offer first.";
-			SoftwareNotification.notifyError(errorMsg);
-    	} else {
-    		ViewProductOffersController.run();
-    	}
-    	
     }
     
     @FXML protected void handleTagProductOffer(ActionEvent event) throws IOException {

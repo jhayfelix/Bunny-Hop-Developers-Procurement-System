@@ -1,5 +1,10 @@
 package procurementsys.model.database;
 
+
+import java.sql.SQLException;
+import java.sql.Statement;
+
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +28,6 @@ public class MySQLOrderDAO implements OrderDAO {
 
 	@Override
 	public List<Order> getAll() {
-		// TODO - DEVS implement this
 		List<Order> ret = new ArrayList<>();
 		
 		SupplierDAO supplierDAO = new MySQLSupplierDAO();
@@ -67,6 +71,23 @@ public class MySQLOrderDAO implements OrderDAO {
 	@Override
 	public void addDelivery(Order order, Delivery delivery) {
 		// TODO - DEVS implement this
+		
+		 try{
+				java.sql.Connection conn = DBConnection.getConnection();
+				Statement statement = conn.createStatement();
+				//suppName=supplier.getName();
+				//suppContact=supplier.getContactNumber();
+			//	String query = String.format("INSERT INTO procurementdb.suppliers(supplier_name, contact_number, isActive)   VALUES (\"%s\", \"%s\", true)",suppName,suppContact);
+				
+				
+				//statement.executeUpdate(query);
+
+				conn.close();}
+		       catch(SQLException sqlException){
+		           sqlException.printStackTrace();
+		       }
+		       System.out.println("successful pare.");
+				// TODO - DEVS implement this
 		
 	}
 
