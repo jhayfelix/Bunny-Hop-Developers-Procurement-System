@@ -85,6 +85,13 @@ public class MySQLProductOfferDAO implements ProductOfferDAO {
 		return false;
 	}
 
+	@Override
+	public void addCostChange(ProductOffer productOffer, CostChange costChange) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 
 
 }

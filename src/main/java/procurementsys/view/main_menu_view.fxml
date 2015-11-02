@@ -22,6 +22,8 @@
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#handleAssignProduct" text="Add Product Offer to Supplier" />
                   <MenuItem mnemonicParsing="false" onAction="#handleViewProductOffers" text="View Product Offers of Supplier" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleAddCostChange" text="Add Cost Change to Product Offer" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Products">
@@ -44,11 +46,6 @@
                   <MenuItem mnemonicParsing="false" onAction="#handleViewOrders" text="View All Orders" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#handleAddDelivery" text="Add New Delivery to Order" />
-              </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Help">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
               </items>
             </Menu>
       </menus>

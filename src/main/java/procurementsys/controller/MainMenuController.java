@@ -335,6 +335,17 @@ public class MainMenuController extends Controller {
     	}
     }
     
+    @FXML protected void handleAddCostChange(ActionEvent event) throws IOException {
+    	ProductOfferDAO productOfferDAO = new MySQLProductOfferDAO();
+    	
+    	if (productOfferDAO.isEmpty()) {
+			String errorMsg = "There are no product offers in the system. Please add a product offer first.";
+			SoftwareNotification.notifyError(errorMsg);
+    	} else {
+    		ChangeCostController.run();
+    	}
+    }
+    
     @FXML protected void handleViewTags(ActionEvent event) throws IOException {
     	TagDAO tagDAO = new MySQLTagDAO();
     	

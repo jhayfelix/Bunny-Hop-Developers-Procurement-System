@@ -33,6 +33,7 @@ public class ViewAllProductsController {
 			stage.show();
 			
 			showProducts();	
+			controller.resize(controller.getWidth(), 300);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

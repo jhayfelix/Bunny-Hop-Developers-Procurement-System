@@ -100,6 +100,7 @@ public class ViewProductOffersController {
 		List<Supplier> suppliers = supplierDAO.getAll(filterField.getText());
 		
 		ListView<Supplier> listView = supplierController.getListView();
+		listView.getItems().clear();
 		listView.getItems().addAll(suppliers);
 		
 		if (listView.getItems().size() > 0) {

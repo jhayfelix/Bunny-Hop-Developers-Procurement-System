@@ -2,6 +2,7 @@ package procurementsys.model.database;
 
 import java.util.List;
 
+import procurementsys.model.CostChange;
 import procurementsys.model.Product;
 import procurementsys.model.ProductOffer;
 import procurementsys.model.Supplier;
@@ -12,5 +13,6 @@ public interface ProductOfferDAO {
 	List<ProductOffer> getAll(Supplier supplier);
 	List<ProductOffer> getAll(Product product, String filterStr);
 	boolean isEmpty();
+	void addCostChange(ProductOffer productOffer, CostChange costChange);
 
 }

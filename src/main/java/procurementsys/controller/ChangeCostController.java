@@ -1,6 +1,7 @@
 package procurementsys.controller;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,27 +22,27 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-
+import jfxtras.scene.control.LocalDateTimeTextField;
+import procurementsys.model.CostChange;
 import procurementsys.model.ProductOffer;
 import procurementsys.model.Supplier;
-import procurementsys.model.Tag;
+import procurementsys.model.database.MySQLProductOfferDAO;
 import procurementsys.model.database.MySQLSupplierDAO;
-import procurementsys.model.database.MySQLTagDAO;
+import procurementsys.model.database.ProductOfferDAO;
 import procurementsys.model.database.SupplierDAO;
-import procurementsys.model.database.TagDAO;
 import procurementsys.view.SoftwareNotification;
 
-public class TagProductOfferController {
+public class ChangeCostController {
 	
-	private static TagListController tagController;
 	private static ProductOfferTableController tableController;
 	private static SupplierListController supplierController;
+	private static LocalDateTimeTextField dateTimeField;
+	private static TextField costField;
 	
-	@SuppressWarnings("unchecked")
 	public static void run() {
 		Dialog<Map<String, Object>> dialog  = new Dialog<>();
-		dialog.setTitle("Tag Product Offer");
-		//dialog.setHeaderText("Tag a supplier");
+		dialog.setTitle("Add Cost Change");
+		dialog.setHeaderText("Enter cost change details");
 		dialog.getDialogPane().getButtonTypes()
 			.addAll(ButtonType.OK, ButtonType.CANCEL);
 		
@@ -50,37 +51,39 @@ public class TagProductOfferController {
 		grid.setVgap(10);
 		grid.setPadding(new Insets(20, 20, 10, 10));
 		
+		Label dateTimeLbl = new Label("Cost Change DateTime:");
+		dateTimeLbl.setStyle("-fx-font-weight: bold");
+		dateTimeField = new LocalDateTimeTextField();
+		grid.add(dateTimeLbl, 1, 0);
+		grid.add(dateTimeField, 1, 1);
+		
+		Label costLbl = new Label("Cost:");
+		costLbl.setStyle("-fx-font-weight: bold");
+		costField = new TextField();
+		grid.add(costLbl, 0, 0);
+		grid.add(costField, 0, 1);
 		
 		Label productOfferLbl = new Label("Product Offer:");
 		productOfferLbl.setStyle("-fx-font-weight: bold");
 		TableView<ProductOffer> productOfferTable = createTable();
-		grid.add(productOfferLbl, 1, 0);
-		grid.add(productOfferTable, 1, 1);
+		grid.add(productOfferLbl, 1, 2);
+		grid.add(productOfferTable, 1, 3);
 		
 		Label supplierLbl = new Label("Supplier");
 		supplierLbl.setStyle("-fx-font-weight: bold");
 		Node supplierListView = createSupplierListView();
-		grid.add(supplierLbl, 0, 0);
-		grid.add(supplierListView, 0, 1);
-		
-		
-		Label tagsLbl = new Label("Tags:");
-		tagsLbl.setStyle("-fx-font-weight: bold");
-		grid.add(tagsLbl, 2, 0);
-		Node tagListView = createTagsListView();
-		grid.add(tagListView, 2, 1);
-		
+		grid.add(supplierLbl, 0, 2);
+		grid.add(supplierListView, 0, 3);
 		
 		showSuppliers();
-		showTags();
 		dialog.getDialogPane().setContent(grid);
 		
 		dialog.setResultConverter(dialogButton -> {
 		    if (dialogButton == ButtonType.OK) {
 		    	Map<String, Object> map = new HashMap<>();
 		    	map.put("PRODUCT_OFFER", getSelectedProductOffer());
-		    	map.put("SELECTED_TAGS", tagController.getListView()
-		    								.getSelectionModel().getSelectedItems());
+		    	map.put("CHANGE_DATETIME", dateTimeField.getLocalDateTime());
+		    	map.put("COST", Double.parseDouble(costField.getText()));
 		    	return map;
 		    }
 		    return null;
@@ -89,7 +92,7 @@ public class TagProductOfferController {
 		final Button btOk = (Button) dialog.getDialogPane()
 				.lookupButton(ButtonType.OK);
 		btOk.addEventFilter(ActionEvent.ACTION, event -> {
-			if (!isValidProductOffer() || !isValidTags()) {
+			if (!isValidProductOffer() || !isValidCost() || !isValidDateTime()) {
 				event.consume();
 			}
 		});
@@ -98,12 +101,14 @@ public class TagProductOfferController {
 		if (result.isPresent()) {
 			Map<String, Object> map = result.get();
 			ProductOffer po = (ProductOffer) map.get("PRODUCT_OFFER");
-			List<Tag> tags = (List<Tag>) map.get("SELECTED_TAGS");
+			LocalDateTime dateTime = (LocalDateTime) map.get("CHANGE_DATETIME");
+			double cost = (Double) map.get("COST");
 			
-			TagDAO tagDAO = new MySQLTagDAO();
-			tagDAO.tagProductOffer(po, tags);
-			SoftwareNotification.notifySuccess("The product offer has"
-					+ " been succesfully tagged.");
+			CostChange costChange = new CostChange(dateTime, cost);
+			ProductOfferDAO productOffer = new MySQLProductOfferDAO();
+			productOffer.addCostChange(po, costChange);
+			SoftwareNotification.notifySuccess("The cost change has been successfully "
+					+ "added to the product offer.");
 		}
 		
 	}
@@ -179,48 +184,6 @@ public class TagProductOfferController {
 		return null;
 	}
 	
-	private static Node createTagsListView() {
-		try {
-			FXMLLoader loader = new FXMLLoader(TagProductOfferController
-					.class.getResource("/procurementsys/view/tag_list.fxml"));
-			Parent root = loader.load();
-			tagController = loader.getController();
-		
-			
-			TextField filterField = tagController.getFilterTextField();
-			filterField.textProperty().addListener(new ChangeListener<String>() {
-
-				@Override
-				public void changed(
-						ObservableValue<? extends String> observable,
-						String oldValue, String newValue) {
-					showTags();
-				}
-				
-			});
-			
-			return root;
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return null;	
-	}
-	
-	private static void showTags() {
-		TextField filterField = tagController.getFilterTextField();
-		TagDAO tagDAO = new MySQLTagDAO();
-		List<Tag> tags = tagDAO.getAll(filterField.getText());
-		
-		ListView<Tag> listView = tagController.getListView();
-		listView.getItems().clear();
-		listView.getItems().addAll(tags);
-		
-		if (listView.getItems().size() > 0) {
-			listView.getSelectionModel().select(0);
-		}
-	}
 	
 	private static boolean isValidProductOffer() {
 		ProductOffer selectedProductOffer = getSelectedProductOffer();
@@ -238,24 +201,37 @@ public class TagProductOfferController {
 		return tableController.getSelectedProductOffer();
 	}
 	
-	private static boolean isValidTags() {
-		List<Tag> selectedTags = tagController.getListView().getSelectionModel().getSelectedItems();
-		ProductOffer selectedProductOffer = getSelectedProductOffer();
-		if (selectedTags == null || selectedTags.size() == 0) {
-			String errorMsg = "Tags cannot be empty. "
-					+ "Please select at least one tag.";
+	private static boolean isValidCost() {
+		String costInput = costField.getText();
+		
+		try {
+			if (costInput.length() == 0) {
+				costInput = null;
+			}
+			double value = Double.parseDouble(costInput);
+			if (value < 0) {
+				throw new NumberFormatException();
+			}
+		} catch (NullPointerException e) {
+			SoftwareNotification.notifyError("Cost cannot be empty."
+					+ " Please enter an cost.");
+			return false;
+		} catch (NumberFormatException e) {
+			SoftwareNotification.notifyError("Cost must be "
+					+ "a non-negative number. Please enter another cost.");
+			return false;
+		}
+		
+		return true;
+	}
+	
+	private static boolean isValidDateTime() {
+		LocalDateTime dateTime = dateTimeField.getLocalDateTime();
+		if (dateTime == null) {
+			String errorMsg = "Order datetime cannot be empty."
+					+ " Please select an order datetime.";
 			SoftwareNotification.notifyError(errorMsg);
 			return false;
-		} 
-		
-		List<Tag> productOfferTags = selectedProductOffer.getTags();
-		for (Tag t : selectedTags) {
-			if (productOfferTags.contains(t)) {
-				String errorMsg = "The product offer selected already contains the tag '" + t + "'."
-						+ " Please remove the tag from the selection.";
-				SoftwareNotification.notifyError(errorMsg);
-				return false;
-			}
 		}
 		return true;
 	}

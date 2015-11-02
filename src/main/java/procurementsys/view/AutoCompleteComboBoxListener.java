@@ -9,13 +9,16 @@ import javafx.scene.input.KeyEvent;
 
 public class AutoCompleteComboBoxListener<T> implements EventHandler<KeyEvent> {
 
-    private ComboBox comboBox;
-    private StringBuilder sb;
+    @SuppressWarnings("rawtypes")
+	private ComboBox comboBox;
+    @SuppressWarnings("unused")
+	private StringBuilder sb;
     private ObservableList<T> data;
     private boolean moveCaretToPos = false;
     private int caretPos;
 
-    public AutoCompleteComboBoxListener(final ComboBox comboBox) {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public AutoCompleteComboBoxListener(final ComboBox comboBox) {
         this.comboBox = comboBox;
         sb = new StringBuilder();
         data = comboBox.getItems();
@@ -31,7 +34,8 @@ public class AutoCompleteComboBoxListener<T> implements EventHandler<KeyEvent> {
         this.comboBox.setOnKeyReleased(AutoCompleteComboBoxListener.this);
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void handle(KeyEvent event) {
 
         if(event.getCode() == KeyCode.UP) {
@@ -59,7 +63,8 @@ public class AutoCompleteComboBoxListener<T> implements EventHandler<KeyEvent> {
             return;
         }
 
-        ObservableList list = FXCollections.observableArrayList();
+        @SuppressWarnings("rawtypes")
+		ObservableList list = FXCollections.observableArrayList();
         for (int i=0; i<data.size(); i++) {
             if(data.get(i).toString().toLowerCase().startsWith(
                 AutoCompleteComboBoxListener.this.comboBox
