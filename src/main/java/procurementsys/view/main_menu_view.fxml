@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import procurementsys.view.NumericTextField ?>
+
 <?import java.net.*?>
 <?import javafx.scene.shape.*?>
 <?import java.lang.*?>
@@ -81,7 +83,7 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="quantityTextField" layoutX="81.0" layoutY="5.0" prefHeight="27.0" prefWidth="190.0" AnchorPane.leftAnchor="110.0" />
+                        <NumericTextField fx:id="quantityTextField" layoutX="81.0" layoutY="5.0" prefHeight="27.0" prefWidth="190.0" AnchorPane.leftAnchor="110.0" />
                         <Label layoutX="22.0" layoutY="12.0" text="Quantity:" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="5.0">
                            <font>
                               <Font name="System Bold" size="13.0" />

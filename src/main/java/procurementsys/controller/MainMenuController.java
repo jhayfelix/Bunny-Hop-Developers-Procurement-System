@@ -24,6 +24,7 @@ import procurementsys.model.database.ProductOfferDAO;
 import procurementsys.model.database.SupplierDAO;
 import procurementsys.model.database.TagDAO;
 import procurementsys.view.AutoCompleteComboBoxListener;
+import procurementsys.view.NumericTextField;
 import procurementsys.view.SoftwareNotification;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -65,7 +66,7 @@ public class MainMenuController extends Controller {
 	
 	@FXML private ListView<Product> taggedProductsListView;
 	@FXML private TextField productFilterTextField;
-	@FXML private TextField quantityTextField;
+	@FXML private NumericTextField quantityTextField;
 	@FXML private TextField supplierFilterTextField;
 	@FXML private TableView<ProductOffer> productOffersTable;
 	@FXML private TableColumn<ProductOffer, Supplier> supplierCol;
@@ -152,7 +153,17 @@ public class MainMenuController extends Controller {
 			@Override
 			public void changed(ObservableValue<? extends String> observable,
 					String oldValue, String newValue) {
-				productOffersTable.refresh();
+				try {
+					Integer.parseInt(quantityTextField.getText());
+					productOffersTable.refresh();
+				} catch (NumberFormatException e) {
+					if (!quantityTextField.getText().equals("")) {
+						quantityTextField.clear();
+						SoftwareNotification.notifyError("Quantity entered is too large."
+								+ " Please enter a lower quantity");
+					}
+				}
+				
 			}
 		});
 		
