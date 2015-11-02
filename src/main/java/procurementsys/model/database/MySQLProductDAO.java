@@ -1,17 +1,46 @@
 package procurementsys.model.database;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import procurementsys.model.Product;
 import procurementsys.model.Supplier;
 import procurementsys.model.Tag;
+import procurementsys.view.SoftwareNotification;
 
 public class MySQLProductDAO implements ProductDAO {
+	private Connection conn;
+	
+	public MySQLProductDAO() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			String url = "jdbc:mysql://localhost/procurementdb";
+			conn = DriverManager.getConnection(url, "root", "DLSU1234");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Override 
+	public void add(Product product) { // Implemented by Jan Tristan Milan
 
-	@Override
-	public void add(Product product) {
-		// TODO - DEVS implement this
+		try {
+			String addStr = "INSERT INTO products(product_name) VALUES(?)";
+			PreparedStatement addProduct =  conn.prepareStatement(addStr);
+			addProduct.setString(1, product.getName());
+			addProduct.execute();
+		} catch (SQLException e) {
+			SoftwareNotification.notifyError("The product '" + product.getName()
+					+ "' already exists in the database.");
+		}
+		
 		
 	}
 

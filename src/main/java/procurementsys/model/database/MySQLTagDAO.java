@@ -1,17 +1,42 @@
 package procurementsys.model.database;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import procurementsys.model.ProductOffer;
 import procurementsys.model.Tag;
+import procurementsys.view.SoftwareNotification;
 
 public class MySQLTagDAO implements TagDAO {
+	private Connection conn;
+	
+	public MySQLTagDAO() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			String url = "jdbc:mysql://localhost/procurementdb";
+			conn = DriverManager.getConnection(url, "root", "DLSU1234");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public void add(Tag tag) {
-		// TODO - DEVS implement this
-		
+		try {
+			String addStr = "INSERT INTO tags(tag_name) VALUES(?)";
+			PreparedStatement addTag = conn.prepareStatement(addStr);
+			addTag.setString(1, tag.getName());
+			addTag.execute();
+		} catch (SQLException e) {
+			SoftwareNotification.notifyError("The tag '" + tag.getName()
+					+ "' already exists in the database.");
+		}
 	}
 	
 	@Override
