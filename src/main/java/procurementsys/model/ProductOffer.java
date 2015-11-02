@@ -62,9 +62,10 @@ public class ProductOffer {
 	}
 	
 	public CostChange getUpcomingCostChange() {
-		CostChange upcomingCostChange = null;
+		CostChange upcomingCostChange = costChanges.get(0);
 		for (CostChange c : costChanges) {
-			if (c.isFuture()) { // TODO - FIIIIIIIIIIIX THIS condition is incomplete
+			if (c.isFuture() && c.getChangeDateTime()
+					.isBefore(upcomingCostChange.getChangeDateTime())) {
 				upcomingCostChange = c;
 			}
 		}

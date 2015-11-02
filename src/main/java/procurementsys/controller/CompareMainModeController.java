@@ -140,8 +140,13 @@ public class CompareMainModeController {
 		        @Override
 		        protected void updateItem(Number item, boolean empty) {
 		            super.updateItem(item, empty);
-		            setTextFill(Color.BLACK);
-		            
+		         
+		            ProductOffer po = (ProductOffer) this.getTableRow().getItem();
+		            if (po != null) {
+			            double currCost = po.getCurrentCost();
+			            double upcomingCost = po.getUpcomingCost();
+			            setTextFill((currCost > upcomingCost) ? Color.RED :Color.GREEN);
+		            }
 		            if (!empty) {
 		            	setText(item + "");
 		            } else {
