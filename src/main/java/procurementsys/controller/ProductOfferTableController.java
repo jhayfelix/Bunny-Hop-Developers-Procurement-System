@@ -31,8 +31,10 @@ public class ProductOfferTableController extends Controller {
 	
 	public void setSupplier(Supplier supplier) {		
 		ProductOfferDAO productOfferDAO = new MySQLProductOfferDAO();
-		productOfferTable.getItems().addAll(productOfferDAO.getAll(supplier));
-		
+		productOfferTable.getItems().clear();
+		if (supplier != null) {
+			productOfferTable.getItems().addAll(productOfferDAO.getAll(supplier));
+		}
 		if (productOfferTable.getItems().size() > 0) {
 			productOfferTable.getSelectionModel().select(0);
 		}
@@ -40,5 +42,9 @@ public class ProductOfferTableController extends Controller {
 	
 	public ProductOffer getSelectedProductOffer() {
 		return productOfferTable.getSelectionModel().getSelectedItem();
+	}
+	
+	public TableView<ProductOffer> getTableView() {
+		return productOfferTable;
 	}
  }

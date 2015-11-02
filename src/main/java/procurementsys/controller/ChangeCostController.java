@@ -214,7 +214,7 @@ public class ChangeCostController {
 			}
 		} catch (NullPointerException e) {
 			SoftwareNotification.notifyError("Cost cannot be empty."
-					+ " Please enter an cost.");
+					+ " Please enter a cost.");
 			return false;
 		} catch (NumberFormatException e) {
 			SoftwareNotification.notifyError("Cost must be "

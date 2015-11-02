@@ -43,6 +43,10 @@ public class ProductOffer {
 		return supplier.get();
 	}
 	
+	public List<CostChange> getCostChanges() {
+		return costChanges;
+	}
+	
 	public CostChange getCurrentCostChange() {
 		CostChange currCostChange = costChanges.get(0);
 		

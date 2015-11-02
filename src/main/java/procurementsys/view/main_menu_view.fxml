@@ -24,6 +24,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#handleViewProductOffers" text="View Product Offers of Supplier" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#handleAddCostChange" text="Add Cost Change to Product Offer" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleViewCostChanges" text="View Cost Changes of Product Offer" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Products">

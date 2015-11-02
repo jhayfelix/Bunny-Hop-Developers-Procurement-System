@@ -346,6 +346,18 @@ public class MainMenuController extends Controller {
     	}
     }
     
+    @FXML protected void handleViewCostChanges(ActionEvent event) throws IOException {
+    	OrderDAO orderDAO = new MySQLOrderDAO();
+    	
+    	if (orderDAO.isEmpty()) {
+    		String errorMsg = "There are no orders in the system."
+    				+ " Please add an order first.";
+    		SoftwareNotification.notifyError(errorMsg);
+    	} else {
+    		ViewCostChangesController.run();
+    	}
+    }
+    
     @FXML protected void handleViewTags(ActionEvent event) throws IOException {
     	TagDAO tagDAO = new MySQLTagDAO();
     	
