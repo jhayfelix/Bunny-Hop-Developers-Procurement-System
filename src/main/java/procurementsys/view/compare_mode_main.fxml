@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.GridPane?>
+
+<SplitPane dividerPositions="0.4952" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.0" prefWidth="1252.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="procurementsys.controller.CompareMainModeController">
+  <items>
+      <VBox fx:id="leftVBox">
+         <children>
+          <AnchorPane fx:id="leftBlank" minHeight="0.0" minWidth="0.0" prefHeight="521.0" prefWidth="598.0">
+               <children>
+                  <Text layoutX="221.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click to select a supplier" AnchorPane.bottomAnchor="240.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="240.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+      <VBox fx:id="rightVBox">
+         <children>
+          <AnchorPane fx:id="rightBlank" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Text layoutX="189.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click to select a supplier" AnchorPane.bottomAnchor="240.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="240.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+  </items>
+</SplitPane>

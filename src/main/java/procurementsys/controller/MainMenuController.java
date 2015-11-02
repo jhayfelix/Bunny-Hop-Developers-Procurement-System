@@ -43,8 +43,11 @@ public class MainMenuController extends Controller {
 	@FXML private ListView<Tag> selectedTagsListView;
 	@FXML private SegmentedButton segmentedButton;
 	
-	private NormalMainModeController normalModeController;
+	private SplitPane normalRoot;
+	private SplitPane compareRoot;
 	
+	private NormalMainModeController normalModeController;
+	private CompareMainModeController compareModeController;
 	private Tooltip toolTip;
 	
 	public MainMenuController() {
@@ -94,26 +97,64 @@ public class MainMenuController extends Controller {
 		
 		// Initialize segemented button
 		ToggleButton compareSuppliersToggle = new ToggleButton("Suppliers");
-		ToggleButton productTagsToggle  = new ToggleButton("Products");
-		productTagsToggle.setSelected(true);
-		segmentedButton.getButtons().addAll(productTagsToggle, compareSuppliersToggle);
+		compareSuppliersToggle.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				titleLabel.setText("What type of suppliers are you looking for?");
+				int index = rootVBox.getChildren().size() - 1;
+				rootVBox.getChildren().remove(index);
+				rootVBox.getChildren().add(compareRoot);
+			}
+			
+		});
+		ToggleButton normalToggle  = new ToggleButton("Products");
+		normalToggle.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				titleLabel.setText("What types of products are you looking for?");
+				int index = rootVBox.getChildren().size() - 1;
+				rootVBox.getChildren().remove(index);
+				rootVBox.getChildren().add(normalRoot);
+			}
+			
+		});
+		normalToggle.setSelected(true);
+		segmentedButton.getButtons().addAll(normalToggle, compareSuppliersToggle);
 		segmentedButton.setPrefSize(300, 100);
 		segmentedButton.getStyleClass().add(SegmentedButton.STYLE_CLASS_DARK);
+		
 		//segmentedButton.getToggleGroup().selectToggle(productTagsToggle);
 		
 		
 		
 	}
 	
+    
+    @FXML protected void handleNormalMode(ActionEvent event) throws IOException {
+    	
+    }
+    
+    @FXML protected void handleCompareMode(ActionEvent event) throws IOException {
+    	
+    }
+	
 	private void initializeMode() {
 		try {
 			
-			FXMLLoader normalLoader = new FXMLLoader(getClass().getResource("/procurementsys/view/normal_mode_main.fxml"));
-			SplitPane root = normalLoader.load();
+			FXMLLoader normalLoader = new FXMLLoader(getClass()
+					.getResource("/procurementsys/view/normal_mode_main.fxml"));
+			normalRoot = normalLoader.load();
 			normalModeController = normalLoader.getController();
 			normalModeController.initialize(selectedTagsListView);
-			rootVBox.getChildren().add(root);			
+			rootVBox.getChildren().add(normalRoot);			
 			
+			FXMLLoader compareLoader = new FXMLLoader(getClass()
+					.getResource("/procurementsys/view/compare_mode_main.fxml"));
+			compareRoot = compareLoader.load();
+			compareModeController = compareLoader.getController();
+			compareModeController.initialize(selectedTagsListView);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -121,8 +162,6 @@ public class MainMenuController extends Controller {
 		
 	}
 
-
-	
 	@FXML protected void handleSearchTag(ActionEvent event) throws IOException {
 		
 		normalModeController.handleSearchTag(tagSearchComboBox, selectedTagsListView, toolTip);

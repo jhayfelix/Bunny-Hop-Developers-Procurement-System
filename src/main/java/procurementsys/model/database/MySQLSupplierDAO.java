@@ -49,11 +49,25 @@ public class MySQLSupplierDAO implements SupplierDAO {
 	}
 
 	@Override
-	public List<Supplier> getAll(List<Tag> tags) {
+	public List<Supplier> getAll(List<Tag> tags, String nameFilter) {
 		// TODO - DEVS implement this
-		return null;
+		List<Supplier> ret = new ArrayList<>();
+		
+		ret.add(new Supplier("National Bookstore", "8452005"));
+		ret.add(new Supplier("SM Supermarket", "4202045"));
+		ret.add(new Supplier("Robinsons Supermarket", "8506453"));
+		ret.add(new Supplier("Milan Industries", "7004533"));
+		ret.add(new Supplier("La Senza", "2347777"));
+		
+		List<Supplier> filteredRet = new ArrayList<>();
+		for (Supplier x : ret) {
+			if (x.getName().toLowerCase().contains(nameFilter.toLowerCase())) {
+				filteredRet.add(x);
+			}
+		}
+		return filteredRet;
 	}
-
+	
 	@Override
 	public boolean isEmpty() {
 		return getAll().size() == 0;

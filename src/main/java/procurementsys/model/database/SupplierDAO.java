@@ -9,7 +9,7 @@ public interface SupplierDAO {
 	void add(Supplier supplier);
 	List<Supplier> getAll();
 	List<Supplier> getAll(String nameFilter);
-	List<Supplier> getAll(List<Tag> tags);
+	List<Supplier> getAll(List<Tag> tags, String nameFilter);
 	boolean isEmpty();
 	
 }
