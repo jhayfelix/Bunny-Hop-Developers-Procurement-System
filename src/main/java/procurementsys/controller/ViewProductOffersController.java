@@ -3,8 +3,6 @@ package procurementsys.controller;
 import java.io.IOException;
 import java.util.List;
 
-import org.controlsfx.control.MasterDetailPane;
-
 import procurementsys.model.ProductOffer;
 import procurementsys.model.Supplier;
 import procurementsys.model.database.MySQLSupplierDAO;
@@ -12,12 +10,15 @@ import procurementsys.model.database.SupplierDAO;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class ViewProductOffersController {
@@ -26,25 +27,35 @@ public class ViewProductOffersController {
 	
 	public static void run() {
 		Stage stage = new Stage();
-		stage.setTitle("Product Offers");
-		stage.setMinWidth(780);
 		
+		GridPane grid = new GridPane();
+		grid.setHgap(10);
+		grid.setVgap(10);
+		grid.setPadding(new Insets(20, 20, 10, 10));
+		
+		
+		Label productOfferLbl = new Label("Product Offer:");
+		productOfferLbl.setStyle("-fx-font-weight: bold");
 		TableView<ProductOffer> productOfferTable = createTable();
+		grid.add(productOfferLbl, 1, 0);
+		grid.add(productOfferTable, 1, 1);
+		
+		Label supplierLbl = new Label("Supplier");
+		supplierLbl.setStyle("-fx-font-weight: bold");
 		Node supplierListView = createSupplierListView();
+		grid.add(supplierLbl, 0, 0);
+		grid.add(supplierListView, 0, 1);
+
 		
-		MasterDetailPane masterDetailPane = new MasterDetailPane();
-		masterDetailPane.setMasterNode(supplierListView);
-		masterDetailPane.setDetailNode(productOfferTable);
-		
-		masterDetailPane.setDividerPosition(.25);
-		
-		stage.setScene(new Scene(masterDetailPane));
-		stage.show();
 		
 		showSuppliers();
+		
+		stage.setTitle("View Product Offers");
+		stage.setScene(new Scene(grid));
+		stage.show();
 	}
 	
-	
+
 	private static Node createSupplierListView() {
 		try {
 			FXMLLoader loader = new FXMLLoader(ViewProductOffersController

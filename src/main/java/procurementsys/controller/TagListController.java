@@ -3,6 +3,7 @@ package procurementsys.controller;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import procurementsys.model.Tag;
 
@@ -11,7 +12,8 @@ public class TagListController {
 	@FXML private ListView<Tag> tagListView;
 	
 	@FXML private void initialize() {
-		
+		tagListView.getSelectionModel()
+		.setSelectionMode(SelectionMode.MULTIPLE);
 	}
 	
 	public void resize(double width, double height) {

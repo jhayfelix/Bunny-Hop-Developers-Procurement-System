@@ -9,6 +9,7 @@ import procurementsys.model.CostChange;
 import procurementsys.model.Product;
 import procurementsys.model.ProductOffer;
 import procurementsys.model.Supplier;
+import procurementsys.model.Tag;
 
 public class MySQLProductOfferDAO implements ProductOfferDAO {
 	
@@ -43,7 +44,14 @@ public class MySQLProductOfferDAO implements ProductOfferDAO {
 		
 		TagDAO tagDAO = new MySQLTagDAO();
 		for (ProductOffer po : ret) {
-			po.addAllTags(tagDAO.getAll());
+			List<Tag> tags = tagDAO.getAll();
+			for (Tag t : tags) {
+				if (!t.getName().equals("PENCIL")) {
+					List<Tag> tempList = new ArrayList<>();
+					tempList.add(t);
+					po.addAllTags(tempList);
+				}
+			}
 		}
 		return ret;
 	}

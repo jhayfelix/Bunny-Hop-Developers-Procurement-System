@@ -32,5 +32,13 @@ public class ProductOfferTableController extends Controller {
 	public void setSupplier(Supplier supplier) {		
 		ProductOfferDAO productOfferDAO = new MySQLProductOfferDAO();
 		productOfferTable.getItems().addAll(productOfferDAO.getAll(supplier));
+		
+		if (productOfferTable.getItems().size() > 0) {
+			productOfferTable.getSelectionModel().select(0);
+		}
 	}
-}
+	
+	public ProductOffer getSelectedProductOffer() {
+		return productOfferTable.getSelectionModel().getSelectedItem();
+	}
+ }

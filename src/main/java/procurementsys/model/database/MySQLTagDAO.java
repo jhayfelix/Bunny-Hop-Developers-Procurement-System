@@ -3,6 +3,7 @@ package procurementsys.model.database;
 import java.util.ArrayList;
 import java.util.List;
 
+import procurementsys.model.ProductOffer;
 import procurementsys.model.Tag;
 
 public class MySQLTagDAO implements TagDAO {
@@ -44,6 +45,12 @@ public class MySQLTagDAO implements TagDAO {
 		}
 		
 		return ret;
+	}
+
+	@Override
+	public void tagProductOffer(ProductOffer productOffer, List<Tag> tags) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

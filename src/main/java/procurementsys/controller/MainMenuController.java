@@ -320,7 +320,19 @@ public class MainMenuController extends Controller {
     }
     
     @FXML protected void handleTagProductOffer(ActionEvent event) throws IOException {
-    	// TODO - implement this
+    	TagDAO tagDAO = new MySQLTagDAO();
+    	ProductOfferDAO productOfferDAO = new MySQLProductOfferDAO();
+    	
+    	if (tagDAO.isEmpty()) {
+    		String errorMsg = "There are no tags in the system."
+    				+ " Please add a tag first.";
+    		SoftwareNotification.notifyError(errorMsg);
+    	} else if (productOfferDAO.isEmpty()) {
+			String errorMsg = "There are no product offers in the system. Please add a product offer first.";
+			SoftwareNotification.notifyError(errorMsg);
+    	} else {
+    		TagProductOfferController.run();
+    	}
     }
     
     @FXML protected void handleViewTags(ActionEvent event) throws IOException {

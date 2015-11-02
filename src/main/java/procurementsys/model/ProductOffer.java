@@ -122,6 +122,10 @@ public class ProductOffer {
 		tags.remove(tag);
 	}
 	
+	public List<Tag> getTags() {
+		return tags;
+	}
+	
 	public String getTagsString() {
 		StringBuilder sb = new StringBuilder();
 		Iterator<Tag> iter = tags.iterator();

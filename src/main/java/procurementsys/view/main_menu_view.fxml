@@ -35,7 +35,7 @@
                 <MenuItem mnemonicParsing="false" onAction="#handleAddNewTag" text="Add New Tag" />
                   <MenuItem mnemonicParsing="false" onAction="#handleViewTags" text="View All Tags" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Tag Product Offer" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleTagProductOffer" text="Tag Product Offer" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Orders">
