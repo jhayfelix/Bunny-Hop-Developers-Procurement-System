@@ -3,7 +3,9 @@ package procurementsys.model.database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,10 +53,26 @@ public class MySQLProductDAO implements ProductDAO {
 	}
 	
 	@Override
-	public List<Product> getAll() {
-		// TODO - DEVS implement this
-		List<Product> ret = new ArrayList<>();
+	public List<Product> getAll() {//implement by Dominic Pagtalunan
 		
+		List<Product> ret = new ArrayList<>();
+		String query = "SELECT * FROM products";
+	 
+	    
+		try{
+			//st = conn.createStatement(); 
+			PreparedStatement getProduct = conn.prepareStatement(query); 
+		    ResultSet rs = getProduct.executeQuery(query);
+		       while(rs.next()){
+		    	   String productName=rs.getString("product_name");
+		    	   System.out.format("%s \n",productName);
+		    	   ret.add(new Product(productName));	
+		}}
+		catch(SQLException e){
+			SoftwareNotification.notifyError("Error in the Product database: " + e.getMessage());
+		}
+		
+		/*
 		ret.add(new Product("Red Ballpen"));
 		ret.add(new Product("Blue Ballpen"));
 		ret.add(new Product("Green Ballpen"));
@@ -68,7 +86,7 @@ public class MySQLProductDAO implements ProductDAO {
 		
 		ret.add(new Product("Minute Maid Pulpy Orange"));
 		ret.add(new Product("Zesto Orange Juice Drink"));
-		
+		*/
 		return ret;
 	}
 	
@@ -77,7 +95,24 @@ public class MySQLProductDAO implements ProductDAO {
 	public List<Product> getAll(String productNameFilter) {
 		// TODO - DEVS implement this
 		List<Product> ret = new ArrayList<>();
+		String query = 
+				String.format(   "select * from products "
+						+ "WHERE LOWER(REPLACE(product_name, ' ', '')) = "
+						+ "LOWER(REPLACE(\"%s\", ' ', ''))",productNameFilter);
 		
+	   
+	    try{
+			PreparedStatement getProduct = conn.prepareStatement(query); 
+		    ResultSet rs = getProduct.executeQuery(query);
+		       while(rs.next()){
+		    	   String productName=rs.getString("product_name");
+		    	   System.out.format("%s \n",productName);
+		    	   ret.add(new Product(productName));	
+		}}
+	    catch(SQLException e){
+			SoftwareNotification.notifyError("Error in the Product database: " + e.getMessage());
+		}
+		/*
 		ret.add(new Product("Red Ballpen"));
 		ret.add(new Product("Blue Ballpen"));
 		ret.add(new Product("Green Ballpen"));
@@ -91,7 +126,7 @@ public class MySQLProductDAO implements ProductDAO {
 			
 		ret.add(new Product("Minute Maid Pulpy Orange"));
 		ret.add(new Product("Zesto Orange Juice Drink"));
-
+*/
 		List<Product> filteredRet = new ArrayList<>();
 		for (int i = 0; i < ret.size(); i++) {
 			Product x = ret.get(i);
@@ -103,9 +138,22 @@ public class MySQLProductDAO implements ProductDAO {
 	}
 
 	@Override
-	public List<Product> getAll(List<Tag> tags, String productNameFilter) {
-		// TODO - DEVS implement this
+	public List<Product> getAll(List<Tag> tags, String productNameFilter) {//implemented by DOminic Pagtalunan
+		
 		List<Product> ret = new ArrayList<>();
+//		String query = 
+//				String.format("");
+//		try{
+//			PreparedStatement getProduct = conn.prepareStatement(query); 
+//		    ResultSet rs = getProduct.executeQuery(query);
+//		    while(rs.next()){
+//		    	   
+//		}
+//		}
+//		catch(SQLException e){
+//			SoftwareNotification.notifyError("Error in the Product database: " + e.getMessage());
+//		}
+		
 		
 		ret.add(new Product("Red Ballpen"));
 		ret.add(new Product("Blue Ballpen"));
@@ -135,7 +183,7 @@ public class MySQLProductDAO implements ProductDAO {
 	public List<Product> getAll(Supplier selectedSupplier, String productNameFilter) {
 		// TODO - DEVS implement this
 		List<Product> ret = new ArrayList<>();
-		
+		/*
 		ret.add(new Product("Red Ballpen"));
 		ret.add(new Product("Blue Ballpen"));
 		ret.add(new Product("Green Ballpen"));
@@ -149,7 +197,7 @@ public class MySQLProductDAO implements ProductDAO {
 			
 		ret.add(new Product("Minute Maid Pulpy Orange"));
 		ret.add(new Product("Zesto Orange Juice Drink"));
-
+*/
 		List<Product> filteredRet = new ArrayList<>();
 		for (int i = 0; i < ret.size(); i++) {
 			Product x = ret.get(i);

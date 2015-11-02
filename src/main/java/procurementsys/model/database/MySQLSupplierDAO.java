@@ -3,7 +3,9 @@ package procurementsys.model.database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,14 +49,38 @@ public class MySQLSupplierDAO implements SupplierDAO {
 	@Override
 	public List<Supplier> getAll(String nameFilter) {
 		// TODO - DEVS implement this
-		List<Supplier> ret = new ArrayList<>();
-		
+		  List<Supplier> ret = new ArrayList<>();
+	      String query = 
+String.format(   "select * from suppliers "
+		+ "WHERE LOWER(REPLACE(supplier_name, ' ', '')) = "
+		+ "LOWER(REPLACE(\"%s\", ' ', ''))",nameFilter);
+	      
+		try {
+			//st = conn.createStatement(); 
+			PreparedStatement getSupplier = conn.prepareStatement(query); 
+			ResultSet rs = getSupplier.executeQuery(query);
+	       while(rs.next()){
+	    	   String suppName=rs.getString("supplier_name");
+	    	   String conNum=rs.getString("contact_number");
+	    	   Boolean isActive=rs.getBoolean("isActive");
+	    	   System.out.format("%s, %s, %b \n",suppName,conNum,isActive);
+	    	   ret.add(new Supplier(suppName, conNum));
+	    	
+	    }
+	    //  st.close();
+	      
+		} catch (SQLException e) {
+			SoftwareNotification.notifyError("Error in the supplier database");
+
+			e.printStackTrace();
+		}
+	  	/*
 		ret.add(new Supplier("National Bookstore", "8452005"));
 		ret.add(new Supplier("SM Supermarket", "4202045"));
 		ret.add(new Supplier("Robinsons Supermarket", "8506453"));
 		ret.add(new Supplier("Milan Industries", "7004533"));
 		ret.add(new Supplier("La Senza", "2347777"));
-		
+		*/
 		List<Supplier> filteredRet = new ArrayList<>();
 		for (Supplier x : ret) {
 			if (x.getName().toLowerCase().contains(nameFilter.toLowerCase())) {
@@ -65,16 +91,36 @@ public class MySQLSupplierDAO implements SupplierDAO {
 	}
 	
 	@Override
-	public List<Supplier> getAll() {
-		// TODO - DEVS implement this
+	public List<Supplier> getAll() { //implemented by DOms
 		List<Supplier> ret = new ArrayList<>();
-		
+	      String query = "SELECT * FROM suppliers";
+	      Statement st;
+		try {
+			//st = conn.createStatement(); 
+			PreparedStatement getSupplier = conn.prepareStatement(query); 
+			ResultSet rs = getSupplier.executeQuery(query);
+	       while(rs.next()){
+	    	   String suppName=rs.getString("supplier_name");
+	    	   String conNum=rs.getString("contact_number");
+	    	   Boolean isActive=rs.getBoolean("isActive");
+	    	   System.out.format("%s, %s, %b \n",suppName,conNum,isActive);
+	    	   ret.add(new Supplier(suppName, conNum));
+	    	
+	    }
+	    //  st.close();
+	      
+		} catch (SQLException e) {
+			SoftwareNotification.notifyError("Error in the supplier database");
+
+			e.printStackTrace();
+		}
+		/*
 		ret.add(new Supplier("National Bookstore", "8452005"));
 		ret.add(new Supplier("SM Supermarket", "4202045"));
 		ret.add(new Supplier("Robinsons Supermarket", "8506453"));
 		ret.add(new Supplier("Milan Industries", "7004533"));
 		ret.add(new Supplier("La Senza", "2347777"));
-		
+		*/
 		return ret;
 	}
 

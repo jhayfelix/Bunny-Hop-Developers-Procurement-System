@@ -1,5 +1,7 @@
 package procurementsys.model.database;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
@@ -10,12 +12,22 @@ import procurementsys.model.Product;
 import procurementsys.model.ProductOffer;
 import procurementsys.model.Supplier;
 import procurementsys.model.Tag;
+import procurementsys.view.SoftwareNotification;
 
 public class MySQLProductOfferDAO implements ProductOfferDAO {
 	
 	@Override
 	public void add(ProductOffer productOffer) {
 		// TODO - DEVS implement this
+//		try {
+//			String addStr = "INSERT INTO tags(tag_name) VALUES(?)";
+//			PreparedStatement addTag = conn.prepareStatement(addStr);
+//			
+//			addTag.execute();
+//		} catch (SQLException e) {
+//			SoftwareNotification.notifyError("");
+//		}
+//	}
 	}
 	
 	@Override

@@ -1,5 +1,7 @@
 package procurementsys.model.database;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,17 +14,41 @@ import procurementsys.model.Order;
 import procurementsys.model.Product;
 import procurementsys.model.ProductOffer;
 import procurementsys.model.Supplier;
+import procurementsys.view.SoftwareNotification;
 
 public class MySQLOrderDAO implements OrderDAO {
 
 	@Override
 	public void add(Order order) {
 		// TODO - DEVS implement this
-		
+		String query = 
+//				String.format("");
+//		try{
+//			PreparedStatement getProduct = conn.prepareStatement(query); 
+//		    ResultSet rs = getProduct.executeQuery(query);
+//		    while(rs.next()){
+//		    	   
+//		}
+//		}
+//		catch(SQLException e){
+//			SoftwareNotification.notifyError("Error in the Order database: " + e.getMessage());
+//		}
 	}
 
 	@Override
 	public List<Order> getAll() {
+//		String query = 
+//				String.format("");
+//		try{
+//			PreparedStatement getProduct = conn.prepareStatement(query); 
+//		    ResultSet rs = getProduct.executeQuery(query);
+//		    while(rs.next()){
+//		    	   
+//		}
+//		}
+//		catch(SQLException e){
+//			SoftwareNotification.notifyError("Error in the Order database: " + e.getMessage());
+//		}
 		// TODO - DEVS implement this
 		List<Order> ret = new ArrayList<>();
 		
@@ -66,6 +92,14 @@ public class MySQLOrderDAO implements OrderDAO {
 
 	@Override
 	public void addDelivery(Order order, Delivery delivery) {
+//		try {
+//			String query = "INSERT INTO products(product_name) VALUES(?)";
+//			PreparedStatement addProduct =  conn.prepareStatement(addStr);
+//		
+//			addProduct.execute();
+//		} catch (SQLException e) {
+//			SoftwareNotification.notifyError("error in add delivery.");
+//		}
 		// TODO - DEVS implement this
 		
 	}
