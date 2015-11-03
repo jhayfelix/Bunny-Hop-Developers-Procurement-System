@@ -186,4 +186,9 @@ public class NormalMainModeController {
 		productOffersTable.getItems().setAll(productOffersDAO.getAll(product, supplierFilterTextField.getText()));
 	}
 	
+	
+	public void refresh() {
+		showProductOffers(taggedProductsListView.getSelectionModel().getSelectedItem());
+		productOffersTable.refresh();
+	}
 }

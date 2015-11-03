@@ -254,5 +254,7 @@ public class CompareMainModeController {
 	}
 	
 	
-	
+	public void refresh() {
+		
+	}
 }

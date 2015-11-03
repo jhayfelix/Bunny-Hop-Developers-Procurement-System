@@ -3,6 +3,7 @@ package procurementsys.model.database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,14 +42,20 @@ public class MySQLTagDAO implements TagDAO {
 	
 	@Override
 	public List<Tag> getAll() {
-		// TODO - DEVS implement this properly
 		List<Tag> ret = new ArrayList<>();
-		ret.add(new Tag("BALLPEN"));
-		ret.add(new Tag("PENCIL"));
-		ret.add(new Tag("FOLDER"));
-		ret.add(new Tag("SUPPLIES"));
-		ret.add(new Tag("PRODUCT"));
-		ret.add(new Tag("GEL"));
+		try {
+			String queryStr = "SELECT * FROM tags";
+			PreparedStatement getAll = conn.prepareStatement(queryStr);
+			ResultSet rs = getAll.executeQuery();
+		
+			
+			while (rs.next()) {
+				Tag t = new Tag(rs.getString("tag_name"));
+				ret.add(t);
+			}
+		} catch (SQLException e) {
+			
+		}
 		return ret;
 	}
 
@@ -59,35 +66,47 @@ public class MySQLTagDAO implements TagDAO {
 
 	@Override
 	public List<Tag> getAll(String tagNameFilter) {
-		// TODO - DEVS implement this
 		List<Tag> ret = new ArrayList<>();
-		
-		for (Tag x : getAll()) {
-			String tagName = x.getName().toLowerCase();
-			if (tagName.contains(tagNameFilter.toLowerCase())) {
-				ret.add(x);
+		try {
+			String queryStr = "SELECT * FROM tags WHERE tag_name LIKE ?";
+			PreparedStatement getAll = conn.prepareStatement(queryStr);
+			getAll.setString(1, "%" + tagNameFilter + "%");
+			ResultSet rs = getAll.executeQuery();
+			
+			while (rs.next()) {
+				Tag t = new Tag(rs.getString("tag_name"));
+				ret.add(t);
 			}
+		} catch (SQLException e) {
+			
 		}
-		
 		return ret;
 	}
 
 	@Override
 	public void tagProductOffer(ProductOffer productOffer, List<Tag> tags) {
-		// TODO Auto-generated method stub
-		String addStr = "INSERT INTO product_offer_tags(supplier_name,"
-				  + "product_name,"
-				  + "tag_name) "
-				  + "VALUES(?,?,?);";
-		PreparedStatement addTags;
-		try {
-			addTags = conn.prepareStatement(addStr);
-			addTags.execute();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		for (Tag t : tags) {
+			tagProductOffer(productOffer, t);
 		}
-		
+	}
+	
+	private void tagProductOffer(ProductOffer productOffer, Tag tag) {
+		try {
+			String addStr = "INSERT INTO product_offers_tags(supplier_name,"
+														+ "product_name,"
+														+ "tag_name) "
+														+ "VALUES(?,?,?);";
+			PreparedStatement addTags = conn.prepareStatement(addStr);
+			addTags = conn.prepareStatement(addStr);
+			addTags.setString(1, productOffer.getSupplier().getName());
+			addTags.setString(2, productOffer.getProduct().getName());
+			addTags.setString(3, tag.getName());
+			addTags.execute();
+			
+		} catch (SQLException e) {
+			SoftwareNotification.notifyError("The product offer already has the tag. "
+					+ "Please select another product offer");
+		}
 	}
 
 }
