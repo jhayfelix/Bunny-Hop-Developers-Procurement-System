@@ -43,8 +43,10 @@ public class NormalMainModeController {
 	@FXML private TableColumn<ProductOffer, Number> costCol;
 	@FXML private TableColumn<ProductOffer, Number> upcomingCostCol;
 	@FXML private TableColumn<ProductOffer, String> upcomingCostChangeDateCol;
-	
+	private ListView<Tag> selectedTagsListView;
 	protected void initialize(ListView<Tag> selectedTagsListView) {
+		this.selectedTagsListView = selectedTagsListView;
+		
 		// Filter the products shown in the list whenever the filter changes
 				productFilterTextField.textProperty().addListener(new ChangeListener<String>(){
 					@Override
@@ -188,6 +190,7 @@ public class NormalMainModeController {
 	
 	
 	public void refresh() {
+		showTaggedProducts(selectedTagsListView.getItems());
 		showProductOffers(taggedProductsListView.getSelectionModel().getSelectedItem());
 		productOffersTable.refresh();
 	}

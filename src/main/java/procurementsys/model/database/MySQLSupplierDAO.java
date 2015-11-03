@@ -32,7 +32,7 @@ public class MySQLSupplierDAO implements SupplierDAO {
 	@Override
 	public void add(Supplier supplier)  {
 		try {
-			String addStr = "INSERT INTO suppliers(supplier_name, contact_number, isActive)"
+			String addStr = "INSERT INTO suppliers(supplier_name, contact_number, is_active)"
 					+ " VALUES(?,?,?);";
 			PreparedStatement addSupplier = conn.prepareStatement(addStr);
 			addSupplier.setString(1, supplier.getName());

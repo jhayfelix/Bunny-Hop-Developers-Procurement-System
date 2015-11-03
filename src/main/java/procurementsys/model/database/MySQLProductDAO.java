@@ -47,7 +47,7 @@ public class MySQLProductDAO implements ProductDAO {
 	public Product get(String name) {
 		Product ret = null;
 		try {
-			String queryStr = "SELECT * FROM products WHERE product_name LIKE ?";
+			String queryStr = "SELECT * FROM products WHERE product_name = ?";
 			PreparedStatement getAll = conn.prepareStatement(queryStr);
 			getAll.setString(1, name);
 			ResultSet rs = getAll.executeQuery();
@@ -145,7 +145,7 @@ public class MySQLProductDAO implements ProductDAO {
 							  + "FROM suppliers S JOIN product_offers PO ON (S.supplier_name = PO.supplier_name) "
 							  + "WHERE PO.product_name LIKE ? AND S.supplier_name = ?;"; 
 			PreparedStatement getAll = conn.prepareStatement(queryStr);
-			getAll.setString(1, productNameFilter.toUpperCase());
+			getAll.setString(1, "%" + productNameFilter + "%");
 			getAll.setString(2, selectedSupplier.getName());
 			ResultSet rs = getAll.executeQuery();
 			

@@ -185,6 +185,7 @@ public class MainMenuController extends Controller {
     	} else {
     		ViewAllSuppliersController.run();
     	}
+    	refresh();
     }
     
     
@@ -220,6 +221,7 @@ public class MainMenuController extends Controller {
     	} else {
     		ViewAllProductsController.run();
     	}
+    	refresh();
     }
     
     @FXML protected void handleAddNewTag(ActionEvent event) throws IOException {
@@ -240,7 +242,7 @@ public class MainMenuController extends Controller {
     	} else {
     		ViewProductOffersController.run();
     	}
-    	
+    	refresh();
     }
     
     @FXML protected void handleTagProductOffer(ActionEvent event) throws IOException {
@@ -294,6 +296,7 @@ public class MainMenuController extends Controller {
     	} else {
     		ViewAllTagsController.run();
     	}
+    	refresh();
     }
     
     @FXML protected void handleAddNewOrder(ActionEvent event) throws IOException {
@@ -321,6 +324,7 @@ public class MainMenuController extends Controller {
     	} else {
     		ViewAllOrdersController.run();
     	}
+    	refresh();
     }
     
     @FXML protected void handleAddDelivery(ActionEvent event) throws IOException {

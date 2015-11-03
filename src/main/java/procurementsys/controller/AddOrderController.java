@@ -126,6 +126,8 @@ public class AddOrderController {
 						+ "added to the system");
 			}
 			
+			//showProducts();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
