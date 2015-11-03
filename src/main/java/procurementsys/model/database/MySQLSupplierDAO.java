@@ -3,10 +3,12 @@ package procurementsys.model.database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import procurementsys.model.ProductOffer;
 import procurementsys.model.Supplier;
 import procurementsys.model.Tag;
 import procurementsys.view.SoftwareNotification;
@@ -45,57 +47,61 @@ public class MySQLSupplierDAO implements SupplierDAO {
 	}
 	
 	@Override
-	public List<Supplier> getAll(String nameFilter) {
-		// TODO - DEVS implement this
+	public List<Supplier> getAll() {
 		List<Supplier> ret = new ArrayList<>();
 		
-		ret.add(new Supplier("National Bookstore", "8452005"));
-		ret.add(new Supplier("SM Supermarket", "4202045"));
-		ret.add(new Supplier("Robinsons Supermarket", "8506453"));
-		ret.add(new Supplier("Milan Industries", "7004533"));
-		ret.add(new Supplier("La Senza", "2347777"));
-		
-		List<Supplier> filteredRet = new ArrayList<>();
-		for (Supplier x : ret) {
-			if (x.getName().toLowerCase().contains(nameFilter.toLowerCase())) {
-				filteredRet.add(x);
+		try {
+			String queryStr = "SELECT * FROM suppliers";
+			PreparedStatement getAll = conn.prepareStatement(queryStr);
+			ResultSet rs = getAll.executeQuery();
+			
+			while (rs.next()) {
+				String supplierName = rs.getString("supplier_name");
+				String contactNumber = rs.getString("contact_number");
+				ret.add(new Supplier(supplierName, contactNumber));
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		return filteredRet;
+		return ret;
 	}
 	
 	@Override
-	public List<Supplier> getAll() {
-		// TODO - DEVS implement this
+	public List<Supplier> getAll(String nameFilter) {
 		List<Supplier> ret = new ArrayList<>();
 		
-		ret.add(new Supplier("National Bookstore", "8452005"));
-		ret.add(new Supplier("SM Supermarket", "4202045"));
-		ret.add(new Supplier("Robinsons Supermarket", "8506453"));
-		ret.add(new Supplier("Milan Industries", "7004533"));
-		ret.add(new Supplier("La Senza", "2347777"));
-		
+		try {
+			String queryStr = "SELECT * FROM suppliers WHERE supplier_name LIKE ?";
+			PreparedStatement getAll = conn.prepareStatement(queryStr);
+			getAll.setString(1, "%" + nameFilter +  "%");
+			ResultSet rs = getAll.executeQuery();
+			while (rs.next()) {
+				String supplierName = rs.getString("supplier_name");
+				String contactNumber = rs.getString("contact_number");
+				ret.add(new Supplier(supplierName, contactNumber));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return ret;
 	}
 
 	@Override
 	public List<Supplier> getAll(List<Tag> tags, String nameFilter) {
-		// TODO - DEVS implement this
+		ProductOfferDAO productOfferDAO = new MySQLProductOfferDAO();
+		List<ProductOffer> productOffers = productOfferDAO.getAll();
+		
 		List<Supplier> ret = new ArrayList<>();
-		
-		ret.add(new Supplier("National Bookstore", "8452005"));
-		ret.add(new Supplier("SM Supermarket", "4202045"));
-		ret.add(new Supplier("Robinsons Supermarket", "8506453"));
-		ret.add(new Supplier("Milan Industries", "7004533"));
-		ret.add(new Supplier("La Senza", "2347777"));
-		
-		List<Supplier> filteredRet = new ArrayList<>();
-		for (Supplier x : ret) {
-			if (x.getName().toLowerCase().contains(nameFilter.toLowerCase())) {
-				filteredRet.add(x);
+		for (ProductOffer po : productOffers) {
+			if (po.getTags().containsAll(tags)) {
+				Supplier supplier = po.getSupplier();
+				if (!ret.contains(supplier)) {
+					ret.add(supplier);
+				}
 			}
 		}
-		return filteredRet;
+		
+		return ret;
 	}
 	
 	@Override
