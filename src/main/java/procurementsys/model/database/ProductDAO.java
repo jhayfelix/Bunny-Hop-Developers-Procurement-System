@@ -10,7 +10,6 @@ public interface ProductDAO {
 	void add(Product product);
 	
 	Product get(String name);
-	
 	List<Product> getAll();
 	List<Product> getAll(String productNameFilter);
 	List<Product> getAll(List<Tag> tags, String productNameFilter);
