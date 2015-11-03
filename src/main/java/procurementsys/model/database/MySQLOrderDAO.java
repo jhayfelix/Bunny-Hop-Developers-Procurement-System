@@ -61,7 +61,7 @@ public class MySQLOrderDAO implements OrderDAO {
 			costChanges.add(new CostChange(LocalDateTime.now().minusMonths(1), 10));
 			costChanges.add(new CostChange(LocalDateTime.now().minusMonths(1), 15));
 			costChanges.add(new CostChange(LocalDateTime.now().minusMonths(1), 30));
-			costChanges.add(new CostChange(LocalDateTime.now(), 20));
+			costChanges.add(new CostChange(LocalDateTime.now(), 30));
 			costChanges.add(new CostChange(LocalDateTime.now().plusMonths(2), 25));
 			
 			ProductOffer po1 = new ProductOffer(new Product("Iphone 16GB"),

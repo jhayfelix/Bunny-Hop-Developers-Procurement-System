@@ -66,7 +66,7 @@ public class MySQLProductDAO implements ProductDAO {
 		    ResultSet rs = getProduct.executeQuery(query);
 		       while(rs.next()){
 		    	   String productName=rs.getString("product_name");
-		    	   System.out.format("%s \n",productName);
+		    	 //  System.out.format("%s \n",productName);
 		    	   ret.add(new Product(productName));	
 		}}
 		catch(SQLException e){
@@ -100,14 +100,14 @@ public class MySQLProductDAO implements ProductDAO {
 				String.format(   "select * from products "
 						+ "WHERE LOWER(REPLACE(product_name, ' ', '')) = "
 						+ "LOWER(REPLACE(\"%s\", ' ', ''))",productNameFilter);
-		
+		String query2 = "SELECT * FROM products";
 	   
 	    try{
-			PreparedStatement getProduct = conn.prepareStatement(query); 
-		    ResultSet rs = getProduct.executeQuery(query);
+			PreparedStatement getProduct = conn.prepareStatement(query2); 
+		    ResultSet rs = getProduct.executeQuery(query2);
 		       while(rs.next()){
 		    	   String productName=rs.getString("product_name");
-		    	   System.out.format("%s \n",productName);
+		    	  // System.out.format("%s \n",productName);
 		    	   ret.add(new Product(productName));	
 		}}
 	    catch(SQLException e){
@@ -140,8 +140,19 @@ public class MySQLProductDAO implements ProductDAO {
 
 	@Override
 	public List<Product> getAll(List<Tag> tags, String productNameFilter) {//implemented by DOminic Pagtalunan
-		
+		String query2 = "SELECT * FROM products";
 		List<Product> ret = new ArrayList<>();
+		try{
+			PreparedStatement getProduct = conn.prepareStatement(query2); 
+		    ResultSet rs = getProduct.executeQuery(query2);
+		       while(rs.next()){
+		    	   String productName=rs.getString("product_name");
+		    	  // System.out.format("%s \n",productName);
+		    	   ret.add(new Product(productName));	
+		}}
+	    catch(SQLException e){
+			SoftwareNotification.notifyError("Error in the Product database: " + e.getMessage());
+		}
 //		String query = 
 //				String.format("");
 //		try{
@@ -156,19 +167,19 @@ public class MySQLProductDAO implements ProductDAO {
 //		}
 		
 		
-		ret.add(new Product("Red Ballpen"));
-		ret.add(new Product("Blue Ballpen"));
-		ret.add(new Product("Green Ballpen"));
-		ret.add(new Product("Black Ballpen"));
-		
-		ret.add(new Product("Sola (Orange)"));
-		ret.add(new Product("Sola (Apple)"));
-		ret.add(new Product("Sola (Lemon)"));
-		ret.add(new Product("Sola (Grape)"));
-		ret.add(new Product("Sola (Raspberry)"));
-			
-		ret.add(new Product("Minute Maid Pulpy Orange"));
-		ret.add(new Product("Zesto Orange Juice Drink"));
+//		ret.add(new Product("Red Ballpen"));
+//		ret.add(new Product("Blue Ballpen"));
+//		ret.add(new Product("Green Ballpen"));
+//		ret.add(new Product("Black Ballpen"));
+//		
+//		ret.add(new Product("Sola (Orange)"));
+//		ret.add(new Product("Sola (Apple)"));
+//		ret.add(new Product("Sola (Lemon)"));
+//		ret.add(new Product("Sola (Grape)"));
+//		ret.add(new Product("Sola (Blueberry)"));
+//			
+//		ret.add(new Product("Minute Maid Pulpy Orange"));
+//		ret.add(new Product("Zesto Orange Juice Drink"));
 
 		List<Product> filteredRet = new ArrayList<>();
 		for (int i = 0; i < ret.size(); i++) {
