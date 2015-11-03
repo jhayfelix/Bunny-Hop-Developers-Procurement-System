@@ -128,7 +128,7 @@ public class NormalMainModeController {
 					            double upcomingCost = po.getUpcomingCost();
 					            setTextFill((currCost > upcomingCost) ? Color.RED :Color.GREEN);
 				            }
-				            if (!empty) {
+				            if (!empty && item.doubleValue() >= 0) {
 				            	setText(item + "");
 				            } else {
 				            	setText("");
@@ -147,7 +147,6 @@ public class NormalMainModeController {
 		Tag selectedTag = tagSearchComboBox.getSelectionModel().getSelectedItem();
 		
 		if (selectedTag != null && !selectedTagsListView.getItems().contains(selectedTag)) {
-			
 			selectedTagsListView.getItems().add(selectedTag);
 			showTaggedProducts(selectedTagsListView.getItems());
 			tagSearchComboBox.getSelectionModel().clearSelection();
@@ -172,6 +171,7 @@ public class NormalMainModeController {
 		
 		taggedProductsListView.getItems().clear();
 		taggedProductsListView.getItems().addAll(taggedProducts);
+		
 		
 		if (taggedProductsListView.getItems().size() > 0) {
 			taggedProductsListView.getSelectionModel().select(0);

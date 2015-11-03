@@ -127,7 +127,14 @@ public class MySQLProductDAO implements ProductDAO {
 			}
 		}
 		
-		return ret;
+		List<Product> filteredRet = new ArrayList<>();
+		for (Product p : ret) {
+			if (p.getName().toLowerCase().contains(productNameFilter.toLowerCase())) {
+				filteredRet.add(p);
+			}
+		}
+		
+		return filteredRet;
 	}
 
 	@Override

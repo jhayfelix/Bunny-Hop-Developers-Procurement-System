@@ -47,6 +47,24 @@ public class MySQLSupplierDAO implements SupplierDAO {
 	}
 	
 	@Override
+	public Supplier get(String name) {		
+		try {
+			String queryStr = "SELECT * FROM suppliers WHERE supplier_name = ?";
+			PreparedStatement getAll = conn.prepareStatement(queryStr);
+			getAll.setString(1, name);
+			ResultSet rs = getAll.executeQuery();
+			while (rs.next()) {
+				String supplierName = rs.getString("supplier_name");
+				String contactNumber = rs.getString("contact_number");
+				return new Supplier(supplierName, contactNumber);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
 	public List<Supplier> getAll() {
 		List<Supplier> ret = new ArrayList<>();
 		
@@ -108,7 +126,6 @@ public class MySQLSupplierDAO implements SupplierDAO {
 	public boolean isEmpty() {
 		return getAll().size() == 0;
 	}
-
 
 
 }

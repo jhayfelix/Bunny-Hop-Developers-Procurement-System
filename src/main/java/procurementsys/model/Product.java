@@ -29,6 +29,6 @@ public class Product {
 			return false;
 		
 		Product p = (Product) o;
-		return name.equals(p.getName());
+		return name.get().equals(p.getName());
 	}
 }

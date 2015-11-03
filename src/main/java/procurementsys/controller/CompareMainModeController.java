@@ -147,7 +147,7 @@ public class CompareMainModeController {
 			            double upcomingCost = po.getUpcomingCost();
 			            setTextFill((currCost > upcomingCost) ? Color.RED :Color.GREEN);
 		            }
-		            if (!empty) {
+		            if (!empty && item.doubleValue() >= 0) {
 		            	setText(item + "");
 		            } else {
 		            	setText("");

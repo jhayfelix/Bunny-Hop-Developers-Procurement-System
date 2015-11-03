@@ -75,6 +75,18 @@ public class MySQLTagDAO implements TagDAO {
 	@Override
 	public void tagProductOffer(ProductOffer productOffer, List<Tag> tags) {
 		// TODO Auto-generated method stub
+		String addStr = "INSERT INTO product_offer_tags(supplier_name,"
+				  + "product_name,"
+				  + "tag_name) "
+				  + "VALUES(?,?,?);";
+		PreparedStatement addTags;
+		try {
+			addTags = conn.prepareStatement(addStr);
+			addTags.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
