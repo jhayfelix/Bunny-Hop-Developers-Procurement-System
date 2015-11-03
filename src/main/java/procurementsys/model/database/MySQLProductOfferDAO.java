@@ -1,5 +1,6 @@
 package procurementsys.model.database;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -15,6 +16,10 @@ import procurementsys.model.Tag;
 import procurementsys.view.SoftwareNotification;
 
 public class MySQLProductOfferDAO implements ProductOfferDAO {
+	private Connection conn;
+	public MySQLProductOfferDAO(){
+		conn=DBConnection.getConnection();
+	}
 	
 	@Override
 	public void add(ProductOffer productOffer) {

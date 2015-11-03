@@ -18,15 +18,17 @@ public class MySQLTagDAO implements TagDAO {
 	private Connection conn;
 	
 	public MySQLTagDAO() {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			String url = "jdbc:mysql://localhost/procurementdb";
-			conn = DriverManager.getConnection(url, "root", "DLSU1234");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			Class.forName("com.mysql.jdbc.Driver");
+//			String url = "jdbc:mysql://localhost/procurementdb";
+//			conn = DriverManager.getConnection(url, "root", "pagtalunan");
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} catch (ClassNotFoundException e) {
+//			e.printStackTrace();
+//		}
+		
+		conn=DBConnection.getConnection();
 	}
 
 	@Override

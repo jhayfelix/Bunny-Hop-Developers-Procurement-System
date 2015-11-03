@@ -22,7 +22,8 @@ public class MySQLOrderDAO implements OrderDAO {
 	public void add(Order order) {
 		// TODO - DEVS implement this
 		String query = 
-//				String.format("");
+			String.format("");
+		
 //		try{
 //			PreparedStatement getProduct = conn.prepareStatement(query); 
 //		    ResultSet rs = getProduct.executeQuery(query);
