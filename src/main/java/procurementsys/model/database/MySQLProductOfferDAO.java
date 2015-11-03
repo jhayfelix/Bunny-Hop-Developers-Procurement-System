@@ -91,6 +91,13 @@ public class MySQLProductOfferDAO implements ProductOfferDAO {
 		
 	}
 
+	@Override
+	public List<ProductOffer> getAll() {
+		List<ProductOffer> ret = new ArrayList<>();
+		
+		return ret;
+	}
+
 
 
 
