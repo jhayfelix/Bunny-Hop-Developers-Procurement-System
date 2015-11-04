@@ -73,6 +73,9 @@ public class MySQLProductOfferDAO implements ProductOfferDAO {
 			
 			// No need to add tags yet
 			
+			SoftwareNotification.notifySuccess("The product offer has been"
+					+ " successfully added to the system.");
+			
 		} catch (SQLException e) {
 			SoftwareNotification.notifyError("Error with adding order. "
 					+ "Please contact the developers.");

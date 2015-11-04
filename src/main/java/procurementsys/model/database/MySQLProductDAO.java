@@ -37,6 +37,9 @@ public class MySQLProductDAO implements ProductDAO {
 			PreparedStatement addProduct =  conn.prepareStatement(addStr);
 			addProduct.setString(1, product.getName());
 			addProduct.execute();
+    		String successMsg = "The product \'" + product.getName() 
+				  + "\' has been successfully added to the system.";
+    		SoftwareNotification.notifySuccess(successMsg);
 		} catch (SQLException e) {
 			SoftwareNotification.notifyError("The product '" + product.getName()
 					+ "' already exists in the database.");

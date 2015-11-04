@@ -55,6 +55,9 @@ public class MySQLOrderDAO implements OrderDAO {
 				addProductOrdered.setInt(4, order.quantityOrdered(po));
 				addProductOrdered.execute();
 				
+				SoftwareNotification.notifySuccess("The order has been succesfully "
+						+ "added to the system");
+				
 			}
 		
 		} catch (SQLException e) {
@@ -119,6 +122,7 @@ public class MySQLOrderDAO implements OrderDAO {
 		
 			Order order = new Order(dateTimeOrdered, orderSupplier, orderedMap);
 			
+			return order;
 			/* get deliveries
 			queryStr = "SELECT D.delivery_datetime, D.supplier_name, "
 					+ "D.product_name FROM orders O JOIN deliveries D ON "

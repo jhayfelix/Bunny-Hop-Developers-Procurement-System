@@ -39,6 +39,10 @@ public class MySQLSupplierDAO implements SupplierDAO {
 			addSupplier.setString(2, supplier.getContactNumber());
 			addSupplier.setBoolean(3, supplier.isActive());
 			addSupplier.execute();
+			String successMsg = "The supplier \'" + supplier.getName() 
+					  + "\' has been successfully added to the system.";
+			SoftwareNotification.notifySuccess(successMsg);
+			
 		} catch (SQLException e) {
 			SoftwareNotification.notifyError("The supplier '" + supplier.getName()
 					+ "' already exists in the database.");

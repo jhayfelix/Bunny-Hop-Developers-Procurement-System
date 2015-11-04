@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.geometry.Pos;
+
+import org.controlsfx.control.Notifications;
+
 import procurementsys.model.ProductOffer;
 import procurementsys.model.Tag;
 import procurementsys.view.SoftwareNotification;
@@ -34,6 +38,10 @@ public class MySQLTagDAO implements TagDAO {
 			PreparedStatement addTag = conn.prepareStatement(addStr);
 			addTag.setString(1, tag.getName());
 			addTag.execute();
+    		Notifications.create().title("Success")
+			.text("The tag \'" + tag.getName() 
+				  + "\' has been successfully added to the system.")
+			.position(Pos.TOP_RIGHT).showInformation();
 		} catch (SQLException e) {
 			SoftwareNotification.notifyError("The tag '" + tag.getName()
 					+ "' already exists in the database.");
