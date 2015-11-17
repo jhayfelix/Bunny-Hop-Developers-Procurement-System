@@ -52,11 +52,10 @@ public class MySQLTagDAO implements TagDAO {
 		 try{
 				PreparedStatement getTags = conn.prepareStatement(query); 
 				ResultSet rs = getTags.executeQuery(query);
-				//System.out.println("TAGS: getALL no: ");
+				System.out.println("TAGS: getALL no: ");
 			 while(rs.next()){
-				 System.out.println("listing tag 2");
 				 String tags= rs.getString("tag_name");
-				 //System.out.format("%s \n",tags);
+				 System.out.format("%s \n",tags);
 				 ret.add(new Tag(tags));
 			 }
 			 
@@ -88,13 +87,12 @@ public class MySQLTagDAO implements TagDAO {
 						+ "LOWER(REPLACE(\"%s\", ' ', ''))",tagNameFilter);
 	    
 	    try{
-	    	System.out.println("listing tag 1");
 	    	PreparedStatement getTags = conn.prepareStatement(query); 
 	    	ResultSet rs = getTags.executeQuery(query);
-	    	   //System.out.println("TAGS: getALl tagnamefilter: ");
+	    	   System.out.println("TAGS: getALl tagnamefilter: ");
 		       while(rs.next()){
 		    	   String tagName=rs.getString("tag_name");
-		    	 //  System.out.format("%s \n",tagName);
+		    	   System.out.format("%s \n",tagName);
 		    	   ret.add(new Tag(tagName));	
 		}}
 	    catch(SQLException e){

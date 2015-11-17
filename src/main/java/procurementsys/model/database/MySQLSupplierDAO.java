@@ -54,17 +54,16 @@ public class MySQLSupplierDAO implements SupplierDAO {
 String.format(   "select * from suppliers "
 		+ "WHERE LOWER(REPLACE(supplier_name, ' ', '')) = "
 		+ "LOWER(REPLACE(\"%s\", ' ', ''))",nameFilter);
-	      String query2 = "SELECT * FROM suppliers";
 	      
 		try {
 			//st = conn.createStatement(); 
-			PreparedStatement getSupplier = conn.prepareStatement(query2); 
-			ResultSet rs = getSupplier.executeQuery(query2);
+			PreparedStatement getSupplier = conn.prepareStatement(query); 
+			ResultSet rs = getSupplier.executeQuery(query);
 	       while(rs.next()){
 	    	   String suppName=rs.getString("supplier_name");
 	    	   String conNum=rs.getString("contact_number");
 	    	   Boolean isActive=rs.getBoolean("isActive");
-	    	  // System.out.format("%s, %s, %b \n",suppName,conNum,isActive);
+	    	   System.out.format("%s, %s, %b \n",suppName,conNum,isActive);
 	    	   ret.add(new Supplier(suppName, conNum));
 	    	
 	    }
@@ -104,7 +103,7 @@ String.format(   "select * from suppliers "
 	    	   String suppName=rs.getString("supplier_name");
 	    	   String conNum=rs.getString("contact_number");
 	    	   Boolean isActive=rs.getBoolean("isActive");
-	    	  // System.out.format("%s, %s, %b \n",suppName,conNum,isActive);
+	    	   System.out.format("%s, %s, %b \n",suppName,conNum,isActive);
 	    	   ret.add(new Supplier(suppName, conNum));
 	    	
 	    }
@@ -130,11 +129,11 @@ String.format(   "select * from suppliers "
 		// TODO - DEVS implement this
 		List<Supplier> ret = new ArrayList<>();
 		
-		ret.add(new Supplier("National Bookstore power", "8452005"));
-//		ret.add(new Supplier("SM Supermarket", "4202045"));
-//		ret.add(new Supplier("Robinsons Supermarket", "8506453"));
-//		ret.add(new Supplier("Milano Industries", "7004533"));
-//		ret.add(new Supplier("La Senzasss", "2347777"));
+		ret.add(new Supplier("National Bookstore", "8452005"));
+		ret.add(new Supplier("SM Supermarket", "4202045"));
+		ret.add(new Supplier("Robinsons Supermarket", "8506453"));
+		ret.add(new Supplier("Milan Industries", "7004533"));
+		ret.add(new Supplier("La Senza", "2347777"));
 		
 		List<Supplier> filteredRet = new ArrayList<>();
 		for (Supplier x : ret) {
