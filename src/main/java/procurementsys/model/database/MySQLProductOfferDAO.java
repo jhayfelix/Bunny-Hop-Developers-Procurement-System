@@ -267,6 +267,47 @@ public class MySQLProductOfferDAO implements ProductOfferDAO {
 		}
 		
 	}
+	@Override
+	public void toggleProductOfferAvailability(ProductOffer productOffer){
+		try {
+					Supplier supplier=productOffer.getSupplier();
+					Product product = productOffer.getProduct();
+					int changer=2;
+					String getStr= "SELECT supplier_name,product_name,isAvailable FROM product_offers WHERE supplier_name LIKE ? AND product_name LIKE ?";
+					PreparedStatement get = conn.prepareStatement(getStr);
+					get.setString(1,supplier.getName());
+					get.setString(2,product.getName());
+					ResultSet rs = get.executeQuery();
+					
+					while(rs.next()) {
+						Boolean isAvailable= rs.getBoolean("isAvailable");
+						if(isAvailable)
+						changer=0;
+						else
+						changer=1;
+					}
+					
+					
+					String queryStr = "UPDATE product_offers SET isAvailable=? WHERE supplier_name=? and product_name=?";
+					PreparedStatement setAvailability= conn.prepareStatement(queryStr);
+					setAvailability.setInt(1,changer);
+					setAvailability.setString(2, supplier.getName());
+					setAvailability.setString(3, product.getName());
+					setAvailability.executeUpdate();
+				
+					System.out.println("product offer has been toggled");
+					String successMsg = "The Product offer of  " + supplier.getName()
+					+ " offering the product : "+product.getName()
+					+" is now changed to " +changer;
+					System.out.println(successMsg);
+					//SoftwareNotification.notifySuccess(successMsg);
+				} catch (SQLException e) {
+					e.printStackTrace();
+					//SoftwareNotification.notifyError("There is an error with database trying to toggle product Offer Availability."
+					//		+ " Please notify the developers.");
+				}
+
+		}
 
 
 

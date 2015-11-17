@@ -12,5 +12,7 @@ public interface SupplierDAO {
 	List<Supplier> getAll(List<Tag> tags, String nameFilter);
 	boolean isEmpty();
 	Supplier get(String name);
+	void updateContactNumber(Supplier supplier);
+	void toggleSupplier(Supplier supplier);
 	
 }
