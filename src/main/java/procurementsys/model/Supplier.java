@@ -31,6 +31,10 @@ public class Supplier {
 		this.active = active;
 	}
 	
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+	
 	@Override
 	public String toString() {
 		return name;

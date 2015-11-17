@@ -18,6 +18,7 @@ public class ProductOffer {
 	private List<CostChange> costChanges;
 	private List<Tag> tags;
 	private Promo promo;
+	private boolean available = true;
 	
 	public ProductOffer(Product product, Supplier supplier,
 			List<CostChange> costChanges) {
@@ -147,6 +148,14 @@ public class ProductOffer {
 		}*/
 		
 		return sb.toString();
+	}
+	
+	public boolean isAvailable() {
+		return available;
+	}
+	
+	public void setActive(boolean available) {
+		this.available = available;
 	}
 	
 	@Override
