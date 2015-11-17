@@ -44,7 +44,7 @@ public class MySQLProductOfferDAO implements ProductOfferDAO {
 			
 			String addStr = "INSERT INTO product_offers(supplier_name,"
 													 + "product_name,"
-													 + "is_available,"
+													 + "is_Available,"
 													 + "promo_qty_needed,"
 													 + "promo_discount_percentage)"
 													 + "VALUES (?,?,?,?,?);";

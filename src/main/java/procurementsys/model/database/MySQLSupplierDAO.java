@@ -130,6 +130,59 @@ public class MySQLSupplierDAO implements SupplierDAO {
 	public boolean isEmpty() {
 		return getAll().size() == 0;
 	}
+	@Override
+	public void toggleSupplier(Supplier supplier){	
+		int changer=0;
+		Boolean checker =true;
+			try {
+				String supplierName= supplier.getName();
+				String queryStr =" SELECT suppliers.isActive FROM suppliers WHERE supplier_name LIKE ?";
+				PreparedStatement get = conn.prepareStatement(queryStr);
+				get.setString(1,supplierName);
+				ResultSet rs = get.executeQuery();
+				
+				while(rs.next()) {
+					Boolean isActive= rs.getBoolean("isActive");
+					if(isActive){
+					changer=0;checker=false;
+					}
+					else{
+					changer=1;checker=true;
+					}
+				}
+				String togStr = "UPDATE suppliers SET isActive=? WHERE supplier_name=?;";
+				PreparedStatement toggleSupplier = conn.prepareStatement(togStr);
+				toggleSupplier.setInt(1, changer);
+				toggleSupplier.setString(2, supplier.getName());
+				toggleSupplier.execute();
+				
+				String successMsg = "The supplier " + supplier.getName()
+				+ " availability is now changed to " +checker;
+				SoftwareNotification.notifySuccess(successMsg);
 
+			} catch (SQLException e) {
+				SoftwareNotification.notifyError("Error in trying to toggle supplier,"
+						+ "please contact developers." );
+			}			
+			
+		}
+	@Override
+	public void updateContactNumber(Supplier supplier){
+		try {
+					int changer;
+					changer = Integer.parseInt(supplier.getContactNumber());
+					String queryStr = "UPDATE suppliers SET contact_number=? WHERE supplier_name=?";
+					PreparedStatement setPromo= conn.prepareStatement(queryStr);
+					setPromo.setInt(1, changer);
+					setPromo.setString(2, supplier.getName());
+					setPromo.executeUpdate();
+				
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+					
+				}
+
+		}
 
 }

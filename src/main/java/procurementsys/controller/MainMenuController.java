@@ -159,8 +159,8 @@ public class MainMenuController extends Controller {
 		tagSearchComboBox.getItems().clear();
 		tagSearchComboBox.getItems().addAll(tagDAO.getAll());
 		
-		normalModeController.refresh();
-		compareModeController.refresh();
+		//normalModeController.refresh();
+		//compareModeController.refresh();
 		
 	}
 	
@@ -172,7 +172,7 @@ public class MainMenuController extends Controller {
 	
     @FXML protected void handleAddNewSupplier(ActionEvent event) throws IOException {
     	AddSupplierController.run();
-    	refresh();
+    	//refresh();
     }
 	
     @FXML protected void handleViewSuppliers(ActionEvent event)
@@ -185,7 +185,7 @@ public class MainMenuController extends Controller {
     	} else {
     		ViewAllSuppliersController.run();
     	}
-    	refresh();
+    	//refresh();
     }
     
     

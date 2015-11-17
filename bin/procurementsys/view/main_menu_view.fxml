@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import org.controlsfx.control.* ?>
+
+<VBox fx:id="rootVBox" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="procurementsys.controller.MainMenuController">
+  <children>
+    <MenuBar prefHeight="29.0" prefWidth="863.0" VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="Suppliers">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#handleAddNewSupplier" text="Add New Supplier" />
+            <MenuItem mnemonicParsing="false" onAction="#handleViewSuppliers" text="View All Suppliers" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleAssignProduct" text="Add Product Offer to Supplier" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleViewProductOffers" text="View Product Offers of Supplier" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleAddCostChange" text="Add Cost Change to Product Offer" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleViewCostChanges" text="View Cost Changes of Product Offer" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Products">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#handleAddNewProduct" text="Add New Product" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleViewProducts" text="View All Products" />
+          </items>
+        </Menu>
+            <Menu mnemonicParsing="false" text="Tags">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#handleAddNewTag" text="Add New Tag" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleViewTags" text="View All Tags" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleTagProductOffer" text="Tag Product Offer" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Orders">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#handleAddNewOrder" text="Add New Order" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleViewOrders" text="View All Orders" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleAddDelivery" text="Add New Delivery to Order" />
+              </items>
+            </Menu>
+      </menus>
+    </MenuBar>
+      <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="188.0" prefWidth="1000.0" style="-fx-background-color: royalblue;">
+         <children>
+            <ComboBox fx:id="tagSearchComboBox" layoutX="410.0" layoutY="101.0" prefHeight="27.0" prefWidth="420.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="410.0" AnchorPane.rightAnchor="420.0" AnchorPane.topAnchor="101.0" />
+            <Button layoutX="839.0" layoutY="101.0" mnemonicParsing="false" onAction="#handleSearchTag" text="Search" AnchorPane.leftAnchor="839.0" AnchorPane.topAnchor="101.0" />
+            <ListView fx:id="selectedTagsListView" layoutX="410.0" layoutY="44.0" orientation="HORIZONTAL" prefHeight="50.0" prefWidth="422.0" style="-fx-background-color: royalblue; -fx-control-inner-background: royalblue;" AnchorPane.bottomAnchor="94.0" AnchorPane.leftAnchor="410.0" AnchorPane.rightAnchor="420.0" AnchorPane.topAnchor="44.0" />
+            <SegmentedButton fx:id="segmentedButton" layoutX="530.0" layoutY="136.0" prefHeight="38.0" prefWidth="285.0" />
+         </children>
+      </AnchorPane>
+  </children>
+</VBox>
