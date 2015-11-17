@@ -14,9 +14,8 @@ import procurementsys.model.Tag;
 import procurementsys.view.SoftwareNotification;
 
 public class MySQLSupplierDAO implements SupplierDAO {
-	private Connection conn;
-	
-	public MySQLSupplierDAO() {
+	private static Connection conn;
+	static {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = "jdbc:mysql://localhost/procurementdb";
@@ -26,6 +25,10 @@ public class MySQLSupplierDAO implements SupplierDAO {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public MySQLSupplierDAO() {
+
 		
 	}
 	

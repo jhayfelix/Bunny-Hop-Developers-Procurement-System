@@ -15,9 +15,8 @@ import procurementsys.model.Tag;
 import procurementsys.view.SoftwareNotification;
 
 public class MySQLProductDAO implements ProductDAO {
-	private Connection conn;
-	
-	public MySQLProductDAO() {
+	private static Connection conn;
+	static {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = "jdbc:mysql://localhost/procurementdb";
@@ -28,6 +27,10 @@ public class MySQLProductDAO implements ProductDAO {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public MySQLProductDAO() {
+
 	}
 	
 	@Override 
