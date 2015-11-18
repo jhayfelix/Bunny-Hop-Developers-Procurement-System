@@ -16,6 +16,6 @@ public interface ProductOfferDAO {
 	boolean isEmpty();
 	void addCostChange(ProductOffer productOffer, CostChange costChange);
 	void changeAvailability(ProductOffer productOffer, boolean available);
-	void addPromo(ProductOffer productOffer, Promo promo);
+	void setPromo(ProductOffer productOffer);
 
 }

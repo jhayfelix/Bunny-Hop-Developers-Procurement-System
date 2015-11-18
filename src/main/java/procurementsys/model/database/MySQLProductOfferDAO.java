@@ -11,6 +11,7 @@ import java.util.List;
 import procurementsys.model.CostChange;
 import procurementsys.model.Product;
 import procurementsys.model.ProductOffer;
+import procurementsys.model.Promo;
 import procurementsys.model.Supplier;
 import procurementsys.model.Tag;
 import procurementsys.view.SoftwareNotification;
@@ -105,6 +106,35 @@ public class MySQLProductOfferDAO implements ProductOfferDAO {
 	@Override
 	public void addCostChange(ProductOffer productOffer, CostChange costChange) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void changeAvailability(ProductOffer productOffer, boolean available) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setPromo(ProductOffer productOffer) {
+		Supplier supplier =productOffer.getSupplier();
+		Product product = productOffer.getProduct();
+		Promo promo = productOffer.getPromo();
+		
+		try{
+			String query = "UPDATE product_offers SET promo_qty_needed=?," + "promo_discount_percentage=? WHERE supplier_name=? " + "and product_name =?";
+			PreparedStatement setPromo = conn.prepareStatement(query);
+			
+			setPromo.setInt(1, promo.getQuantityNeeded());
+			setPromo.setDouble(2, promo.getDiscount());
+			setPromo.setString(3, supplier.getName());
+			setPromo.setString(4, product.getName());
+			
+			setPromo.execute();
+			
+		} catch (SQLException e) {
+			SoftwareNotification.notifyError("Error");
+		}
 		
 	}
 

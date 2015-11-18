@@ -112,6 +112,11 @@ public class ProductOffer {
 		this.promo = promo;
 	}
 	
+	public Promo getPromo()
+	{
+		return promo;
+	}
+	
 	public String getContactNumber() {
 		return supplier.get().getContactNumber();
 	}
