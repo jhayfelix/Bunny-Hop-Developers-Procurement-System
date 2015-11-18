@@ -6,6 +6,7 @@ import procurementsys.model.CostChange;
 import procurementsys.model.Product;
 import procurementsys.model.ProductOffer;
 import procurementsys.model.Supplier;
+import procurementsys.model.Promo;
 
 public interface ProductOfferDAO {
 	void add(ProductOffer productOffer);
@@ -15,5 +16,6 @@ public interface ProductOfferDAO {
 	boolean isEmpty();
 	void addCostChange(ProductOffer productOffer, CostChange costChange);
 	void changeAvailability(ProductOffer productOffer, boolean available);
+	void addPromo(ProductOffer productOffer, Promo promo);
 
 }

@@ -22,7 +22,7 @@ public class DBConnection {
 	private String	url		= "jdbc:mysql://localhost:3306/";
 	private String	database	= "procurementdb";
 	private String	username	= "root";
-	private String	password	= "pagtalunan";
+	private String	password	= "password";
         
         public static DBConnection getInstance() {
         if (instance == null) {
