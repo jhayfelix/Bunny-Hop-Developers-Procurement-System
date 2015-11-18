@@ -1,6 +1,9 @@
 package procurementsys.model.database;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -8,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import procurementsys.model.CostChange;
 import procurementsys.model.Delivery;
 import procurementsys.model.Order;
 import procurementsys.model.Product;
@@ -17,94 +19,181 @@ import procurementsys.model.Supplier;
 import procurementsys.view.SoftwareNotification;
 
 public class MySQLOrderDAO implements OrderDAO {
+	private static Connection conn;
+	static {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			String url = "jdbc:mysql://localhost/procurementdb";
+			conn = DriverManager.getConnection(url, "root", "DLSU1234");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public MySQLOrderDAO() {
 
+		
+	}
+	
 	@Override
 	public void add(Order order) {
-		// TODO - DEVS implement this
-		String query = 
-			String.format("");
+		try {
+			String addStr = "INSERT INTO orders(order_datetime) VALUES (?);";
+			PreparedStatement addOrder = conn.prepareStatement(addStr);
+			addOrder.setString(1, order.getOrderDateTime() + "");
+			addOrder.execute();
+			
+			for (ProductOffer po : order.getProductsOffersOrdered()) {
+				addStr = "INSERT INTO products_ordered(order_datetime, "
+													+ "supplier_name, "
+													+ "product_name, "
+													+ "qty_ordered) "
+													+ "VALUES (?,?,?,?);";
+				PreparedStatement addProductOrdered = conn.prepareStatement(addStr);
+				addProductOrdered.setString(1, order.getOrderDateTime() + "");
+				addProductOrdered.setString(2, po.getSupplier().getName());
+				addProductOrdered.setString(3, po.getProduct().getName());
+				addProductOrdered.setInt(4, order.quantityOrdered(po));
+				addProductOrdered.execute();
+				
+				SoftwareNotification.notifySuccess("The order has been succesfully "
+						+ "added to the system");
+				
+			}
 		
-//		try{
-//			PreparedStatement getProduct = conn.prepareStatement(query); 
-//		    ResultSet rs = getProduct.executeQuery(query);
-//		    while(rs.next()){
-//		    	   
-//		}
-//		}
-//		catch(SQLException e){
-//			SoftwareNotification.notifyError("Error in the Order database: " + e.getMessage());
-//		}
+		} catch (SQLException e) {
+			SoftwareNotification.notifyError("An identical order already exists in the system.");
+		}
 	}
 
 	@Override
 	public List<Order> getAll() {
-//		String query = 
-//				String.format("");
-//		try{
-//			PreparedStatement getProduct = conn.prepareStatement(query); 
-//		    ResultSet rs = getProduct.executeQuery(query);
-//		    while(rs.next()){
-//		    	   
-//		}
-//		}
-//		catch(SQLException e){
-//			SoftwareNotification.notifyError("Error in the Order database: " + e.getMessage());
-//		}
-		// TODO - DEVS implement this
 		List<Order> ret = new ArrayList<>();
-		
-		SupplierDAO supplierDAO = new MySQLSupplierDAO();
-		for (Supplier supplier : supplierDAO.getAll()) {
-			LocalDateTime dateTime = LocalDateTime.now();
 			
-			List<CostChange> costChanges = new ArrayList<>();
-			costChanges.add(new CostChange(LocalDateTime.now().minusMonths(1), 10));
-			costChanges.add(new CostChange(LocalDateTime.now().minusMonths(1), 15));
-			costChanges.add(new CostChange(LocalDateTime.now().minusMonths(1), 30));
-			costChanges.add(new CostChange(LocalDateTime.now(), 20));
-			costChanges.add(new CostChange(LocalDateTime.now().plusMonths(2), 25));
+		try {
+			String queryStr = "SELECT * FROM orders";
+			PreparedStatement getAll = conn.prepareStatement(queryStr);
+			ResultSet rs = getAll.executeQuery();
 			
-			ProductOffer po1 = new ProductOffer(new Product("Iphone 16GB"),
-					supplier, costChanges);
-			ProductOffer po2 = new ProductOffer(new Product("Hugo Boss Glasses"),
-					supplier, costChanges);
-			ProductOffer po3 = new ProductOffer(new Product("Wilkins Mineral Water"),
-					supplier, costChanges);
-			ProductOffer po4 = new ProductOffer(new Product("Elmers Glue"),
-					supplier, costChanges);
-			Map<ProductOffer, Integer> map = new HashMap<>();
+			List<LocalDateTime> dateTimes = new ArrayList<>();
+			while (rs.next()) {
+				dateTimes.add(rs.getTimestamp("order_datetime")
+						.toLocalDateTime());
+			}
 			
-			map.put(po1, 35);
-			map.put(po2, 5000);
-			map.put(po3, 350);
-			map.put(po4, 1200);
+			for (LocalDateTime dt : dateTimes) {
+				ret.add(getOrder(dt));
+			}
 			
-			ret.add(new Order(dateTime, supplier, map));
+		} catch (SQLException e) {
+			
 		}
 		
 		return ret;
 	}
 	
+	private Order getOrder(LocalDateTime dateTimeOrdered) {
+		try {
+			String queryStr = "SELECT PO.supplier_name, PO.product_name, "
+							+ "qty_ordered FROM orders O "
+							+ "JOIN products_ordered PO ON (O.order_datetime = PO.order_datetime) "
+							+ "WHERE O.order_datetime = ?";
+			
+			PreparedStatement getOrderedProducts = conn.prepareStatement(queryStr);
+			getOrderedProducts.setString(1, dateTimeOrdered.toString());
+			ResultSet rs = getOrderedProducts.executeQuery();
+			Supplier orderSupplier = null;
+			Map<ProductOffer, Integer> orderedMap = new HashMap<>();
+			while (rs.next()) {
+				String supplierName = rs.getString("supplier_name");
+				String productName = rs.getString("product_name");
+				int quantity = rs.getInt("qty_ordered");
+				
+				SupplierDAO supplierDAO = new MySQLSupplierDAO();
+				Supplier supplier = supplierDAO.get(supplierName);
+				orderSupplier = supplier;
+				
+				ProductDAO productDAO = new MySQLProductDAO();
+				Product product = productDAO.get(productName);
+				
+				ProductOfferDAO productOfferDAO = new MySQLProductOfferDAO();
+				ProductOffer productOffer =  productOfferDAO.get(supplier, product);
+				orderedMap.put(productOffer, quantity);
+			}
+		
+			Order order = new Order(dateTimeOrdered, orderSupplier, orderedMap);
+			
+			return order;
+			/* get deliveries
+			queryStr = "SELECT D.delivery_datetime, D.supplier_name, "
+					+ "D.product_name FROM orders O JOIN deliveries D ON "
+					+ "(O.order_datetime = D.order_datetime)";
+			
+			PreparedStatement getDeliveries = conn.prepareStatement(queryStr);
+			rs = getDeliveries.executeQuery();
+			
+			while (rs.next()) {
+				LocalDateTime dateTime = rs.getTimestamp("delivery_datetime")
+						.toLocalDateTime();
+				
+			}*/
+			
+		} catch (SQLException e) {
+			
+		}
+		return null;
+	}
+	
 	@Override
 	public boolean isEmpty() {
 		// TODO - DEVS implement this
-		return false;
+		return getAll().size() == 0;
 	}
 
 	@Override
 	public void addDelivery(Order order, Delivery delivery) {
-//		try {
-//			String query = "INSERT INTO products(product_name) VALUES(?)";
-//			PreparedStatement addProduct =  conn.prepareStatement(addStr);
-//		
-//			addProduct.execute();
-//		} catch (SQLException e) {
-//			SoftwareNotification.notifyError("error in add delivery.");
-//		}
-		// TODO - DEVS implement this
-		
+		/*
+		try {
+			//quantity, delivery_datetime, supplier_name, product_name, order_datetime
+			String query = "INSERT INTO deliveries(quantity, delivery_datetime, supplier_name, product_name, order_datetime) VALUES(?,?,?,?,?);";
+			PreparedStatement addDelivery =  conn.prepareStatement(query);
+			//addDelivery.setInt(1, delivery.getQuantityDelivered());
+			addDelivery.setString(2, delivery.getDeliveryDateTime() + "");
+			addDelivery.setString(3, order.getSupplier().getName());
+			addDelivery.setString(4, order.getDeliveries() + "");
+			addDelivery.setString(5, order.getOrderDateTime() + "");
+			addDelivery.execute();
+		} catch (SQLException e) {
+			SoftwareNotification.notifyError("Error adding delivery to database.");
+		}
+		*/
+		/*
+		try {
+		for (ProductOffer po : delivery.getProductOffersDelivered()) {
+			String query = "INSERT INTO deliveries(quantity, "
+												+ "delivery_datetime, "
+												+ "supplier_name, "
+												+ "product_name), "
+												+ "order_datetime) "
+												+ "VALUES (?,?,?,?,?);";
+			PreparedStatement addDelivery = conn.prepareStatement(query);
+			addDelivery.setInt(1, delivery.getQuantityDelivered(po));
+			addDelivery.setString(2, delivery.getDeliveryDateTime() + "");
+			addDelivery.setString(3, po.getSupplier().getName());
+			addDelivery.setString(4, po.getProduct().getName());
+			addDelivery.setString(5, order.getOrderDateTime() + "");
+			addDelivery.execute();
+			SoftwareNotification.notifySuccess("The delivery has been succesfully "
+					+ "added to the system");
+			
+		}
+		} catch (SQLException e) {
+		SoftwareNotification.notifyError("An identical delivery already exists in the system.");
+		}
+		*/
 	}
-
-
+	
 
 }
