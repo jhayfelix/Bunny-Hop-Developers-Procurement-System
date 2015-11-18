@@ -42,6 +42,6 @@ public class Supplier {
 			return false;
 		
 		Supplier s = (Supplier) o;
-		return name.equals(s.getName());
+		return name.toLowerCase().equals(s.getName().toLowerCase());
 	}
 }
