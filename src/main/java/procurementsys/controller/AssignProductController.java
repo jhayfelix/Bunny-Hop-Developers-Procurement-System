@@ -101,7 +101,8 @@ public class AssignProductController {
 				ProductOfferDAO productOfferDAO = new MySQLProductOfferDAO();
 				productOfferDAO.add(productOffer);
 				
-		
+				SoftwareNotification.notifySuccess("The product offer has been"
+						+ " successfully added to the system.");
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

@@ -132,6 +132,14 @@ public class MainMenuController extends Controller {
 	}
 	
     
+    @FXML protected void handleNormalMode(ActionEvent event) throws IOException {
+    	
+    }
+    
+    @FXML protected void handleCompareMode(ActionEvent event) throws IOException {
+    	
+    }
+	
 	private void initializeMode() {
 		try {
 			
@@ -153,17 +161,6 @@ public class MainMenuController extends Controller {
 		}
 		
 	}
-	
-	private void refresh() {
-		TagDAO tagDAO = new MySQLTagDAO();
-		tagSearchComboBox.getItems().clear();
-		tagSearchComboBox.getItems().addAll(tagDAO.getAll());
-		
-		normalModeController.refresh();
-		compareModeController.refresh();
-		
-	}
-	
 
 	@FXML protected void handleSearchTag(ActionEvent event) throws IOException {
 		
@@ -172,7 +169,6 @@ public class MainMenuController extends Controller {
 	
     @FXML protected void handleAddNewSupplier(ActionEvent event) throws IOException {
     	AddSupplierController.run();
-    	refresh();
     }
 	
     @FXML protected void handleViewSuppliers(ActionEvent event)
@@ -185,13 +181,11 @@ public class MainMenuController extends Controller {
     	} else {
     		ViewAllSuppliersController.run();
     	}
-    	refresh();
     }
     
     
     @FXML protected void handleAddNewProduct(ActionEvent event) throws IOException {
     	AddProductController.run();
-    	refresh();
     }
     
     @FXML protected void handleAssignProduct(ActionEvent event) throws IOException {
@@ -207,7 +201,6 @@ public class MainMenuController extends Controller {
     	} else {
     		AssignProductController.run();
     	}
-    	refresh();
     }
     
     @FXML protected void handleViewProducts(ActionEvent event) 
@@ -221,12 +214,10 @@ public class MainMenuController extends Controller {
     	} else {
     		ViewAllProductsController.run();
     	}
-    	refresh();
     }
     
     @FXML protected void handleAddNewTag(ActionEvent event) throws IOException {
     	AddTagController.run();
-    	refresh();
     }
     
     @FXML protected void handleViewProductOffers(ActionEvent event) throws IOException {
@@ -242,7 +233,7 @@ public class MainMenuController extends Controller {
     	} else {
     		ViewProductOffersController.run();
     	}
-    	refresh();
+    	
     }
     
     @FXML protected void handleTagProductOffer(ActionEvent event) throws IOException {
@@ -259,7 +250,6 @@ public class MainMenuController extends Controller {
     	} else {
     		TagProductOfferController.run();
     	}
-    	refresh();
     }
     
     @FXML protected void handleAddCostChange(ActionEvent event) throws IOException {
@@ -271,7 +261,6 @@ public class MainMenuController extends Controller {
     	} else {
     		ChangeCostController.run();
     	}
-    	refresh();
     }
     
     @FXML protected void handleViewCostChanges(ActionEvent event) throws IOException {
@@ -296,7 +285,6 @@ public class MainMenuController extends Controller {
     	} else {
     		ViewAllTagsController.run();
     	}
-    	refresh();
     }
     
     @FXML protected void handleAddNewOrder(ActionEvent event) throws IOException {
@@ -311,7 +299,6 @@ public class MainMenuController extends Controller {
     	} else {
     		AddOrderController.run();
     	}
-    	refresh();
     }
     
     @FXML protected void handleViewOrders(ActionEvent event) throws IOException {
@@ -324,7 +311,6 @@ public class MainMenuController extends Controller {
     	} else {
     		ViewAllOrdersController.run();
     	}
-    	refresh();
     }
     
     @FXML protected void handleAddDelivery(ActionEvent event) throws IOException {
@@ -337,7 +323,7 @@ public class MainMenuController extends Controller {
     	} else {
     		AddDeliveryController.run();
     	}
-    	refresh();
+    	
     }
     
 }

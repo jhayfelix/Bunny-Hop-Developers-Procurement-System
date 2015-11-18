@@ -39,6 +39,10 @@ public class AddProductController extends Controller {
         if (name.isPresent()){
         	ProductDAO productDAO = new MySQLProductDAO();
         	productDAO.add(new Product(name.get()));
+       
+    		String successMsg = "The product \'" + name.get() 
+				  + "\' has been successfully added to the system.";
+    		SoftwareNotification.notifySuccess(successMsg);
         }
         
 	}

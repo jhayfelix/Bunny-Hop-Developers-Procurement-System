@@ -43,10 +43,8 @@ public class NormalMainModeController {
 	@FXML private TableColumn<ProductOffer, Number> costCol;
 	@FXML private TableColumn<ProductOffer, Number> upcomingCostCol;
 	@FXML private TableColumn<ProductOffer, String> upcomingCostChangeDateCol;
-	private ListView<Tag> selectedTagsListView;
+	
 	protected void initialize(ListView<Tag> selectedTagsListView) {
-		this.selectedTagsListView = selectedTagsListView;
-		
 		// Filter the products shown in the list whenever the filter changes
 				productFilterTextField.textProperty().addListener(new ChangeListener<String>(){
 					@Override
@@ -130,7 +128,7 @@ public class NormalMainModeController {
 					            double upcomingCost = po.getUpcomingCost();
 					            setTextFill((currCost > upcomingCost) ? Color.RED :Color.GREEN);
 				            }
-				            if (!empty && item.doubleValue() >= 0) {
+				            if (!empty) {
 				            	setText(item + "");
 				            } else {
 				            	setText("");
@@ -149,6 +147,7 @@ public class NormalMainModeController {
 		Tag selectedTag = tagSearchComboBox.getSelectionModel().getSelectedItem();
 		
 		if (selectedTag != null && !selectedTagsListView.getItems().contains(selectedTag)) {
+			
 			selectedTagsListView.getItems().add(selectedTag);
 			showTaggedProducts(selectedTagsListView.getItems());
 			tagSearchComboBox.getSelectionModel().clearSelection();
@@ -174,7 +173,6 @@ public class NormalMainModeController {
 		taggedProductsListView.getItems().clear();
 		taggedProductsListView.getItems().addAll(taggedProducts);
 		
-		
 		if (taggedProductsListView.getItems().size() > 0) {
 			taggedProductsListView.getSelectionModel().select(0);
 			showProductOffers(taggedProductsListView.getSelectionModel().getSelectedItem());
@@ -188,10 +186,4 @@ public class NormalMainModeController {
 		productOffersTable.getItems().setAll(productOffersDAO.getAll(product, supplierFilterTextField.getText()));
 	}
 	
-	
-	public void refresh() {
-		showTaggedProducts(selectedTagsListView.getItems());
-		showProductOffers(taggedProductsListView.getSelectionModel().getSelectedItem());
-		productOffersTable.refresh();
-	}
 }

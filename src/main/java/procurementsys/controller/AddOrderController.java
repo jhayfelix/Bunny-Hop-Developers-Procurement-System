@@ -122,10 +122,9 @@ public class AddOrderController {
 				
 				OrderDAO orderDAO = new MySQLOrderDAO();
 				orderDAO.add(order);
-			
+				SoftwareNotification.notifySuccess("The order has been succesfully "
+						+ "added to the system");
 			}
-			
-			//showProducts();
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

@@ -25,7 +25,7 @@ public class ProductOffer {
 		this.supplier = new SimpleObjectProperty<Supplier>(supplier);
 		this.costChanges = new ArrayList<>(costChanges);
 		this.tags = new ArrayList<Tag>();
-		//this.tags.add(Tag.DEFAULT_TAG);
+		this.tags.add(Tag.DEFAULT_TAG);
 		this.promo = null;
 	}
 	
@@ -47,7 +47,7 @@ public class ProductOffer {
 		return costChanges;
 	}
 	
-	public CostChange getCurrentCostChange() {	
+	public CostChange getCurrentCostChange() {
 		CostChange currCostChange = costChanges.get(0);
 		
 		for (int i = 1; i < costChanges.size(); i++) {
@@ -62,21 +62,7 @@ public class ProductOffer {
 	}
 	
 	public CostChange getUpcomingCostChange() {
-		CostChange upcomingCostChange = null;
-		boolean foundFirst = false;
-		int i = 0;
-		while (!foundFirst && i < costChanges.size()) {
-
-			if (costChanges.get(i).isFuture()) {
-				upcomingCostChange = costChanges.get(i);
-				foundFirst = false;
-			}
-			i++;	
-		}
-		
-		if (upcomingCostChange == null)
-			return null;
-		
+		CostChange upcomingCostChange = costChanges.get(0);
 		for (CostChange c : costChanges) {
 			if (c.isFuture() && c.getChangeDateTime()
 					.isBefore(upcomingCostChange.getChangeDateTime())) {
@@ -86,7 +72,7 @@ public class ProductOffer {
 		return upcomingCostChange;
 	}
 	
-	public Double getCurrentCost() {		
+	public Double getCurrentCost() {
 		return getCurrentCostChange().getCost();
 	}
 	
@@ -99,10 +85,6 @@ public class ProductOffer {
 	}
 	
 	public Double getUpcomingCost() {
-		if (getUpcomingCostChange() == null) {
-			return -1.0;
-		}
-		
 		return getUpcomingCostChange().getCost();
 	}
 	
@@ -115,9 +97,6 @@ public class ProductOffer {
 	}
 	
 	public String getUpcomingCostChangeDateStr() {
-		if (getUpcomingCostChange() == null) {
-			return "";
-		}
 		return getUpcomingCostChange().getChangeDateTime().toString();
 	}
 	
@@ -162,6 +141,11 @@ public class ProductOffer {
 					+ ((iter.hasNext()) ? ", " : ""));
 		}
 		
+		/*
+		for (Tag t : tags) {
+			sb.append(t + ", ");
+		}*/
+		
 		return sb.toString();
 	}
 	
@@ -173,9 +157,5 @@ public class ProductOffer {
 		ProductOffer po = (ProductOffer) o;
 		return (product.equals(po.getProduct()) 
 				&& supplier.equals(po.getSupplier()));
-	}
-
-	public Promo getPromo() {
-		return promo;
 	}
 }

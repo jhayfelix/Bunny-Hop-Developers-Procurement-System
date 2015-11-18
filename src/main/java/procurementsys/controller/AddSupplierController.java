@@ -77,7 +77,9 @@ public class AddSupplierController extends Controller {
 			SupplierDAO supplierDAO = new MySQLSupplierDAO();
 			supplierDAO.add(new Supplier(name, contactNumber));
 			
-
+			String successMsg = "The supplier \'" + name 
+					  + "\' has been successfully added to the system.";
+			SoftwareNotification.notifySuccess(successMsg);
 
 		}
 	}

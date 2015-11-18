@@ -5,167 +5,208 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import procurementsys.model.Product;
-import procurementsys.model.ProductOffer;
 import procurementsys.model.Supplier;
 import procurementsys.model.Tag;
 import procurementsys.view.SoftwareNotification;
 
 public class MySQLProductDAO implements ProductDAO {
-	private static Connection conn;
-	static {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			String url = "jdbc:mysql://localhost/procurementdb";
-			conn = DriverManager.getConnection(url, "root", "DLSU1234");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+	private Connection conn;
+	//private DBConnection dB;
+	public MySQLProductDAO() {
+//		try {
+//			Class.forName("com.mysql.jdbc.Driver");
+//			String url = "jdbc:mysql://localhost/procurementdb";
+//			conn = DriverManager.getConnection(url, "root", "pagtalunan");
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} catch (ClassNotFoundException e) {
+//			e.printStackTrace();
+//		}
+		conn=DBConnection.getConnection();
 		
 	}
 	
-	public MySQLProductDAO() {
-
-	}
-	
 	@Override 
-	public void add(Product product) {
+	public void add(Product product) { // Implemented by Jan Tristan Milan
+
 		try {
 			String addStr = "INSERT INTO products(product_name) VALUES(?)";
 			PreparedStatement addProduct =  conn.prepareStatement(addStr);
 			addProduct.setString(1, product.getName());
 			addProduct.execute();
-    		String successMsg = "The product \'" + product.getName() 
-				  + "\' has been successfully added to the system.";
-    		SoftwareNotification.notifySuccess(successMsg);
 		} catch (SQLException e) {
 			SoftwareNotification.notifyError("The product '" + product.getName()
 					+ "' already exists in the database.");
 		}
+		
+		
 	}
 
 	@Override
-	public Product get(String name) {
-		Product ret = null;
-		try {
-			String queryStr = "SELECT * FROM products WHERE product_name = ?";
-			PreparedStatement getAll = conn.prepareStatement(queryStr);
-			getAll.setString(1, name);
-			ResultSet rs = getAll.executeQuery();
-			
-			while(rs.next()) {
-				String productName = rs.getString("product_name");
-				ret = new Product(productName);
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			SoftwareNotification.notifyError("There is an error with database."
-					+ " Please notify the developers.");
-		}
-		
-		return ret;
+	public Product get(String productNameFilter) {
+		// TODO - DEVS implement this
+		return new Product(productNameFilter);
 	}
 	
 	@Override
-	public List<Product> getAll() {
+	public List<Product> getAll() {//implement by Dominic Pagtalunan
+		
 		List<Product> ret = new ArrayList<>();
-		try {
-			String queryStr = "SELECT * FROM products";
-			PreparedStatement getAll = conn.prepareStatement(queryStr);
-			ResultSet rs = getAll.executeQuery();
-			
-			while(rs.next()) {
-				String productName = rs.getString("product_name");
-				ret.add(new Product(productName.toUpperCase()));
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			SoftwareNotification.notifyError("There is an error with database."
-					+ " Please notify the developers.");
+		String query = "SELECT * FROM products";
+	 
+	    
+		try{
+			//st = conn.createStatement(); 
+			PreparedStatement getProduct = conn.prepareStatement(query); 
+		    ResultSet rs = getProduct.executeQuery(query);
+		       while(rs.next()){
+		    	   String productName=rs.getString("product_name");
+		    	   System.out.format("%s \n",productName);
+		    	   ret.add(new Product(productName));	
+		}}
+		catch(SQLException e){
+			SoftwareNotification.notifyError("Error in the Product database: " + e.getMessage());
 		}
 		
+		/*
+		ret.add(new Product("Red Ballpen"));
+		ret.add(new Product("Blue Ballpen"));
+		ret.add(new Product("Green Ballpen"));
+		ret.add(new Product("Black Ballpen"));
+		
+		ret.add(new Product("Sola (Orange)"));
+		ret.add(new Product("Sola (Apple)"));
+		ret.add(new Product("Sola (Lemon)"));
+		ret.add(new Product("Sola (Grape)"));
+		ret.add(new Product("Sola (Raspberry)"));
+		
+		ret.add(new Product("Minute Maid Pulpy Orange"));
+		ret.add(new Product("Zesto Orange Juice Drink"));
+		*/
 		return ret;
 	}
 	
 
 	@Override
-	public List<Product> getAll(String productNameFilter) {		
+	public List<Product> getAll(String productNameFilter) {
+		// TODO - DEVS implement this
 		List<Product> ret = new ArrayList<>();
-		try {
-			String queryStr = "SELECT * FROM products WHERE product_name LIKE ?";
-			PreparedStatement getAll = conn.prepareStatement(queryStr);
-			getAll.setString(1, "%" + productNameFilter.toUpperCase() + "%");
-			ResultSet rs = getAll.executeQuery();
-			
-			while(rs.next()) {
-				String productName = rs.getString("product_name");
-				ret.add(new Product(productName));
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			SoftwareNotification.notifyError("There is an error with database."
-					+ " Please notify the developers.");
+		String query = 
+				String.format(   "select * from products "
+						+ "WHERE LOWER(REPLACE(product_name, ' ', '')) = "
+						+ "LOWER(REPLACE(\"%s\", ' ', ''))",productNameFilter);
+		
+	   
+	    try{
+			PreparedStatement getProduct = conn.prepareStatement(query); 
+		    ResultSet rs = getProduct.executeQuery(query);
+		       while(rs.next()){
+		    	   String productName=rs.getString("product_name");
+		    	   System.out.format("%s \n",productName);
+		    	   ret.add(new Product(productName));	
+		}}
+	    catch(SQLException e){
+			SoftwareNotification.notifyError("Error in the Product database: " + e.getMessage());
 		}
+		/*
+		ret.add(new Product("Red Ballpen"));
+		ret.add(new Product("Blue Ballpen"));
+		ret.add(new Product("Green Ballpen"));
+		ret.add(new Product("Black Ballpen"));
 		
-		return ret;
-	}
-
-	@Override
-	public List<Product> getAll(List<Tag> tags, String productNameFilter) {
-		ProductOfferDAO productOfferDAO = new MySQLProductOfferDAO();
-		List<ProductOffer> productOffers = productOfferDAO.getAll();
-		
-		List<Product> ret = new ArrayList<>();
-		for (ProductOffer po : productOffers) {
-			if (po.getTags().containsAll(tags)) {
-				Product p = po.getProduct();
-				if (!ret.contains(p)) {
-					ret.add(p);
-				}
-			}
-		}
-		
+		ret.add(new Product("Sola (Orange)"));
+		ret.add(new Product("Sola (Apple)"));
+		ret.add(new Product("Sola (Lemon)"));
+		ret.add(new Product("Sola (Grape)"));
+		ret.add(new Product("Sola (Raspberry)"));
+			
+		ret.add(new Product("Minute Maid Pulpy Orange"));
+		ret.add(new Product("Zesto Orange Juice Drink"));
+*/
 		List<Product> filteredRet = new ArrayList<>();
-		for (Product p : ret) {
-			if (p.getName().toLowerCase().contains(productNameFilter.toLowerCase())) {
-				filteredRet.add(p);
+		for (int i = 0; i < ret.size(); i++) {
+			Product x = ret.get(i);
+			if (x.getName().toLowerCase().contains(productNameFilter.toLowerCase())) {
+				filteredRet.add(x);
 			}
 		}
+		return filteredRet;
+	}
+
+	@Override
+	public List<Product> getAll(List<Tag> tags, String productNameFilter) {//implemented by DOminic Pagtalunan
 		
+		List<Product> ret = new ArrayList<>();
+//		String query = 
+//				String.format("");
+//		try{
+//			PreparedStatement getProduct = conn.prepareStatement(query); 
+//		    ResultSet rs = getProduct.executeQuery(query);
+//		    while(rs.next()){
+//		    	   
+//		}
+//		}
+//		catch(SQLException e){
+//			SoftwareNotification.notifyError("Error in the Product database: " + e.getMessage());
+//		}
+		
+		
+		ret.add(new Product("Red Ballpen"));
+		ret.add(new Product("Blue Ballpen"));
+		ret.add(new Product("Green Ballpen"));
+		ret.add(new Product("Black Ballpen"));
+		
+		ret.add(new Product("Sola (Orange)"));
+		ret.add(new Product("Sola (Apple)"));
+		ret.add(new Product("Sola (Lemon)"));
+		ret.add(new Product("Sola (Grape)"));
+		ret.add(new Product("Sola (Raspberry)"));
+			
+		ret.add(new Product("Minute Maid Pulpy Orange"));
+		ret.add(new Product("Zesto Orange Juice Drink"));
+
+		List<Product> filteredRet = new ArrayList<>();
+		for (int i = 0; i < ret.size(); i++) {
+			Product x = ret.get(i);
+			if (x.getName().toLowerCase().contains(productNameFilter.toLowerCase())) {
+				filteredRet.add(x);
+			}
+		}
 		return filteredRet;
 	}
 
 	@Override
 	public List<Product> getAll(Supplier selectedSupplier, String productNameFilter) {
+		// TODO - DEVS implement this
 		List<Product> ret = new ArrayList<>();
-		try {
-			String queryStr =   "SELECT PO.product_name "
-							  + "FROM suppliers S JOIN product_offers PO ON (S.supplier_name = PO.supplier_name) "
-							  + "WHERE PO.product_name LIKE ? AND S.supplier_name = ?;"; 
-			PreparedStatement getAll = conn.prepareStatement(queryStr);
-			getAll.setString(1, "%" + productNameFilter + "%");
-			getAll.setString(2, selectedSupplier.getName());
-			ResultSet rs = getAll.executeQuery();
+		/*
+		ret.add(new Product("Red Ballpen"));
+		ret.add(new Product("Blue Ballpen"));
+		ret.add(new Product("Green Ballpen"));
+		ret.add(new Product("Black Ballpen"));
+		
+		ret.add(new Product("Sola (Orange)"));
+		ret.add(new Product("Sola (Apple)"));
+		ret.add(new Product("Sola (Lemon)"));
+		ret.add(new Product("Sola (Grape)"));
+		ret.add(new Product("Sola (Raspberry)"));
 			
-			while(rs.next()) {
-				String productName = rs.getString("product_name");
-				ret.add(new Product(productName));
+		ret.add(new Product("Minute Maid Pulpy Orange"));
+		ret.add(new Product("Zesto Orange Juice Drink"));
+*/
+		List<Product> filteredRet = new ArrayList<>();
+		for (int i = 0; i < ret.size(); i++) {
+			Product x = ret.get(i);
+			if (x.getName().toLowerCase().contains(productNameFilter.toLowerCase())) {
+				filteredRet.add(x);
 			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			SoftwareNotification.notifyError("There is an error with database."
-					+ " Please notify the developers.");
 		}
-		return ret;
+		return filteredRet;
 	}
 	
 	@Override

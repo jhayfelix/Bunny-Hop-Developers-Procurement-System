@@ -37,6 +37,11 @@ public class AddTagController {
         if (name.isPresent()){
         	TagDAO tagDAO = new MySQLTagDAO();
         	tagDAO.add(new Tag(name.get()));
+       
+    		Notifications.create().title("Success")
+			.text("The tag \'" + name.get() 
+				  + "\' has been successfully added to the system.")
+			.position(Pos.TOP_RIGHT).showInformation();
         }
 	}
 	
