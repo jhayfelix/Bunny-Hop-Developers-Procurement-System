@@ -43,7 +43,7 @@ public class AssignProductController {
 	public static void run() {
 		try {
 			Dialog<Map<String, Object>> dialog = new Dialog<>();
-			dialog.setTitle("Assign Product");
+			dialog.setTitle("Assig1n Product");
 			dialog.setHeaderText("Enter product offer details");
 			dialog.getDialogPane().getButtonTypes()
 				.addAll(ButtonType.OK, ButtonType.CANCEL);
@@ -112,7 +112,7 @@ public class AssignProductController {
 
 	private static void initializeSupplierSelection(GridPane grid,
 			Parent supplierRoot) {
-		Label supplierLbl = new Label("Supplier:");
+		Label supplierLbl = new Label("Supplier:!");
 		supplierLbl.setStyle("-fx-font-weight: bold");
 		supplierController.resize(150, 150);
 		grid.add(supplierLbl, 0, 2);

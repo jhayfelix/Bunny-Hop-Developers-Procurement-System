@@ -176,11 +176,16 @@ public class MySQLSupplierDAO implements SupplierDAO {
 					setPromo.setInt(1, changer);
 					setPromo.setString(2, supplier.getName());
 					setPromo.executeUpdate();
-				
+					String successMsg = "The supplier "+ supplier.getName()
+							+"contact number is now changed to: "
+							+ changer;
+					SoftwareNotification.notifySuccess(successMsg);
 					
 				} catch (SQLException e) {
 					e.printStackTrace();
-					
+					SoftwareNotification.notifyError("Error in trying to update "
+							+ "contact number of supplier,"
+							+ "please contact developers." );
 				}
 
 		}

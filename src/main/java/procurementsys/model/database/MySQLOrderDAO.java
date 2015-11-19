@@ -22,7 +22,9 @@ public class MySQLOrderDAO implements OrderDAO {
 	private Connection conn;
 	
 	public MySQLOrderDAO() {
+		
 		try {
+			
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = "jdbc:mysql://localhost/procurementdb";
 			conn = DriverManager.getConnection(url, "root", "DLSU1234");

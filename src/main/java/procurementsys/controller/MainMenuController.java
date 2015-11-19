@@ -340,4 +340,41 @@ public class MainMenuController extends Controller {
     	refresh();
     }
     
-}
+  //based on Tristan Milan's Code
+    @FXML protected void handleToggleSupplier(ActionEvent event) throws IOException {
+       	SupplierDAO supplierDAO = new MySQLSupplierDAO();
+       	
+       	if (supplierDAO.isEmpty()) {
+   			String errorMsg = "There are no suppliers in the system. Please add a supplier first.";
+   			SoftwareNotification.notifyError(errorMsg);
+       	}
+       	 else {
+       		ToggleSupplierController.run();
+       	}
+       }
+    
+    @FXML protected void   handleEditContactNumber(ActionEvent event) throws IOException {
+	SupplierDAO supplierDAO = new MySQLSupplierDAO();
+       	
+       	if (supplierDAO.isEmpty()) {
+   			String errorMsg = "There are no suppliers in the system. Please add a supplier first.";
+   			SoftwareNotification.notifyError(errorMsg);
+       	}
+       	 else {
+       		EditContactNumberController.run();
+       	}
+    }
+    @FXML protected void   handleTaggleProductOffer(ActionEvent event) throws IOException {
+    	ProductOfferDAO productOfferDAO = new MySQLProductOfferDAO();
+           	
+           	if (productOfferDAO.isEmpty()) {
+       			String errorMsg = "There are no suppliers in the system. Please add a supplier first.";
+       			SoftwareNotification.notifyError(errorMsg);
+           	}
+           	 else {
+           		ToggleProductOfferController.run();
+           	}
+        }
+    }
+    
+
