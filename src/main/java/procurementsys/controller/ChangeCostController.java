@@ -69,7 +69,7 @@ public class ChangeCostController {
 		grid.add(productOfferLbl, 1, 2);
 		grid.add(productOfferTable, 1, 3);
 		
-		Label supplierLbl = new Label("Supplier");
+		Label supplierLbl = new Label("Supplier:");
 		supplierLbl.setStyle("-fx-font-weight: bold");
 		Node supplierListView = createSupplierListView();
 		grid.add(supplierLbl, 0, 2);

@@ -159,8 +159,8 @@ public class MainMenuController extends Controller {
 		tagSearchComboBox.getItems().clear();
 		tagSearchComboBox.getItems().addAll(tagDAO.getAll());
 		
-		normalModeController.refresh();
-		compareModeController.refresh();
+		//normalModeController.refresh();
+		//compareModeController.refresh();
 		
 	}
 	
@@ -172,7 +172,7 @@ public class MainMenuController extends Controller {
 	
     @FXML protected void handleAddNewSupplier(ActionEvent event) throws IOException {
     	AddSupplierController.run();
-    	refresh();
+    	//refresh();
     }
 	
     @FXML protected void handleViewSuppliers(ActionEvent event)
@@ -185,7 +185,7 @@ public class MainMenuController extends Controller {
     	} else {
     		ViewAllSuppliersController.run();
     	}
-    	refresh();
+    	//refresh();
     }
     
     
@@ -340,4 +340,41 @@ public class MainMenuController extends Controller {
     	refresh();
     }
     
-}
+  //based on Tristan Milan's Code
+    @FXML protected void handleToggleSupplier(ActionEvent event) throws IOException {
+       	SupplierDAO supplierDAO = new MySQLSupplierDAO();
+       	
+       	if (supplierDAO.isEmpty()) {
+   			String errorMsg = "There are no suppliers in the system. Please add a supplier first.";
+   			SoftwareNotification.notifyError(errorMsg);
+       	}
+       	 else {
+       		ToggleSupplierController.run();
+       	}
+       }
+    
+    @FXML protected void   handleEditContactNumber(ActionEvent event) throws IOException {
+	SupplierDAO supplierDAO = new MySQLSupplierDAO();
+       	
+       	if (supplierDAO.isEmpty()) {
+   			String errorMsg = "There are no suppliers in the system. Please add a supplier first.";
+   			SoftwareNotification.notifyError(errorMsg);
+       	}
+       	 else {
+       		EditContactNumberController.run();
+       	}
+    }
+    @FXML protected void   handleTaggleProductOffer(ActionEvent event) throws IOException {
+    	ProductOfferDAO productOfferDAO = new MySQLProductOfferDAO();
+           	
+           	if (productOfferDAO.isEmpty()) {
+       			String errorMsg = "There are no suppliers in the system. Please add a supplier first.";
+       			SoftwareNotification.notifyError(errorMsg);
+           	}
+           	 else {
+           		ToggleProductOfferController.run();
+           	}
+        }
+    }
+    
+

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="275.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="procurementsys.controller.TagListController">
+  <children>
+    <MenuBar style="-fx-background-color: royalblue;" VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false">
+               <graphic>
+                  <TextField fx:id="filterTextField" />
+               </graphic>
+        </Menu>
+      </menus>
+    </MenuBar>
+      <ListView fx:id="tagListView" prefHeight="275.0" prefWidth="200.0" />
+  </children>
+</VBox>

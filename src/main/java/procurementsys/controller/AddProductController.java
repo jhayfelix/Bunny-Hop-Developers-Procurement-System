@@ -21,8 +21,8 @@ public class AddProductController extends Controller {
 	public static void run() {
 		TextInputDialog dialog = new TextInputDialog();
 		dialog.setTitle("Add Product");
-		dialog.setHeaderText("Enter Product Details");
-		dialog.setContentText("Product name:");
+		dialog.setHeaderText("Enter product details");
+		dialog.setContentText("Product Name:");
         dialog.setGraphic(null);
 	
         final Button btOk = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);

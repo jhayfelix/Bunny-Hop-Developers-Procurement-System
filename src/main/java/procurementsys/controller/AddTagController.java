@@ -17,8 +17,8 @@ public class AddTagController {
 	public static void run() {
 		TextInputDialog dialog = new TextInputDialog();
 		dialog.setTitle("Add Tag");
-		dialog.setHeaderText("Enter Tag Details");
-		dialog.setContentText("Tag name:");
+		dialog.setHeaderText("Enter tag details");
+		dialog.setContentText("Tag Name:");
         dialog.setGraphic(null);
         
         final Button btOk = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);

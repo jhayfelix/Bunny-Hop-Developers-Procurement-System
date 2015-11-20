@@ -19,9 +19,12 @@ import procurementsys.model.Supplier;
 import procurementsys.view.SoftwareNotification;
 
 public class MySQLOrderDAO implements OrderDAO {
-	private static Connection conn;
-	static {
+	private Connection conn;
+	
+	public MySQLOrderDAO() {
+		
 		try {
+			
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = "jdbc:mysql://localhost/procurementdb";
 			conn = DriverManager.getConnection(url, "root", "DLSU1234");
@@ -30,10 +33,6 @@ public class MySQLOrderDAO implements OrderDAO {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public MySQLOrderDAO() {
-
 		
 	}
 	
@@ -154,7 +153,7 @@ public class MySQLOrderDAO implements OrderDAO {
 
 	@Override
 	public void addDelivery(Order order, Delivery delivery) {
-		/* Code 1 Add Delivery 
+		/* Code 1 Add Delivery implemented by Antonio Angeles. 
 		try {
 			//quantity, delivery_datetime, supplier_name, product_name, order_datetime
 			String query = "INSERT INTO deliveries(quantity, delivery_datetime, supplier_name, product_name, order_datetime) VALUES(?,?,?,?,?);";
@@ -170,7 +169,8 @@ public class MySQLOrderDAO implements OrderDAO {
 		}
 	
 		*/
-		//Code 2 Add Delivery NullPointerException error
+		
+		//Code 2 Add Delivery implemented by Antonio Angeles. Same code as add order. Has a NullPointerException error I can't seem to fix
 		try {
 			for (ProductOffer po : delivery.getProductOffersDelivered()) {
 				String query = "INSERT INTO deliveries(quantity, "
@@ -194,8 +194,9 @@ public class MySQLOrderDAO implements OrderDAO {
 			} catch (SQLException e) {
 			SoftwareNotification.notifyError("An identical delivery already exists in the system.");
 			}
-			
+		
 	}
-	
+
+
 
 }

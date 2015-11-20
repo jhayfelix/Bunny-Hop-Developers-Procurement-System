@@ -114,7 +114,7 @@ public class AssignProductController {
 			Parent supplierRoot) {
 		Label supplierLbl = new Label("Supplier:");
 		supplierLbl.setStyle("-fx-font-weight: bold");
-		supplierController.resize(150, 150);
+		supplierController.resize(150, 300);
 		grid.add(supplierLbl, 0, 2);
 		grid.add(supplierRoot, 0, 3);
 		
@@ -153,7 +153,7 @@ public class AssignProductController {
 		
 		Label productLbl = new Label("Product:");
 		productLbl.setStyle("-fx-font-weight: bold");
-		productController.resize(150, 150);
+		productController.resize(150, 300);
 		grid.add(productLbl, 1, 2);
 		grid.add(productRoot, 1, 3);
 		

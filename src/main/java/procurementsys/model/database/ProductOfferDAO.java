@@ -15,6 +15,7 @@ public interface ProductOfferDAO {
 	List<ProductOffer> getAll(Product product, String filterStr);
 	boolean isEmpty();
 	void addCostChange(ProductOffer productOffer, CostChange costChange);
+	void toggleProductOfferAvailability(ProductOffer productOffer);
 
 
 }

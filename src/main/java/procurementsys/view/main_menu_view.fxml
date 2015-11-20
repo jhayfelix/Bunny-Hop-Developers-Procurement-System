@@ -19,9 +19,12 @@
           <items>
             <MenuItem mnemonicParsing="false" onAction="#handleAddNewSupplier" text="Add New Supplier" />
             <MenuItem mnemonicParsing="false" onAction="#handleViewSuppliers" text="View All Suppliers" />
+            <MenuItem mnemonicParsing="false" onAction="#handleToggleSupplier" text="Toggle Suppliers Status" />
+             <MenuItem mnemonicParsing="false" onAction="#handleEditContactNumber" text="Edit Supplier Contact Number" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#handleAssignProduct" text="Add Product Offer to Supplier" />
                   <MenuItem mnemonicParsing="false" onAction="#handleViewProductOffers" text="View Product Offers of Supplier" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleTaggleProductOffer" text="Toggle Product Offer Availability" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#handleAddCostChange" text="Add Cost Change to Product Offer" />
                   <MenuItem mnemonicParsing="false" onAction="#handleViewCostChanges" text="View Cost Changes of Product Offer" />
@@ -49,6 +52,14 @@
                   <MenuItem mnemonicParsing="false" onAction="#handleAddDelivery" text="Add New Delivery to Order" />
               </items>
             </Menu>
+            
+            <Menu mnemonicParsing="false" text="Promos">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#handleAddNewOrder" text="Add New Promo" />
+                <SeparatorMenuItem mnemonicParsing="false" />
+                </items>
+            </Menu>
+            
       </menus>
     </MenuBar>
       <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="188.0" prefWidth="1000.0" style="-fx-background-color: royalblue;">

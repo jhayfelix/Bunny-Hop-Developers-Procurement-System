@@ -17,8 +17,9 @@ import procurementsys.model.Tag;
 import procurementsys.view.SoftwareNotification;
 
 public class MySQLTagDAO implements TagDAO {
-	private static Connection conn;
-	static {
+	private Connection conn;
+	
+	public MySQLTagDAO() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = "jdbc:mysql://localhost/procurementdb";
@@ -28,9 +29,6 @@ public class MySQLTagDAO implements TagDAO {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-	}
-	public MySQLTagDAO() {
-
 	}
 
 	@Override

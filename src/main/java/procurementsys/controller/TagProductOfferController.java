@@ -57,7 +57,7 @@ public class TagProductOfferController {
 		grid.add(productOfferLbl, 1, 0);
 		grid.add(productOfferTable, 1, 1);
 		
-		Label supplierLbl = new Label("Supplier");
+		Label supplierLbl = new Label("Supplier:");
 		supplierLbl.setStyle("-fx-font-weight: bold");
 		Node supplierListView = createSupplierListView();
 		grid.add(supplierLbl, 0, 0);
