@@ -63,7 +63,7 @@ public class MySQLOrderDAO implements OrderDAO {
 			}
 		
 		} catch (SQLException e) {
-			SoftwareNotification.notifyError("An identical order already exists in the system.");
+			SoftwareNotification.notifyError("An identical order already exists in the system");
 		}
 	}
 
@@ -153,48 +153,32 @@ public class MySQLOrderDAO implements OrderDAO {
 
 	@Override
 	public void addDelivery(Order order, Delivery delivery) {
-		/* Code 1 Add Delivery implemented by Antonio Angeles. 
-		try {
-			//quantity, delivery_datetime, supplier_name, product_name, order_datetime
-			String query = "INSERT INTO deliveries(quantity, delivery_datetime, supplier_name, product_name, order_datetime) VALUES(?,?,?,?,?);";
-			PreparedStatement addDelivery =  conn.prepareStatement(query);
-			//addDelivery.setInt(1, delivery.getQuantityDelivered());
-			addDelivery.setString(2, delivery.getDeliveryDateTime() + "");
-			addDelivery.setString(3, order.getSupplier().getName());
-			addDelivery.setString(4, order.getDeliveries() + "");
-			addDelivery.setString(5, order.getOrderDateTime() + "");
-			addDelivery.execute();
-		} catch (SQLException e) {
-			SoftwareNotification.notifyError("Error adding delivery to database.");
-		}
-	
-		*/
 		
-		//Code 2 Add Delivery implemented by Antonio Angeles. Same code as add order. Has a NullPointerException error I can't seem to fix
+		//Code 2 Add Delivery implemented by Antonio Angeles
 		try {
 			for (ProductOffer po : delivery.getProductOffersDelivered()) {
 				String query = "INSERT INTO deliveries(quantity, "
 													+ "delivery_datetime, "
 													+ "supplier_name, "
-													+ "product_name), "
+													+ "product_name, "
 													+ "order_datetime) "
 													+ "VALUES (?,?,?,?,?);";
 				PreparedStatement addDelivery = conn.prepareStatement(query);
 				addDelivery.setInt(1, delivery.getQuantityDelivered(po));
 				addDelivery.setString(2, delivery.getDeliveryDateTime() + "");
-				addDelivery.setString(3, order.getSupplier().getName());
-				addDelivery.setString(4, delivery.getDeliveredProducts());
+				addDelivery.setString(3, po.getSupplier().getName());
+				addDelivery.setString(4, po.getProduct().getName());
 				addDelivery.setString(5, order.getOrderDateTime() + "");
 				addDelivery.execute();
+				
 				SoftwareNotification.notifySuccess("The delivery has been succesfully"
-						+ "added to the system");
+						+ " added to the system");
 				
 			}
 			
 			} catch (SQLException e) {
-			SoftwareNotification.notifyError("An identical delivery already exists in the system.");
+			SoftwareNotification.notifyError("An identical delivery already exists in the system");
 			}
-		
 	}
 
 

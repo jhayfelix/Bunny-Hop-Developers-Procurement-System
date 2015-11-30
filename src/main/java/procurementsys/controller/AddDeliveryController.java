@@ -88,7 +88,7 @@ public class AddDeliveryController {
 		if (result.isPresent()) {
 			Map<String, Object> map = result.get();
 			
-			LocalDateTime dateTime = (LocalDateTime) map.get("DATE_ORDERED");
+			LocalDateTime dateTime = (LocalDateTime) map.get("DATE_DELIVERED");
 			Order order = (Order) map.get("ORDER");
 			Map<ProductOffer, Integer> deliveredProductOffers = 
 					(Map<ProductOffer, Integer>) map.get("ORDERED_PRODUCTOFFERS");
@@ -96,8 +96,6 @@ public class AddDeliveryController {
 			Delivery delivery = new Delivery(dateTime, deliveredProductOffers);
 			OrderDAO orderDAO = new MySQLOrderDAO();
 			orderDAO.addDelivery(order, delivery);
-			SoftwareNotification.notifySuccess("The delivery has been succesfully "
-					+ "added to the system.");
 		}
 	}
 	
